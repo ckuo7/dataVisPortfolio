@@ -55,12 +55,304 @@
         </div><!--/.nav-collapse -->
     </div>
 </nav>
-
+<style>
+    h2 {
+  /*font-size:15px;*/
+  /*line-height: 20px;*/
+  text-align: left;
+  padding: 50px 20px 10px 40px;
+}
+</style>
 <div class = "container">
 		<h2>Homework1</h2>
-		<div id="chart"></div>
+		<div id="chart">
+            <label><input type="checkbox"> Sort values</label>
+        <!--<label><input type="checkbox"> Sort values</label>-->
+
+        <!--<style>-->
+            <!--.d3-tip {-->
+              <!--line-height: 1;-->
+              <!--font-weight: bold;-->
+              <!--padding: 12px;-->
+              <!--background: rgba(0, 0, 0, 0.8);-->
+              <!--color: #fff;-->
+              <!--border-radius: 2px;-->
+        <!--</style>-->
+        <style>
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  position: relative;
+  width: 960px;
+
+}
+
+.axis text {
+  font: 14px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.bar {
+  fill: steelblue;
+  /*fill-opacity: .9;*/
+}
+
+/*.x.axis path {
+  display: none;
+}
+*/
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+.bar:hover {
+  fill: #FD8D3C ;
+}
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+label {
+  position: absolute;
+  top: 160px;
+  left: 55px;
+}
+
+</style>
         <script src = "js/d3.min.js"></script>
-        <script src = "homework1/script.js"></script>
+        <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+        <script>
+
+console.log(window.location.search.substr(1).toLowerCase().match(/[a-zA-Z]/g));
+
+//Loop through the text and store the count for all letters ([A-z]) in a JavaScript object (Links to an external site.)
+// (similar to a dictionary in Python). Use the letter as the key and the count as the value. Do not store spaces,
+// punctuation, or special characters.
+var query = window.location.search.substr(1).toLowerCase().match(/[a-zA-Z]/g);
+var words = {};
+var wordList = [];
+
+for ( var i =0 ; i < query.length; i++)
+{
+  if (query[i] in words){
+  words[query[i]]++;}
+  else{
+  words[query[i]] = 1;
+  }
+}
+
+var wordKey = Object.keys(words)
+var wordsKeySort = Object.keys(words).sort();
+var wordsValue = Object.keys(words).map(function(k){ return words[k]});
+
+for ( var j =0 ; j < wordsKeySort.length; j++){
+
+  temp = {};
+  temp['letter'] = wordsKeySort[j];
+  temp['frequency'] = words[wordsKeySort[j]];
+  wordList.push(temp);
+}
+console.log(wordList);
+
+// data1=d3.entries(wordList)
+
+// [someSelection]
+// .data(data).enter() [etc]
+
+var margin = {top: 40, right: 20, bottom: 30, left: 40},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+// var formatPercent = d3.format("");
+
+var x = d3.scale.ordinal()
+    // .rangeRoundBands([0, width], .1, 1)
+    // .rangeRoundBands([0, width], .1,.2)
+    .rangeBands([0, width], .1,.5);
+    // .domain(wordList.map(function(d){return d.letter;}));
+
+var y = d3.scale.linear()
+    .range([height, 0])
+    // .domain([0, d3.max(wordList, function(d){return d.frequency;})]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left")
+    .ticks(d3.max(wordList,function(d){return d.frequency}))
+    // .tickFormat(formatPercent);
+
+var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    return "<strong>Frequency:</strong> <span style='color:red'>" + d.frequency + "</span>";
+  })
+
+function vowelTest(s) {
+  return (/^[aeiou]$/i).test(s);
+}
+
+var svg = d3.select("#chart").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+//d3.select('#chart').append('label').append()
+  //svg.call(tip);
+
+  // wordList.forEach(function(d) {
+  //   d.frequency = +d.frequency;
+  // });
+
+x.domain(wordList.map(function(d) { return d.letter; }));
+y.domain([0, d3.max(wordList, function(d) { return d.frequency; })]);
+
+var xGuide = svg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xAxis);
+
+
+
+svg.append("g")
+    .attr("class", "y axis")
+    .call(yAxis)
+  .append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 6)
+    .attr("dy", ".71em")
+    .style("text-anchor", "end")
+    .text("Count");
+
+svg.selectAll(".bar")
+    .data(wordList)
+  .enter().append("rect")
+    .attr("class", "bar")
+    .attr("x", function(d) { return x(d.letter); })
+    .attr("width", x.rangeBand())
+    // .attr("y", function(d) { return y(d.frequency); })
+    .attr("y", height + margin.top )
+    // .attr("height", function(d) { return height - y(d.frequency); })
+    .attr("height", 0)
+    // .on('mouseover', tip.show)
+    .on('mouseover', function(d){
+      d3.select(this).style('fill',"#FD8D3C");
+
+      var xPosition = parseFloat(d3.select(this).attr("x")) + x.rangeBand() / 2 + margin.left;
+      var yPosition = parseFloat(d3.select(this).attr("y")) + margin.top - 5;
+
+      d3.select('svg').append("text")
+      .attr("id", "tooltip")
+      .attr("x", xPosition)
+      .attr("y", yPosition)
+      .attr("text-anchor", "middle")
+      .attr("font-family", "sans-serif")
+      .attr("font-size", "18px")
+      .attr("font-weight", "bold")
+      .attr("fill", "black")
+      .text(d.frequency);
+
+    })
+    // .on('mouseout', tip.hide)
+    .on('mouseout', function(d){
+      d3.select(this).style('fill', function(d){
+        if (vowelTest(d.letter)){return "#2171B5";}
+        else{return "#92C5DE";}});
+      d3.select("#tooltip").remove(); // end of style
+        })
+    .style('fill',function(d){
+
+      if (vowelTest(d.letter)){
+
+        return "#2171B5";
+      }
+      else{
+        return "#92C5DE";
+      }
+    })
+    ;
+
+xGuide.selectAll('line').style({"fill":"none","stroke":"none"});
+xGuide.selectAll('path').style({"fill":"none","stroke":"none"});
+
+d3.selectAll('.bar').data(wordList)
+  .transition().duration(600).delay(function(d,i){return 100*i;})
+  .attr("height",function(d){return(  height - y(d.frequency));})
+  .attr("y",function(d){return (y(d.frequency))}).ease('bounce');
+
+d3.select("input").on("change", change);
+
+var sortTimeout = setTimeout(function() {
+  d3.select("input").property("checked", true).each(change);
+}, 3000);
+
+function change() {
+  clearTimeout(sortTimeout);
+
+  // Copy-on-write since tweens are evaluated after a delay.
+  var x0 = x.domain(wordList.sort(this.checked
+      ? function(a, b) { return b.frequency - a.frequency; }
+      : function(a, b) { return d3.ascending(a.letter, b.letter); })
+      .map(function(d) { return d.letter; }))
+      .copy();
+
+  svg.selectAll(".bar")
+      .sort(function(a, b) { return x0(a.letter) - x0(b.letter); });
+
+  var transition = svg.transition().duration(750),
+      delay = function(d, i) { return i * 50; };
+
+  transition.selectAll(".bar")
+      .delay(delay)
+      .attr("x", function(d) { return x0(d.letter); });
+
+  transition.select(".x.axis")
+      .call(xAxis)
+    .selectAll("g")
+      .delay(delay);
+}
+// });
+
+</script>
+        <div id="tfheader">
+		    <form id="tfnewsearch" method="get" action="http://www.google.com">
+		        <input type="text" id="tfq" class="tftextinput2" name="q" size="21" maxlength="120" value="Search our website"><input type="submit" value=">" class="tfbutton2">
+		    </form>
+		<div class="tfclear"></div>
+
+        <!--<script src = "homework1/script.js"></script>-->
 
 </div>
 
