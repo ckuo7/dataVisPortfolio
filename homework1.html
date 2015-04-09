@@ -70,17 +70,14 @@
             <!--<rect id="chart" transform="translate(50,50)" stroke="black" width="1000" height="600" style="fill:none;stroke:black;fill-opacity:0"></rect>-->
         </svg>
             <label><input type="checkbox"> Sort values</label>
-        <!--<label><input type="checkbox"> Sort values</label>-->
-
-        <!--<style>-->
-            <!--.d3-tip {-->
-              <!--line-height: 1;-->
-              <!--font-weight: bold;-->
-              <!--padding: 12px;-->
-              <!--background: rgba(0, 0, 0, 0.8);-->
-              <!--color: #fff;-->
-              <!--border-radius: 2px;-->
-        <!--</style>-->
+        <div id="tfheader">
+		    <!--<form id="tfnewsearch" method="get" action="http://www.google.com">-->
+            <!--<form id="tfnewsearch">-->
+		        <!--<input type="text" id="tfq" class="tftextinput2" name="q" size="80" maxlength="500" value="Type A String Here To Create A Bar Chart"><input type="submit" value="create chart" class="tfbutton2" onclick="location.href+'?'+document.getElementById('tfq').value">-->
+                <input type="text" id="tfq" class="tftextinput2" name="q" size="80" maxlength="500" value="Type A String Here To Create A Bar Chart"><input type="button" value="create chart" class="tfbutton2" id="clickButton">
+                <!--<textarea></textarea>-->
+		    <!--</form>-->
+		<div class="tfclear"></div>
         <style>
 
 body {
@@ -153,211 +150,247 @@ label {
         <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
         <script>
 
-console.log(window.location.search.substr(1).toLowerCase().match(/[a-zA-Z]/g));
+document.getElementById('clickButton').onclick = function() {
+//    var lol = document.getElementById('tfq').value;
+//    console.log(lol);
+
+    d3.select("#barchart").remove();
+//console.log(window.location.search.substr(1).toLowerCase().match(/[a-zA-Z]/g));
 
 //Loop through the text and store the count for all letters ([A-z]) in a JavaScript object (Links to an external site.)
 // (similar to a dictionary in Python). Use the letter as the key and the count as the value. Do not store spaces,
 // punctuation, or special characters.
-var query = window.location.search.substr(1).toLowerCase().match(/[a-zA-Z]/g);
-var words = {};
-var wordList = [];
+//var query = window.location.search.substr(1).toLowerCase().match(/[a-zA-Z]/g);
+    var query = document.getElementById('tfq').value.toLowerCase().match(/[a-zA-Z]/g);
+    var words = {};
+    var wordList = [];
 
-for ( var i =0 ; i < query.length; i++)
-{
-  if (query[i] in words){
-  words[query[i]]++;}
-  else{
-  words[query[i]] = 1;
-  }
-}
+    for (var i = 0; i < query.length; i++) {
+        if (query[i] in words) {
+            words[query[i]]++;
+        }
+        else {
+            words[query[i]] = 1;
+        }
+    }
 
-var wordKey = Object.keys(words)
-var wordsKeySort = Object.keys(words).sort();
-var wordsValue = Object.keys(words).map(function(k){ return words[k]});
+    var wordKey = Object.keys(words);
+    var wordsKeySort = Object.keys(words).sort();
+    var wordsValue = Object.keys(words).map(function (k) {
+        return words[k]
+    });
 
-for ( var j =0 ; j < wordsKeySort.length; j++){
+    for (var j = 0; j < wordsKeySort.length; j++) {
 
-  temp = {};
-  temp['letter'] = wordsKeySort[j];
-  temp['frequency'] = words[wordsKeySort[j]];
-  wordList.push(temp);
-}
-console.log(wordList);
+        temp = {};
+        temp['letter'] = wordsKeySort[j];
+        temp['frequency'] = words[wordsKeySort[j]];
+        wordList.push(temp);
+    }
+    console.log(wordList);
 
 // data1=d3.entries(wordList)
 
 // [someSelection]
 // .data(data).enter() [etc]
 
-var margin = {top: 40, right: 20, bottom: 30, left: 40},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    var margin = {top: 40, right: 20, bottom: 30, left: 40},
+            width = 960 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
 
 // var formatPercent = d3.format("");
 
-var x = d3.scale.ordinal()
-    // .rangeRoundBands([0, width], .1, 1)
-    // .rangeRoundBands([0, width], .1,.2)
-    .rangeBands([0, width], .1,.5);
+    var x = d3.scale.ordinal()
+        // .rangeRoundBands([0, width], .1, 1)
+        // .rangeRoundBands([0, width], .1,.2)
+            .rangeBands([0, width], .1, .5);
     // .domain(wordList.map(function(d){return d.letter;}));
 
-var y = d3.scale.linear()
-    .range([height, 0])
+    var y = d3.scale.linear()
+            .range([height, 0])
     // .domain([0, d3.max(wordList, function(d){return d.frequency;})]);
 
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom");
+    var xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("bottom");
 
-var yAxis = d3.svg.axis()
-    .scale(y)
-    .orient("left")
-    .ticks(d3.max(wordList,function(d){return d.frequency}))
+    var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left")
+            .ticks(d3.max(wordList, function (d) {
+                return d.frequency
+            }))
     // .tickFormat(formatPercent);
 
-var tip = d3.tip()
-  .attr('class', 'd3-tip')
-  .offset([-10, 0])
-  .html(function(d) {
-    return "<strong>Frequency:</strong> <span style='color:red'>" + d.frequency + "</span>";
-  });
+    var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-10, 0])
+            .html(function (d) {
+                return "<strong>Frequency:</strong> <span style='color:red'>" + d.frequency + "</span>";
+            });
 
-function vowelTest(s) {
-  return (/^[aeiou]$/i).test(s);
-}
+    function vowelTest(s) {
+        return (/^[aeiou]$/i).test(s);
+    }
 
-var svg = d3.select("#chart").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    var svg = d3.select("#chart").append("svg").attr("id","barchart")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 //d3.select('#chart').append('label').append()
-  //svg.call(tip);
+    //svg.call(tip);
 
-  // wordList.forEach(function(d) {
-  //   d.frequency = +d.frequency;
-  // });
+    // wordList.forEach(function(d) {
+    //   d.frequency = +d.frequency;
+    // });
 
-x.domain(wordList.map(function(d) { return d.letter; }));
-y.domain([0, d3.max(wordList, function(d) { return d.frequency; })]);
+    x.domain(wordList.map(function (d) {
+        return d.letter;
+    }));
+    y.domain([0, d3.max(wordList, function (d) {
+        return d.frequency;
+    })]);
 
-var xGuide = svg.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
-    .call(xAxis);
+    var xGuide = svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
 
 
+    svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis)
+            .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", ".71em")
+            .style("text-anchor", "end")
+            .text("Count");
 
-svg.append("g")
-    .attr("class", "y axis")
-    .call(yAxis)
-  .append("text")
-    .attr("transform", "rotate(-90)")
-    .attr("y", 6)
-    .attr("dy", ".71em")
-    .style("text-anchor", "end")
-    .text("Count");
-
-svg.selectAll(".bar")
-    .data(wordList)
-  .enter().append("rect")
-    .attr("class", "bar")
-    .attr("x", function(d) { return x(d.letter); })
-    .attr("width", x.rangeBand())
-    // .attr("y", function(d) { return y(d.frequency); })
+    svg.selectAll(".bar")
+            .data(wordList)
+            .enter().append("rect")
+            .attr("class", "bar")
+            .attr("x", function (d) {
+                return x(d.letter);
+            })
+            .attr("width", x.rangeBand())
+        // .attr("y", function(d) { return y(d.frequency); })
 //    .attr("y", height + margin.top )
-    .attr("y", height )
-    // .attr("height", function(d) { return height - y(d.frequency); })
-    .attr("height", 0)
-    // .on('mouseover', tip.show)
-    .on('mouseover', function(d){
-      d3.select(this).style('fill',"#FD8D3C");
+            .attr("y", height)
+        // .attr("height", function(d) { return height - y(d.frequency); })
+            .attr("height", 0)
+        // .on('mouseover', tip.show)
+            .on('mouseover', function (d) {
+                d3.select(this).style('fill', "#FD8D3C");
 
-      var xPosition = parseFloat(d3.select(this).attr("x")) + x.rangeBand() / 2 + margin.left;
-      var yPosition = parseFloat(d3.select(this).attr("y")) + margin.top - 5;
+                var xPosition = parseFloat(d3.select(this).attr("x")) + x.rangeBand() / 2 + margin.left;
+                var yPosition = parseFloat(d3.select(this).attr("y")) + margin.top - 5;
 
-      d3.select('svg').append("text")
-      .attr("id", "tooltip")
-      .attr("x", xPosition)
-      .attr("y", yPosition)
-      .attr("text-anchor", "middle")
-      .attr("font-family", "sans-serif")
-      .attr("font-size", "18px")
-      .attr("font-weight", "bold")
-      .attr("fill", "black")
-      .text("Count: " + d.frequency);
+                d3.select('svg').append("text")
+                        .attr("id", "tooltip")
+                        .attr("x", xPosition)
+                        .attr("y", yPosition)
+                        .attr("text-anchor", "middle")
+                        .attr("font-family", "sans-serif")
+                        .attr("font-size", "18px")
+                        .attr("font-weight", "bold")
+                        .attr("fill", "black")
+                        .text("Count: " + d.frequency);
 
-    })
-    // .on('mouseout', tip.hide)
-    .on('mouseout', function(d){
-      d3.select(this).style('fill', function(d){
-        if (vowelTest(d.letter)){return "#2171B5";}
-        else{return "#92C5DE";}});
-      d3.select("#tooltip").remove(); // end of style
-        })
-    .style('fill',function(d){
+            })
+        // .on('mouseout', tip.hide)
+            .on('mouseout', function (d) {
+                d3.select(this).style('fill', function (d) {
+                    if (vowelTest(d.letter)) {
+                        return "#2171B5";
+                    }
+                    else {
+                        return "#92C5DE";
+                    }
+                });
+                d3.select("#tooltip").remove(); // end of style
+            })
+            .style('fill', function (d) {
 
-      if (vowelTest(d.letter)){
+                if (vowelTest(d.letter)) {
 
-        return "#2171B5";
-      }
-      else{
-        return "#92C5DE";
-      }
-    })
+                    return "#2171B5";
+                }
+                else {
+                    return "#92C5DE";
+                }
+            })
     ;
 
-xGuide.selectAll('line').style({"fill":"none","stroke":"none"});
-xGuide.selectAll('path').style({"fill":"none","stroke":"none"});
+    xGuide.selectAll('line').style({"fill": "none", "stroke": "none"});
+    xGuide.selectAll('path').style({"fill": "none", "stroke": "none"});
 
-d3.selectAll('.bar').data(wordList)
-  .transition().duration(800).delay(function(d,i){return 400*i;})
-  .attr("height",function(d){return(  height - y(d.frequency));})
-  .attr("y",function(d){return (y(d.frequency))});
+    d3.selectAll('.bar').data(wordList)
+            .transition().duration(800).delay(function (d, i) {
+                return 400 * i;
+            })
+            .attr("height", function (d) {
+                return (  height - y(d.frequency));
+            })
+            .attr("y", function (d) {
+                return (y(d.frequency))
+            });
 //        .ease('bounce');
 
-d3.select("input").on("change", change);
+    d3.select("input").on("change", change);
 
-d3.select('#chart').append('label').text('sort value');
+//d3.select('#chart').append('label').text('sort value');
 
-var sortTimeout = setTimeout(function() {
-  d3.select("input").property("checked", true).each(change);
-}, 11000);
+    var sortTimeout = setTimeout(function () {
+        d3.select("input").property("checked", true).each(change);
+    }, 11000);
 
-function change() {
-  clearTimeout(sortTimeout);
+    function change() {
+        clearTimeout(sortTimeout);
 
-  // Copy-on-write since tweens are evaluated after a delay.
-  var x0 = x.domain(wordList.sort(this.checked
-      ? function(a, b) { return b.frequency - a.frequency; }
-      : function(a, b) { return d3.ascending(a.letter, b.letter); })
-      .map(function(d) { return d.letter; }))
-      .copy();
+        // Copy-on-write since tweens are evaluated after a delay.
+        var x0 = x.domain(wordList.sort(this.checked
+                ? function (a, b) {
+            return b.frequency - a.frequency;
+        }
+                : function (a, b) {
+            return d3.ascending(a.letter, b.letter);
+        })
+                .map(function (d) {
+                    return d.letter;
+                }))
+                .copy();
 
-  svg.selectAll(".bar")
-      .sort(function(a, b) { return x0(a.letter) - x0(b.letter); });
+        svg.selectAll(".bar")
+                .sort(function (a, b) {
+                    return x0(a.letter) - x0(b.letter);
+                });
 
-  var transition = svg.transition().duration(750),
-      delay = function(d, i) { return i * 50; };
+        var transition = svg.transition().duration(750),
+                delay = function (d, i) {
+                    return i * 50;
+                };
 
-  transition.selectAll(".bar")
-      .delay(delay)
-      .attr("x", function(d) { return x0(d.letter); });
+        transition.selectAll(".bar")
+                .delay(delay)
+                .attr("x", function (d) {
+                    return x0(d.letter);
+                });
 
-  transition.select(".x.axis")
-      .call(xAxis)
-    .selectAll("g")
-      .delay(delay);
-}
+        transition.select(".x.axis")
+                .call(xAxis)
+                .selectAll("g")
+                .delay(delay);
+    }
+
 // });
 
+}
 </script>
-        <div id="tfheader">
-		    <form id="tfnewsearch" method="get" action="http://www.google.com">
-		        <input type="text" id="tfq" class="tftextinput2" name="q" size="21" maxlength="120" value="Search our website"><input type="submit" value=">" class="tfbutton2">
-		    </form>
-		<div class="tfclear"></div>
+
         <section>
             <h3>Function List</h3>
             <h4>C level</h4>
@@ -380,7 +413,10 @@ function change() {
                 <li>Tooltip shows the exact value of bar when hovering over it</li>
             </ul>
             <h4>A level</h4>
+            <ul>
                 <li>At the beginning of the plot, smoothly grow each bar from the bottom up to its value</li>
+            </ul>
+
         </section>
 
         <!--<script src = "homework1/script.js"></script>-->
