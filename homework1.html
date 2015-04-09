@@ -65,7 +65,10 @@
 </style>
 <div class = "container">
 		<h2>Homework1</h2>
-		<div id="chart">
+		<!--<div id="chart" width="1000" height="550">-->
+        <svg id="chart" width="1200" height="550">
+            <!--<rect id="chart" transform="translate(50,50)" stroke="black" width="1000" height="600" style="fill:none;stroke:black;fill-opacity:0"></rect>-->
+        </svg>
             <label><input type="checkbox"> Sort values</label>
         <!--<label><input type="checkbox"> Sort values</label>-->
 
@@ -217,7 +220,7 @@ var tip = d3.tip()
   .offset([-10, 0])
   .html(function(d) {
     return "<strong>Frequency:</strong> <span style='color:red'>" + d.frequency + "</span>";
-  })
+  });
 
 function vowelTest(s) {
   return (/^[aeiou]$/i).test(s);
@@ -263,7 +266,8 @@ svg.selectAll(".bar")
     .attr("x", function(d) { return x(d.letter); })
     .attr("width", x.rangeBand())
     // .attr("y", function(d) { return y(d.frequency); })
-    .attr("y", height + margin.top )
+//    .attr("y", height + margin.top )
+    .attr("y", height )
     // .attr("height", function(d) { return height - y(d.frequency); })
     .attr("height", 0)
     // .on('mouseover', tip.show)
@@ -282,7 +286,7 @@ svg.selectAll(".bar")
       .attr("font-size", "18px")
       .attr("font-weight", "bold")
       .attr("fill", "black")
-      .text(d.frequency);
+      .text("Count: " + d.frequency);
 
     })
     // .on('mouseout', tip.hide)
@@ -308,15 +312,18 @@ xGuide.selectAll('line').style({"fill":"none","stroke":"none"});
 xGuide.selectAll('path').style({"fill":"none","stroke":"none"});
 
 d3.selectAll('.bar').data(wordList)
-  .transition().duration(600).delay(function(d,i){return 100*i;})
+  .transition().duration(800).delay(function(d,i){return 400*i;})
   .attr("height",function(d){return(  height - y(d.frequency));})
-  .attr("y",function(d){return (y(d.frequency))}).ease('bounce');
+  .attr("y",function(d){return (y(d.frequency))});
+//        .ease('bounce');
 
 d3.select("input").on("change", change);
 
+d3.select('#chart').append('label').text('sort value');
+
 var sortTimeout = setTimeout(function() {
   d3.select("input").property("checked", true).each(change);
-}, 3000);
+}, 11000);
 
 function change() {
   clearTimeout(sortTimeout);
@@ -351,6 +358,30 @@ function change() {
 		        <input type="text" id="tfq" class="tftextinput2" name="q" size="21" maxlength="120" value="Search our website"><input type="submit" value=">" class="tfbutton2">
 		    </form>
 		<div class="tfclear"></div>
+        <section>
+            <h3>Function List</h3>
+            <h4>C level</h4>
+            <ul>
+                <li>Extract alphabets from the query string in URI and turn them into lower case</li>
+                <li>For each alphabet, create an object to store its "letter" and "count"</li>
+                <li>Log the decoded input text and counts to the console</li>
+                <li>Display a basic bar chart</li>
+            </ul>
+            <h4>C level+</h4>
+            <ul>
+                <li>Format the y axis to display only the integer for each tick since "count" is integer</li>
+                <li>Make the path and line of x axis invisible to audience</li>
+                <li>Modify the bar colors for vowel (blue) and consonants (light blue)</li>
+                <li>Sort the letters by their count and alphabet </li>
+            </ul>
+            <h4>B level</h4>
+            <ul>
+                <li>A check box that allows sorting alphabetically or by value</li>
+                <li>Tooltip shows the exact value of bar when hovering over it</li>
+            </ul>
+            <h4>A level</h4>
+                <li>At the beginning of the plot, smoothly grow each bar from the bottom up to its value</li>
+        </section>
 
         <!--<script src = "homework1/script.js"></script>-->
 
