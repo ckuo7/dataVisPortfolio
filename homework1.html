@@ -78,7 +78,7 @@
 		    <!--<form id="tfnewsearch" method="get" action="http://www.google.com">-->
             <!--<form id="tfnewsearch">-->
 		        <!--<input type="text" id="tfq" class="tftextinput2" name="q" size="80" maxlength="500" value="Type A String Here To Create A Bar Chart"><input type="submit" value="create chart" class="tfbutton2" onclick="location.href+'?'+document.getElementById('tfq').value">-->
-                <input type="text" id="tfq" class="tftextinput2" name="q" size="80" maxlength="500" value="Type A String Here To Create A Bar Chart"><input type="button" value="create chart" class="tfbutton2" id="clickButton">
+                <input type="text" id="tfq" class="tftextinput2" name="q" size="80" maxlength="500" value="Type A String Here and click 'create chart'"><input type="button" value="create chart" class="tfbutton2" id="clickButton">
                 <!--<textarea></textarea>-->
 		    <!--</form>-->
 		<div class="tfclear"></div>
@@ -194,10 +194,7 @@ document.getElementById('clickButton').onclick = function() {
     }
     console.log(wordList);
 
-// data1=d3.entries(wordList)
 
-// [someSelection]
-// .data(data).enter() [etc]
 
     var margin = {top: 40, right: 20, bottom: 30, left: 40},
             width = 960 - margin.left - margin.right,
@@ -224,15 +221,9 @@ document.getElementById('clickButton').onclick = function() {
             .orient("left")
             .ticks(d3.max(wordList, function (d) {
                 return d.frequency
-            }))
+            }));
     // .tickFormat(formatPercent);
 
-    var tip = d3.tip()
-            .attr('class', 'd3-tip')
-            .offset([-10, 0])
-            .html(function (d) {
-                return "<strong>Frequency:</strong> <span style='color:red'>" + d.frequency + "</span>";
-            });
 
     function vowelTest(s) {
         return (/^[aeiou]$/i).test(s);
@@ -244,12 +235,7 @@ document.getElementById('clickButton').onclick = function() {
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-//d3.select('#chart').append('label').append()
-    //svg.call(tip);
 
-    // wordList.forEach(function(d) {
-    //   d.frequency = +d.frequency;
-    // });
 
     x.domain(wordList.map(function (d) {
         return d.letter;
@@ -260,14 +246,17 @@ document.getElementById('clickButton').onclick = function() {
 
     var xGuide = svg.append("g")
             .attr("class", "x axis")
+            .attr("id","axis")
             .attr("transform", "translate(0," + height + ")")
             .call(xAxis);
 
 
-    svg.append("g")
+    var yGuide = svg.append("g")
             .attr("class", "y axis")
-            .call(yAxis)
-            .append("text")
+            .attr("id","axis")
+            .call(yAxis);
+
+        yGuide.append("text")
             .attr("transform", "rotate(-90)")
             .attr("y", 6)
             .attr("dy", ".71em")
@@ -277,7 +266,7 @@ document.getElementById('clickButton').onclick = function() {
     svg.selectAll(".bar")
             .data(wordList)
             .enter().append("rect")
-            .attr("class", "bar")
+            .attr("class", "bar").attr('id',"axis")
             .attr("x", function (d) {
                 return x(d.letter);
             })
@@ -333,6 +322,9 @@ document.getElementById('clickButton').onclick = function() {
     xGuide.selectAll('line').style({"fill": "none", "stroke": "none"});
     xGuide.selectAll('path').style({"fill": "none", "stroke": "none"});
 
+    yGuide.selectAll('line').attr('id','axis');
+    yGuide.selectAll('path').attr('id','axis');
+
     d3.selectAll('.bar').data(wordList)
             .transition().duration(400).delay(function (d, i) {
                 return 200 * i;
@@ -347,7 +339,7 @@ document.getElementById('clickButton').onclick = function() {
 
     d3.select("input").on("change", change);
 
-//d3.select('#chart').append('label').text('sort value');
+
 
     var sortTimeout = setTimeout(function () {
         d3.select("input").property("checked", true).each(change);
@@ -400,23 +392,23 @@ document.getElementById('clickButton').onclick = function() {
             <h3>Function List</h3>
             <h4>C level</h4>
             <ul>
-                <li>Instead of extracting alphabets from the query string in URI, read the string in the text box and turn them into lower case when the button is clicked</li>
-                <li>For each alphabet, create an object to store its "letter" and "count"</li>
+                <li>Instead of extracting letters from the query string in URI, my program reads the string from text box and turns them into lower case when the button is clicked</li>
+                <li>Create an JavaScript object to store "count" for each letter</li>
                 <li>Log the decoded input text and counts to the console</li>
                 <li>Display a basic bar chart</li>
             </ul>
             <h4>C level+</h4>
             <ul>
-                <li>Format the y axis to display only the integer for each tick since "count" is integer</li>
+                <li>Format the y axis to display only integer for each tick since "count" is an integer variable</li>
                 <li>Make the path and line of x axis invisible to audience</li>
-                <li>Modify the bar colors for vowel (blue) and consonants (light blue)</li>
-                <li>Sort the letters by their count and alphabet </li>
+                <li>Different color for vowel (blue) and consonants (light blue)</li>
+                <li>Sort letters by their count and alphabet </li>
             </ul>
             <h4>B level</h4>
             <ul>
                 <li>A check box that allows sorting alphabetically or by value</li>
-                <li>Tooltip shows the exact value of bar when hovering over it</li>
-                <li>Add a search box at the bottom of the chart and show the search text and word count in console instead of URL</li>
+                <li>A tooltip that shows the exact value of bar when mouse is hover it</li>
+                <li>Add a search box at the bottom of the chart and show search text and word count in console instead of URL</li>
             </ul>
             <h4>A level</h4>
             <ul>
@@ -424,18 +416,22 @@ document.getElementById('clickButton').onclick = function() {
                 <li>Dynamically update the bar chart corresponding the search text</li>
             </ul>
             <h4>Design Decision</h4>
-            <ul>
-                <li><h5>Color</h5> is being used as a preattentive attribute to tell the Light blue is applied to all the consonants to distinguish from the vowels</li>
-            </ul>
+
             <p>
-                Since there are only two categories in alphabets - vowel and consonant, I use the regular blue for vowels and light blue for consonant <br>
-                because they sound lighter than the vowel. Besides, when hovering, I changed the color to highlight the selected bar and attract more  <br>
-                attention. <br>
-                format ( y, x axis )
-
-
-
-
+                To play around with this bar chart, please type whatever string you like in the text box and click the "create chart" button.
+                </p>
+            <p style="text-indent: 1em;">
+                I used the intensity of blue color as a preattentive attribute to distinguish vowels and consonants in the query string. This can <br>
+                help audience to better find the elements they want to focus on. Also, the color will transit to orange when we hover the bar, which<br>
+                helps audience to focus.
+            </p>
+            <p style="text-indent: 1em;">
+                To easily measure the actual number of bars (especially for those that are far from y axis, I create a tooltip to display the count <br>
+                of each letter at the top of the bar when we hover it.
+            <p>
+            <p style="text-indent: 1em;">
+                The "Sort values" check box is an interactive switch that helps we view the data in different perspectives. If it's checked, we<br>
+                sort the bars by the values of letters. If it is not checked, we sort the bars alphabetically.
             </p>
 
         </section>
