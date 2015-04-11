@@ -62,11 +62,15 @@
   text-align: left;
   padding: 50px 20px 10px 40px;
 }
+    .tftextinput2{
+        paddingLeft:40px;
+    }
+
 </style>
 <div class = "container">
 		<h2>Homework1</h2>
 		<!--<div id="chart" width="1000" height="550">-->
-        <svg id="chart" width="1200" height="550">
+        <svg id="chart" width="1200" height="510">
             <!--<rect id="chart" transform="translate(50,50)" stroke="black" width="1000" height="600" style="fill:none;stroke:black;fill-opacity:0"></rect>-->
         </svg>
             <label><input type="checkbox"> Sort values</label>
@@ -162,6 +166,7 @@ document.getElementById('clickButton').onclick = function() {
 // punctuation, or special characters.
 //var query = window.location.search.substr(1).toLowerCase().match(/[a-zA-Z]/g);
     var query = document.getElementById('tfq').value.toLowerCase().match(/[a-zA-Z]/g);
+    console.log(query);
     var words = {};
     var wordList = [];
 
@@ -329,8 +334,8 @@ document.getElementById('clickButton').onclick = function() {
     xGuide.selectAll('path').style({"fill": "none", "stroke": "none"});
 
     d3.selectAll('.bar').data(wordList)
-            .transition().duration(800).delay(function (d, i) {
-                return 400 * i;
+            .transition().duration(400).delay(function (d, i) {
+                return 200 * i;
             })
             .attr("height", function (d) {
                 return (  height - y(d.frequency));
@@ -346,7 +351,7 @@ document.getElementById('clickButton').onclick = function() {
 
     var sortTimeout = setTimeout(function () {
         d3.select("input").property("checked", true).each(change);
-    }, 11000);
+    }, 200*wordList.length + 400);
 
     function change() {
         clearTimeout(sortTimeout);
@@ -395,7 +400,7 @@ document.getElementById('clickButton').onclick = function() {
             <h3>Function List</h3>
             <h4>C level</h4>
             <ul>
-                <li>Extract alphabets from the query string in URI and turn them into lower case</li>
+                <li>Instead of extracting alphabets from the query string in URI, read the string in the text box and turn them into lower case when the button is clicked</li>
                 <li>For each alphabet, create an object to store its "letter" and "count"</li>
                 <li>Log the decoded input text and counts to the console</li>
                 <li>Display a basic bar chart</li>
@@ -411,11 +416,27 @@ document.getElementById('clickButton').onclick = function() {
             <ul>
                 <li>A check box that allows sorting alphabetically or by value</li>
                 <li>Tooltip shows the exact value of bar when hovering over it</li>
+                <li>Add a search box at the bottom of the chart and show the search text and word count in console instead of URL</li>
             </ul>
             <h4>A level</h4>
             <ul>
                 <li>At the beginning of the plot, smoothly grow each bar from the bottom up to its value</li>
+                <li>Dynamically update the bar chart corresponding the search text</li>
             </ul>
+            <h4>Design Decision</h4>
+            <ul>
+                <li><h5>Color</h5> is being used as a preattentive attribute to tell the Light blue is applied to all the consonants to distinguish from the vowels</li>
+            </ul>
+            <p>
+                Since there are only two categories in alphabets - vowel and consonant, I use the regular blue for vowels and light blue for consonant <br>
+                because they sound lighter than the vowel. Besides, when hovering, I changed the color to highlight the selected bar and attract more  <br>
+                attention. <br>
+                format ( y, x axis )
+
+
+
+
+            </p>
 
         </section>
 
