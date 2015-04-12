@@ -59,7 +59,7 @@
 		<ul>
             <li><h4>Bubble Chart</h4></li>
         </ul>
-        <div id="chart" width="1000" height="600">
+        <div id="chart" width="1000" height="640">
             <script>
 // ploting variable
 var margin = {"left":80,"top":40,"right":30,"bottom":30};
@@ -114,7 +114,7 @@ d3.csv("homework2/stateX77.csv",function(d){
     var min2 = d3.min(rows, function(d){ return d.lifeExp;});
     var max2 = d3.max(rows, function(d){ return d.lifeExp;});
 
-    var percent = 0.04;
+    var percent = 0.06;
     xScale.domain([ min1 - percent * (max1 - min1), max1 + percent * (max1 - min1)]);
     yScale.domain([ min2 - percent * (max2 - min2) , max2 + percent * (max2 - min2)]);
 
@@ -124,8 +124,29 @@ d3.csv("homework2/stateX77.csv",function(d){
         .attr("cy", function(d){return height - yScale(d.lifeExp);})
         .attr("r",  function(d){return rScale(Math.sqrt(d.Income));})
         .attr("transform", "translate(" + margin.left + ",0)")
-        .style('fill','blue').style("fill-opacity",0.6)
-            .on("mouseover");
+        .style('fill','blue').style("fill-opacity",0.4)
+        .on("mouseover", function (d) {
+
+                d3.select(this).style('fill', "#FD8D3C").style('fill-opacity',0.9);
+
+                var xPosition = parseFloat(d3.select(this).attr("cx")) + margin.left ;
+                var yPosition = parseFloat(d3.select(this).attr("cy")) - 10;
+
+                d3.select('.frame').append("text").attr("transform","translate(" + margin.left + ",0")
+                        .attr("id", "tooltip")
+                        .attr("x", xPosition)
+                        .attr("y", yPosition)
+                        .attr("text-anchor", "middle")
+                        .attr("font-family", "sans-serif")
+                        .attr("font-size", "14px")
+                        .attr("font-weight", "bold")
+                        .attr("fill", "black")
+                        .text(d.stateAbb + ",( " +d.hsGrad + " , " + d.lifeExp + " )"); })
+            .on("mouseout", function(d){
+
+                d3.select(this).style("fill","blue").style("fill-opacity",0.4);
+                d3.select("#tooltip").remove(); // end of style
+            });
 
 
     var xGuide = svg1.append("g").attr("class", "Axis").attr("id","xAxis").attr("transform", "translate(" + margin.left + "," + height + ")").call(xAxis);
