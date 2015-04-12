@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>MSAN 622 Homework2</title>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+
+<style type="text/css">
+    body {
+        padding-top: 50px;
+        padding-bottom: 20px;
+    }
+</style>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/d3.min.js"></script>
+</head>
+
+
+<body>
+<!-- Fixed Navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle Navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/index.html">MSAN 622</a>
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="#homework">Homework</a></li>
+                <li><a href="#project">Project</a></li>
+                <li><a href="#participation">Participation</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class = "container">
+		<h2>Homework2</h2>
+		<ul>
+            <li><h4>Bubble Chart</h4></li>
+        </ul>
+        <div id="chart" width="1000" height="600">
+            <script>
+// ploting variable
+var margin = {"left":80,"top":40,"right":30,"bottom":30};
+var width = 800;
+var height = 500;
+var frameWidth = width + margin.left + margin.right;
+var frameHeight = height + margin.top + margin.bottom;
+//data
+
+//console.log("after data");
+//console.log(data);
+//plot element
+var radius = 20;
+var svg1 = d3.select("#chart").append("svg").attr("width", frameWidth).attr("height",frameHeight).attr('class','frame'); //create frame
+//var plot1 = svg1.append("svg").attr('width',width).attr('height',height).attr("transform", "translate(" + margin.left + "," + margin.top + ")").attr('class','plot');
+
+
+
+var xScale = d3.scale.linear().range([0,width]);
+var yScale = d3.scale.linear().range([height,0]);
+var rScale = d3.scale.linear().range([0,radius]);
+
+var xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+var yAxis = d3.svg.axis().scale(yScale).orient("left");
+
+
+//console.log("fefef"data);
+d3.csv("homework2/stateX77.csv",function(d){
+    return {
+        'stateName' : d.stateName,
+        'stateAbb' : d.stateAbb,
+        'population' : +d.population,
+        'Income' : +d.Income,
+        'illiteracy' : +d.illiteracy,
+        'lifeExp' : +d.lifeExp,
+        'murder' : +d.murder,
+        'hsGrad' : +d.hsGrad,
+        'frost' : +d.frost,
+        'area' : +d.area,
+        'stateRegion' : d.stateRegion,
+        'stateDivision' : d.stateDivision };
+
+        },function(error, rows){
+          // code to generate chart goes here
+
+            console.log( rows );
+
+    var min1 = d3.min(rows, function(d){ return d.hsGrad;});
+    var max1 = d3.max(rows, function(d){ return d.hsGrad;});
+
+    console.log(min1);
+    var min2 = d3.min(rows, function(d){ return d.lifeExp;});
+    var max2 = d3.max(rows, function(d){ return d.lifeExp;});
+
+    var percent = 0.04;
+    xScale.domain([ min1 - percent * (max1 - min1), max1 + percent * (max1 - min1)]);
+    yScale.domain([ min2 - percent * (max2 - min2) , max2 + percent * (max2 - min2)]);
+
+    rScale.domain([d3.min(rows, function(d){return Math.sqrt(d.Income);}),d3.max(rows, function(d){return Math.sqrt(d.Income);})]);
+    var circles = svg1.selectAll("circle").data(rows).enter().append("circle")
+        .attr("cx", function(d){return xScale(d.hsGrad);})
+        .attr("cy", function(d){return height - yScale(d.lifeExp);})
+        .attr("r",  function(d){return rScale(Math.sqrt(d.Income));})
+        .attr("transform", "translate(" + margin.left + ",0)")
+        .style('fill','blue').style("fill-opacity",0.6)
+            .on("mouseover");
+
+
+    var xGuide = svg1.append("g").attr("class", "Axis").attr("id","xAxis").attr("transform", "translate(" + margin.left + "," + height + ")").call(xAxis);
+    var yGuide = svg1.append("g").attr("class", "Axis").attr("id","yAxis").attr("transform", "translate(" + margin.left + ",0)").call(yAxis);
+
+    yGuide.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", -70).attr("x",-height/2 + 80)
+            .attr("dy", ".71em")
+            .style("text-anchor", "end")
+            .text("Life Expectency (year)");
+
+    xGuide.append("text").attr("x", width/2 + 130).attr("y", 50)
+            .style("text-anchor", "end")
+            .text("High School Graduates \n(percentage)");
+
+
+    xGuide.selectAll('line').style('fill',"none").style("stroke","black");
+    xGuide.selectAll('path').style('fill',"none").style("stroke","black");
+    yGuide.selectAll('line').style("fill","none").style("stroke","black");
+    yGuide.selectAll('path').style("fill","none").style("stroke","black");
+
+
+});
+            </script>
+
+        </div></div>
+
+
+</body>
+</html>

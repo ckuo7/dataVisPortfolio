@@ -209,7 +209,7 @@ document.getElementById('clickButton').onclick = function() {
     // .domain(wordList.map(function(d){return d.letter;}));
 
     var y = d3.scale.linear()
-            .range([height, 0])
+            .range([height, 0]);
     // .domain([0, d3.max(wordList, function(d){return d.frequency;})]);
 
     var xAxis = d3.svg.axis()
