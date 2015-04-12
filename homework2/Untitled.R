@@ -14,9 +14,24 @@ df <- data.frame(
 )
 
 names(df) <- c('stateName','stateAbb','population','Income','illiteracy','lifeExp','murder','hsGrad','frost','area','stateRegion','stateDivision')
+df['illiteracyPopulation'] <- df['population'] * df['illiteracy']
+summary(df)
+
+df['illiteracyCut'] <- cut(df$illiteracy, breaks = c(0,0.625,0.950,1.575,3), right= F)
+df['count'] <- 1
+df2 <- aggregate( df$count, by = list(stateRegion = df$stateRegion ,illiteracyRange = df$illiteracyCut), sum)
+
+
+
 
 write.csv(
   df, 
   file = "stateX77.csv", 
+  row.names = FALSE
+)
+
+write.csv(
+  df2, 
+  file = "stateX77aggregate.csv", 
   row.names = FALSE
 )

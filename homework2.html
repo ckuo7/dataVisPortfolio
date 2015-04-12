@@ -132,7 +132,7 @@ d3.csv("homework2/stateX77.csv",function(d){
                 var xPosition = parseFloat(d3.select(this).attr("cx")) + margin.left ;
                 var yPosition = parseFloat(d3.select(this).attr("cy")) - 10;
 
-                d3.select('.frame').append("text").attr("transform","translate(" + margin.left + ",0")
+                d3.select('.frame').append("text").attr("transform","translate(" + margin.left + ",0)")
                         .attr("id", "tooltip")
                         .attr("x", xPosition)
                         .attr("y", yPosition)
@@ -172,8 +172,96 @@ d3.csv("homework2/stateX77.csv",function(d){
 
 });
             </script>
+        </div>
+        <ul>
+            <li><h4>Heatmap</h4></li>
+        </ul>
+        <div id="chart1" width="1200" height="640">
+            <script>
 
-        </div></div>
+
+var margin2 = {"left":150,"top":40,"right":120,"bottom":30};
+var frameWidth2 = width + margin2.left + margin2.right;
+var frameHeight2 = height + margin2.top + margin2.bottom;
+
+var svg2 = d3.select("#chart1").append("svg").attr("width", frameWidth2).attr("height",frameHeight2).attr('class','frame'); //create frame
+
+var xScale2 = d3.scale.ordinal().rangeBands([0,width],0,0);
+var yScale2 = d3.scale.ordinal().rangeBands([height,0],0,0);
+var zScale2 = d3.scale.linear().range(["white","steelblue"]);
+
+var xAxis2 = d3.svg.axis().scale(xScale2).orient("bottom");
+var yAxis2 = d3.svg.axis().scale(yScale2).orient("left");
+
+
+
+
+d3.csv("homework2/stateX77aggregate.csv",function(d){
+    return {
+
+        'stateRegion' : d.stateRegion,
+        'illiteracyRange': d.illiteracyRange,
+        'count' : d.x};
+
+        },function(error, rows) {
+    // code to generate chart goes here
+
+    xScale2.domain(rows.map(function(d){ return d.illiteracyRange ; }));
+    yScale2.domain(rows.map(function(d){ return d.stateRegion ; }));
+//    zScale2.domain( d3.extent(function(d){ return d.count; }));
+    zScale2.domain( [0, d3.max(rows, function(d){ return d.count; })]);
+
+    var xGuide2 = svg2.append('g').attr("class","xAxis2").attr("transform","translate(" + margin2.left + "," + height + ")").call(xAxis2);
+    var yGuide2 = svg2.append('g').attr("class","yAxis2").attr("transform","translate(" + margin2.left + ",0)").call(yAxis2);
+
+    xGuide2.selectAll("line").style("fill","none");
+    xGuide2.select("path").style("fill","none").style("stroke","black");
+    yGuide2.selectAll("line").style("fill","none");
+    yGuide2.select("path").style("fill","none").style("stroke","black");
+    console.log(rows);
+
+
+    svg2.selectAll(".tile").data(rows).enter().append("rect").attr("class","tile").attr("transform","translate("+ margin2.left + ",0)")
+            .attr("x", function(d){return xScale2(d.illiteracyRange);})
+            .attr("y", function(d){ return yScale2(d.stateRegion);})
+            .style("fill", function(d){ return zScale2(d.count);})
+            .attr("width", xScale2.rangeBand())
+            .attr("height", yScale2.rangeBand());
+
+
+    var temp = rows.map(function(d){ return d.count});
+    var oTemp = {};
+    for ( var i = 0; i < temp.length ; i++ ){ oTemp[temp[i]] = 0;}
+    console.log(Object.keys(oTemp));
+
+    var legend = svg2.selectAll(".legend")
+      .data(Object.keys(oTemp).reverse())
+    .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d, i) { return "translate(" + (width + margin.left + 120) + "," + ( margin.top + 50 + i * 20) + ")"; });
+
+    legend.append("rect")
+      .attr("width", 20)
+      .attr("height", 20)
+      .style("fill", zScale2);
+
+    legend.append("text")
+      .attr("x", 26)
+      .attr("y", 10)
+      .attr("dy", ".35em")
+      .text(String);
+
+    svg2.append("text")
+            .attr("transform", "translate(" + (width + margin.left + 120) + "," + ( margin.top + 50) + ")")
+            .attr("x",-20)
+            .attr("y",-10)
+            .text("State Count");
+
+});
+
+            </script>
+        </div>
+</div>
 
 
 </body>
