@@ -261,6 +261,203 @@ d3.csv("homework2/stateX77aggregate.csv",function(d){
 
             </script>
         </div>
+
+    <ul>
+            <li><h4>Small Multiple</h4></li>
+        </ul>
+        <div id="chart2" width="2200" height="640">
+            <script>
+
+
+var margin3 = {"left":30,"top":200,"right":20,"bottom":50};
+var extra = 500;
+var frameWidth3 = width + margin3.left + margin3.right + extra;
+var frameHeight3 = height + margin3.top + margin3.bottom + extra;
+
+
+var submargin = {"left":30,"top":30,"right":30,"bottom":30};
+var subwidth = 240;
+var subheight = 260;
+var marginRatio = 1.2;
+
+var svg3 = d3.select("#chart2").append("svg").attr("width", frameWidth3).attr("height",frameHeight3).attr('class','frame'); //create frame
+
+var stateDivision = {"East South Central":0, "Pacific":1, "Mountain":2, "West South Central":3, "New England":4, "South Atlantic":5, "East North Central":6,"West North Central":7, "Middle Atlantic":8};
+
+var stateDivisionArray = [  {"division":"East South Central","state":[]},
+                            {"division":"Pacific","state":[]},
+                            {"division":"Mountain","state":[]},
+                            {"division":"West South Central","state":[]},
+                            {"division":"New England","state":[]},
+                            {"division":"South Atlantic","state":[]},
+                            {"division":"East North Central","state":[]},
+                            {"division":"West North Central","state":[]},
+                            {"division":"Middle Atlantic","state":[]}];
+var divisionCount = [1,2,3,4,5,6,7,8,9];
+
+//console.log("svgGroup");
+//console.log(svgGroup);
+
+var xScaleArray = [];
+var yScaleArray = [];
+
+
+
+//var svgGroup = svg3.selectAll(".subplot").data(divisionCount).enter().append('svg')
+//        .attr("transform","translate(" + margin3.left + "," + margin3.top + ")")
+//        .attr("width", subwidth + submargin.left + submargin.right)
+//        .attr("height", subheight + submargin.top + submargin.bottom)
+//        .attr("x", function(d,i){ return (i%3)*(subwidth + submargin.left + submargin.right)})
+//        .attr("y", function(d,i){ return parseInt(i/3)*(subheight + submargin.top + submargin.bottom)});
+d3.csv("homework2/stateX77.csv",function(d){
+
+    return {
+        'stateName' : d.stateName,
+        'stateAbb' : d.stateAbb,
+        'population' : +d.population,
+        'Income' : +d.Income,
+        'illiteracy' : +d.illiteracy,
+        'lifeExp' : +d.lifeExp,
+        'murder' : +d.murder,
+        'hsGrad' : +d.hsGrad,
+        'frost' : +d.frost,
+        'area' : +d.area,
+        'stateRegion' : d.stateRegion,
+        'stateDivision' : d.stateDivision };
+
+        },function(error, rows) {
+//    // code to generate chart goes here
+
+
+
+
+        rows.forEach(function(d){
+
+            stateDivisionArray[stateDivision[d.stateDivision]]["state"].push(d)
+
+        });
+
+        console.log(stateDivisionArray);
+
+//    for( var i = 0; i < stateDivisionArray.length ; i ++){
+
+        stateDivisionArray.forEach( function(d,i){
+
+            var xScale = d3.scale.ordinal().rangeBands([0,subwidth],0.1,0.2).domain( d["state"].map(function(d2){return d2.stateAbb;}));
+            var yScale = d3.scale.linear().range([subheight,0]).domain([0,d3.max(d["state"], function(d2){return d2.murder;})]);
+//            console.log(yScale(10));
+            var xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+            var yAxis = d3.svg.axis().scale(yScale).orient("left");
+//
+//        var xScale = d3.scale.ordinal().rangeBands([0,subwidth],0.1,0.1).domain( stateDivisionArray[i]["state"].map(function(d){return d.stateAbb}));
+//        var yScale = d3.scale.linear().range([subheight,0]).domain([0,d3.max(stateDivisionArray[i]["state"], function(d){return d.murder;})]);
+//        xScaleArray.push[x];
+//        yScaleArray.push[y];
+//console.log("d");
+//            console.log(d);
+
+        var svgTemp = svg3.append('svg')
+            .attr("transform","translate(" + margin3.left + "," + margin3.top + ")")
+            .attr("width", (subwidth + submargin.left + submargin.right)*marginRatio)
+            .attr("height", (subheight + submargin.top + submargin.bottom)*marginRatio)
+            .attr("x",  (i%3)*(subwidth + submargin.left + submargin.right)*marginRatio )
+            .attr("y", parseInt(i/3)*(subheight + submargin.top + submargin.bottom)*marginRatio );
+
+
+
+        svgTemp.selectAll('.bar').data(d["state"]).enter().append('rect').attr("transform","translate(" + submargin.left + "," + submargin.top +")")
+                .attr("width", xScale.rangeBand())
+                .attr("height", function(d2){ return subheight - yScale(d2.murder);})
+                .attr("x", function(d2){ return xScale(d2.stateAbb);})
+                .attr("y", function(d2){ return yScale(d2.murder);})
+                .style("fill","blue").style("fill-opacity",0.5);
+
+        var xGuide = svgTemp.append("g")
+            .attr("class", "x axis")
+            .attr("id","axis")
+            .attr("transform", "translate(" + submargin.left + "," + (subheight + submargin.top) + ")")
+            .call(xAxis);
+
+
+        var yGuide = svgTemp.append("g")
+            .attr("class", "y axis")
+            .attr("id","axis")
+            .attr("transform", "translate(" + submargin.left + "," + submargin.top + ")")
+            .call(yAxis);
+
+            xGuide.selectAll('line').style({"fill": "none", "stroke": "none"});
+            xGuide.selectAll('path').style({"fill": "none", "stroke": "none"});
+
+            yGuide.selectAll('line').attr({'fill':'none', "stroke": "black"});
+            yGuide.selectAll('path').attr({'fill':'none', "stroke": "black"});
+
+//        svg3.append("text").attr("transform","translate(" + margin3.left + "," + margin3.top + ")")
+//                .attr("x",  (i%3)*(subwidth + submargin.left + submargin.right)*marginRatio )
+//            .attr("y", parseInt(i/3)*(subheight + submargin.top + submargin.bottom)*marginRatio )
+//
+////                .attr("transform","translate(" +submargin.left + "," + submargin.top + ")").style("text-anchor", "middle")
+//            .text(d["stateDivision"]);
+
+
+
+
+
+    });
+//    xScale2.domain(rows.map(function(d){ return d.illiteracyRange ; }));
+//    yScale2.domain(rows.map(function(d){ return d.stateRegion ; }));
+////    zScale2.domain( d3.extent(function(d){ return d.count; }));
+//    zScale2.domain( [0, d3.max(rows, function(d){ return d.count; })]);
+//
+//    var xGuide2 = svg2.append('g').attr("class","xAxis2").attr("transform","translate(" + margin2.left + "," + height + ")").call(xAxis2);
+//    var yGuide2 = svg2.append('g').attr("class","yAxis2").attr("transform","translate(" + margin2.left + ",0)").call(yAxis2);
+//
+//    xGuide2.selectAll("line").style("fill","none");
+//    xGuide2.select("path").style("fill","none").style("stroke","black");
+//    yGuide2.selectAll("line").style("fill","none");
+//    yGuide2.select("path").style("fill","none").style("stroke","black");
+//    console.log(rows);
+//
+//
+//    svg2.selectAll(".tile").data(rows).enter().append("rect").attr("class","tile").attr("transform","translate("+ margin2.left + ",0)")
+//            .attr("x", function(d){return xScale2(d.illiteracyRange);})
+//            .attr("y", function(d){ return yScale2(d.stateRegion);})
+//            .style("fill", function(d){ return zScale2(d.count);})
+//            .attr("width", xScale2.rangeBand())
+//            .attr("height", yScale2.rangeBand());
+//
+//
+//    var temp = rows.map(function(d){ return d.count});
+//    var oTemp = {};
+//    for ( var i = 0; i < temp.length ; i++ ){ oTemp[temp[i]] = 0;}
+//    console.log(Object.keys(oTemp));
+//
+//    var legend = svg2.selectAll(".legend")
+//      .data(Object.keys(oTemp).reverse())
+//    .enter().append("g")
+//      .attr("class", "legend")
+//      .attr("transform", function(d, i) { return "translate(" + (width + margin.left + 120) + "," + ( margin.top + 50 + i * 20) + ")"; });
+//
+//    legend.append("rect")
+//      .attr("width", 20)
+//      .attr("height", 20)
+//      .style("fill", zScale2);
+//
+//    legend.append("text")
+//      .attr("x", 26)
+//      .attr("y", 10)
+//      .attr("dy", ".35em")
+//      .text(String);
+//
+//    svg2.append("text")
+//            .attr("transform", "translate(" + (width + margin.left + 120) + "," + ( margin.top + 50) + ")")
+//            .attr("x",-20)
+//            .attr("y",-10)
+//            .text("State Count");
+//
+});
+
+            </script>
+        </div>
 </div>
 
 
