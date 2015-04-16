@@ -57,9 +57,40 @@
 <div class = "container">
 		<h2>Homework2</h2>
 		<ul>
-            <li><h4>Bubble Chart</h4></li>
+            <li><h3>Bubble Chart</h3></li>
         </ul>
         <div id="chart" width="1000" height="640">
+            <style>
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+</style>
+            <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
             <script>
 // ploting variable
 var margin = {"left":80,"top":40,"right":30,"bottom":30};
@@ -85,6 +116,14 @@ var rScale = d3.scale.linear().range([0,radius]);
 var xAxis = d3.svg.axis().scale(xScale).orient("bottom");
 var yAxis = d3.svg.axis().scale(yScale).orient("left");
 
+var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    return "<strong>State:</strong> <span style='color:red'>" + d.stateAbb + "</span><br><strong>Income:</strong> <span style='color:red'>" + d.Income + "</span><br><strong>hsGrad:</strong> <span style='color:red'>" + d.hsGrad + "</span><br><strong>LifeExp:</strong> <span style='color:red'>" + d.lifeExp + "</span>";
+  });
+
+svg1.call(tip);
 
 //console.log("fefef"data);
 d3.csv("homework2/stateX77.csv",function(d){
@@ -105,48 +144,31 @@ d3.csv("homework2/stateX77.csv",function(d){
         },function(error, rows){
           // code to generate chart goes here
 
-            console.log( rows );
+//            console.log( rows );
 
     var min1 = d3.min(rows, function(d){ return d.hsGrad;});
     var max1 = d3.max(rows, function(d){ return d.hsGrad;});
 
-    console.log(min1);
+//    console.log(min1);
     var min2 = d3.min(rows, function(d){ return d.lifeExp;});
     var max2 = d3.max(rows, function(d){ return d.lifeExp;});
 
     var percent = 0.06;
-    xScale.domain([ min1 - percent * (max1 - min1), max1 + percent * (max1 - min1)]);
-    yScale.domain([ min2 - percent * (max2 - min2) , max2 + percent * (max2 - min2)]);
+//    xScale.domain([ min1 - percent * (max1 - min1), max1 + percent * (max1 - min1)]);
+    xScale.domain([ (min1 - 3), (max1 + 3)]);
+//    yScale.domain([ min2 - percent * (max2 - min2) , max2 + percent * (max2 - min2)]);
+    yScale.domain([ min2 - 0.5, max2 +.5]);
 
     rScale.domain([d3.min(rows, function(d){return Math.sqrt(d.Income);}),d3.max(rows, function(d){return Math.sqrt(d.Income);})]);
-    var circles = svg1.selectAll("circle").data(rows).enter().append("circle")
+
+    var circles = svg1.selectAll("circle").data(rows).enter().append("circle").attr('transform','translate(' + margin.left + ",0)")
         .attr("cx", function(d){return xScale(d.hsGrad);})
-        .attr("cy", function(d){return height - yScale(d.lifeExp);})
+        .attr("cy", function(d){return yScale(d.lifeExp);})
         .attr("r",  function(d){return rScale(Math.sqrt(d.Income));})
         .attr("transform", "translate(" + margin.left + ",0)")
         .style('fill','blue').style("fill-opacity",0.4)
-        .on("mouseover", function (d) {
-
-                d3.select(this).style('fill', "#FD8D3C").style('fill-opacity',0.9);
-
-                var xPosition = parseFloat(d3.select(this).attr("cx")) + margin.left ;
-                var yPosition = parseFloat(d3.select(this).attr("cy")) - 10;
-
-                d3.select('.frame').append("text").attr("transform","translate(" + margin.left + ",0)")
-                        .attr("id", "tooltip")
-                        .attr("x", xPosition)
-                        .attr("y", yPosition)
-                        .attr("text-anchor", "middle")
-                        .attr("font-family", "sans-serif")
-                        .attr("font-size", "14px")
-                        .attr("font-weight", "bold")
-                        .attr("fill", "black")
-                        .text(d.stateAbb + ",( " +d.hsGrad + " , " + d.lifeExp + " )"); })
-            .on("mouseout", function(d){
-
-                d3.select(this).style("fill","blue").style("fill-opacity",0.4);
-                d3.select("#tooltip").remove(); // end of style
-            });
+        .on("mouseover", tip.show)
+        .on("mouseout", tip.hide);
 
 
     var xGuide = svg1.append("g").attr("class", "Axis").attr("id","xAxis").attr("transform", "translate(" + margin.left + "," + height + ")").call(xAxis);
