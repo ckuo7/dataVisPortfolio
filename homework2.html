@@ -55,9 +55,10 @@
 </nav>
 
 <div class = "container">
-		<h2>Homework2</h2>
+    <h1>Homework2</h1>
+		<h2>C level</h2>
 		<ul>
-            <li><h3>Bubble Chart</h3></li>
+            <li><h3>Bubble Chart (hsGrad Rate vs Life Expectancy)</h3></li>
         </ul>
         <div id="chart" width="1000" height="640">
             <style>
@@ -93,7 +94,7 @@
             <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
             <script>
 // ploting variable
-var margin = {"left":80,"top":40,"right":30,"bottom":30};
+var margin = {"left":80,"top":40,"right":200,"bottom":30};
 var width = 800;
 var height = 500;
 var frameWidth = width + margin.left + margin.right;
@@ -114,7 +115,7 @@ var yScale = d3.scale.linear().range([height,0]);
 var rScale = d3.scale.linear().range([0,radius]);
 
 var xAxis = d3.svg.axis().scale(xScale).orient("bottom");
-var yAxis = d3.svg.axis().scale(yScale).orient("left");
+var yAxis = d3.svg.axis().scale(yScale).orient("left").ticks(5);
 
 var tip = d3.tip()
   .attr('class', 'd3-tip')
@@ -179,7 +180,7 @@ d3.csv("homework2/stateX77.csv",function(d){
             .attr("y", -70).attr("x",-height/2 + 80)
             .attr("dy", ".71em")
             .style("text-anchor", "end")
-            .text("Life Expectency (year)");
+            .text("Life Expectancy (year)");
 
     xGuide.append("text").attr("x", width/2 + 130).attr("y", 50)
             .style("text-anchor", "end")
@@ -190,6 +191,9 @@ d3.csv("homework2/stateX77.csv",function(d){
     xGuide.selectAll('path').style('fill',"none").style("stroke","black");
     yGuide.selectAll('line').style("fill","none").style("stroke","black");
     yGuide.selectAll('path').style("fill","none").style("stroke","black");
+
+    var legend = svg1.append('circle').attr("transform","translate(" + (margin.left + width + 60) + "," + (margin.top + 150) + ")").style("fill","blue").style("fill-opacity",0.4).attr("r",10);
+    svg1.append('text').attr("transform","translate(" + (margin.left + width + 60) + "," + (margin.top + 130) + ")").text("Area Size (Income)").style("text-anchor","middle");
 
 
 });
@@ -318,6 +322,7 @@ d3.csv("homework2/stateX77aggregate.csv",function(d){
             </script>
         </div>
 
+        <h2>B level</h2>
         <ul>
             <li><h3>Small Multiple (Murder Rate By State Division)</h3></li>
         </ul>
@@ -354,8 +359,8 @@ var divisionCount = [1,2,3,4,5,6,7,8,9];
 //console.log("svgGroup");
 //console.log(svgGroup);
 
-var xScaleArray = [];
-var yScaleArray = [];
+//var xScaleArray = [];
+//var yScaleArray = [];
 
 svg3.append("text").attr("y",frameHeight3-margin3.top + 100).attr("x",frameWidth3/2-160)
         .text("Figure 3. : murder and non-negligent manslaughter rate per 100,000 population (1976)").style("text-anchor", "middle")
@@ -509,7 +514,7 @@ d3.csv("homework2/stateX77.csv",function(d){
 
             </script>
         </div>
-
+        <h2>A level</h2>
         <ul>
             <li><h4>Parallel Coordinates</h4></li>
         </ul>
@@ -682,6 +687,11 @@ function brush() {
 
 </script>
         </div>
+
+        <ul>
+            <li><h4>Functionality:</h4></li>
+            <li>I created both bubble chart and heatmap to explore more </li>
+        </ul>
 
 </div>
 
