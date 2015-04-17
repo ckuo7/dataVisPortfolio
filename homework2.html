@@ -56,6 +56,7 @@
 
 <div class = "container">
     <h1>Homework2</h1>
+    Chi-Liang "Daniel" Kuo <a href="https://github.com/ckuo7/msan622">github repo</a>
 		<h2>C level</h2>
 		<ul>
             <li><h3>Bubble Chart (hsGrad Rate vs Life Expectancy)</h3></li>
@@ -399,7 +400,7 @@ d3.csv("homework2/stateX77.csv",function(d){
 
     var fillScale = d3.scale.linear().range(["white","red"]).domain([0,d3.max(rows.map(function(d){return d.murder;}))]);
 
-        rows.forEach(function(d){
+        rows.forEach(function(d,i){
 
             stateDivisionArray[stateDivision[d.stateDivision]]["state"].push(d)
 
@@ -429,8 +430,30 @@ d3.csv("homework2/stateX77.csv",function(d){
             .attr("width", (subwidth + submargin.left + submargin.right)*marginRatio)
             .attr("height", (subheight + submargin.top + submargin.bottom)*marginRatio)
             .attr("x",  (i%3)*(subwidth + submargin.left + submargin.right)*marginRatio )
-            .attr("y", parseInt(i/3)*(subheight + submargin.top + submargin.bottom)*marginRatio );
+            .attr("y", parseInt(i/3)*(subheight + submargin.top + submargin.bottom)*marginRatio);
+//                .append('g');
 
+
+
+        svgTemp.append('rect').attr("width",(subwidth + submargin.left + submargin.right))
+                    .attr("height", (subheight + submargin.top + submargin.bottom)).style("fill-opacity",0);
+
+        var xGuide = svgTemp.append("g")
+            .attr("class", "xAxis3")
+            .attr("id","axis")
+            .attr("transform", "translate(" + submargin.left + "," + (subheight + submargin.top) + ")")
+            .call(xAxis);
+
+        svgTemp.on('mouseover', function(d){
+                    var yGuide = svgTemp.append("g")
+                    .attr("class", "yAxis3_" + i )
+                    .attr("id","axis")
+                    .attr("transform", "translate(" + submargin.left + "," + submargin.top + ")").call(yAxis).transition().duration(600);
+                    yGuide.selectAll('line').attr({'fill':'none', "stroke": "black"});
+                    yGuide.selectAll('path').attr({'fill':'none', "stroke": "black"});})
+                .on('mouseout', function(d){
+                    d3.select(".yAxis3_" + i).remove().transition().duration(600);
+                });
 
 
         svgTemp.selectAll('.bar').data(d["state"]).enter().append('rect').attr("transform","translate(" + submargin.left + "," + submargin.top +")")
@@ -445,10 +468,6 @@ d3.csv("homework2/stateX77.csv",function(d){
 
                     var xPosition = parseFloat(d3.select(this).attr("x")) + xScale.rangeBand() / 2 + submargin.left;
                     var yPosition = parseFloat(d3.select(this).attr("y")) +  d3.select(this).attr("height")/2;
-//
-//                    console.log("dfff");
-//                    console.log(xPosition);
-//                    console.log(yPosition);
 
                     var tooltip = svgTemp.append("text")
                             .attr("id", "tooltip")
@@ -468,24 +487,11 @@ d3.csv("homework2/stateX77.csv",function(d){
                 });
 //            .style("fill-opacity",0.5);
 
-        var xGuide = svgTemp.append("g")
-            .attr("class", "x axis")
-            .attr("id","axis")
-            .attr("transform", "translate(" + submargin.left + "," + (subheight + submargin.top) + ")")
-            .call(xAxis);
 
-
-//        var yGuide = svgTemp.append("g")
-//            .attr("class", "y axis")
-//            .attr("id","axis")
-//            .attr("transform", "translate(" + submargin.left + "," + submargin.top + ")")
-//            .call(yAxis);
 
             xGuide.selectAll('line').style({"fill": "none", "stroke": "none"});
             xGuide.selectAll('path').style({"fill": "none", "stroke": "none"});
 
-//            yGuide.selectAll('line').attr({'fill':'none', "stroke": "black"});
-//            yGuide.selectAll('path').attr({'fill':'none', "stroke": "black"});
 
         svgTemp.append("text").attr("transform","translate(" + submargin.left + "," + submargin.top+ ")")
                 .style("text-anchor", "middle")
@@ -516,9 +522,9 @@ d3.csv("homework2/stateX77.csv",function(d){
         </div>
         <h2>A level</h2>
         <ul>
-            <li><h4>Parallel Coordinates</h4></li>
+            <li><h3>Parallel Coordinates</h3></li>
         </ul>
-        <div id="chart3" width="1200" height="640">
+        <div id="chart3" width="1200" height="800">
             <style>
 
 /*svg {*/
@@ -688,10 +694,26 @@ function brush() {
 </script>
         </div>
 
+        <h2>Functionality:</h2>
         <ul>
-            <li><h4>Functionality:</h4></li>
-            <li>I created both bubble chart and heatmap to explore more </li>
+            <li>Bubble chart (C)</li>
+            <li>Heatmap (C)</li>
+            <li>Small multiple (B)</li>
+            <li>Parallel Coordinates(A)</li>
         </ul>
+        <h2>Design Guide</h2>
+        <p> My design principle for this series of visualizations is to make them as simple as possible. Following this rule,
+            I decided not to encode the forth variable with color attribute and make the area less distinguishable in the bubble chart so that we can
+            pay more attention on the correlation between "hsGrad" and "Life Expectancy". To preserve detail information,
+            I created tool tips to provide more context about each data point. The same philosophy is implemented in the heat map and small multiple.
+            To easily decipher the color scale of each level in heat map, I made the stroke of rects and and their corresponding legends thicker so we can associate
+            each color to a real number in the legend. This eases the pain when we try to make comparisons between similar color. As for small multiple, I recalcualte the domain for
+            each subplot to avoid the predominance of some big numbers and, hence, increase the data ink ratio. In addition, I made the y-axis of small
+            multiple visible only when we hovered the subplot. This just make the small multiple cleaner, more concise, and perhaps more easily to focus on the color attribute, which
+            helps to make comparisons between different groups. For example, one can easily tell that the murder rate in east south central is generally
+            higher than New England.The parallel coordinates are relatively complicate. However, with brushing, we can just easily focus on the data we are interested by filtering.
+            </p>
+
 
 </div>
 

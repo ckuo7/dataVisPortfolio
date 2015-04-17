@@ -54,19 +54,19 @@
       <file leaf-file-name="homework2.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/homework2.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.22900763" vertical-offset="2115" max-vertical-offset="3975">
-              <caret line="426" column="37" selection-start-line="426" selection-start-column="37" selection-end-line="426" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.54198474" vertical-offset="2570" max-vertical-offset="3375">
+              <caret line="697" column="12" selection-start-line="697" selection-start-column="12" selection-end-line="697" selection-end-column="12" />
               <folding>
                 <element signature="n#nav#0;n#body#0;n#html#0;n#!!top" expanded="false" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
                 <element signature="n#script#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
                 <element signature="n#script#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+                <element signature="n#script#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
                 <element signature="n#style#0;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-                <element signature="n#script#0;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-                <marker date="1429234327000" expanded="true" signature="3786:3795" placeholder="..." />
-                <marker date="1429234327000" expanded="true" signature="3864:3873" placeholder="..." />
-                <marker date="1429234327000" expanded="true" signature="3940:3949" placeholder="..." />
-                <marker date="1429234327000" expanded="true" signature="4017:4026" placeholder="..." />
+                <marker date="1429250871000" expanded="true" signature="3872:3881" placeholder="..." />
+                <marker date="1429250871000" expanded="true" signature="3950:3959" placeholder="..." />
+                <marker date="1429250871000" expanded="true" signature="4026:4035" placeholder="..." />
+                <marker date="1429250871000" expanded="true" signature="4103:4112" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -480,21 +480,26 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/homework2.html</url>
-          <line>164</line>
+          <line>165</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/homework2.html</url>
-          <line>362</line>
+          <line>363</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/homework2.html</url>
-          <line>134</line>
+          <line>135</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/homework2.html</url>
+          <line>475</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="5" />
+      <option name="time" value="6" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -529,12 +534,12 @@
             <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#script#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#script#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#script#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#script#0;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <marker date="1429234327000" expanded="true" signature="3786:3795" placeholder="..." />
-            <marker date="1429234327000" expanded="true" signature="3864:3873" placeholder="..." />
-            <marker date="1429234327000" expanded="true" signature="3940:3949" placeholder="..." />
-            <marker date="1429234327000" expanded="true" signature="4017:4026" placeholder="..." />
+            <marker date="1429250871000" expanded="true" signature="3872:3881" placeholder="..." />
+            <marker date="1429250871000" expanded="true" signature="3950:3959" placeholder="..." />
+            <marker date="1429250871000" expanded="true" signature="4026:4035" placeholder="..." />
+            <marker date="1429250871000" expanded="true" signature="4103:4112" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -602,12 +607,12 @@
             <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#script#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#script#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#script#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#script#0;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <marker date="1429234327000" expanded="true" signature="3786:3795" placeholder="..." />
-            <marker date="1429234327000" expanded="true" signature="3864:3873" placeholder="..." />
-            <marker date="1429234327000" expanded="true" signature="3940:3949" placeholder="..." />
-            <marker date="1429234327000" expanded="true" signature="4017:4026" placeholder="..." />
+            <marker date="1429250871000" expanded="true" signature="3872:3881" placeholder="..." />
+            <marker date="1429250871000" expanded="true" signature="3950:3959" placeholder="..." />
+            <marker date="1429250871000" expanded="true" signature="4026:4035" placeholder="..." />
+            <marker date="1429250871000" expanded="true" signature="4103:4112" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -675,12 +680,12 @@
             <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#script#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#script#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#script#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#script#0;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <marker date="1429234327000" expanded="true" signature="3786:3795" placeholder="..." />
-            <marker date="1429234327000" expanded="true" signature="3864:3873" placeholder="..." />
-            <marker date="1429234327000" expanded="true" signature="3940:3949" placeholder="..." />
-            <marker date="1429234327000" expanded="true" signature="4017:4026" placeholder="..." />
+            <marker date="1429250871000" expanded="true" signature="3872:3881" placeholder="..." />
+            <marker date="1429250871000" expanded="true" signature="3950:3959" placeholder="..." />
+            <marker date="1429250871000" expanded="true" signature="4026:4035" placeholder="..." />
+            <marker date="1429250871000" expanded="true" signature="4103:4112" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -737,12 +742,12 @@
             <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#script#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#script#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#script#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#script#0;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <marker date="1429234327000" expanded="true" signature="3786:3795" placeholder="..." />
-            <marker date="1429234327000" expanded="true" signature="3864:3873" placeholder="..." />
-            <marker date="1429234327000" expanded="true" signature="3940:3949" placeholder="..." />
-            <marker date="1429234327000" expanded="true" signature="4017:4026" placeholder="..." />
+            <marker date="1429250871000" expanded="true" signature="3872:3881" placeholder="..." />
+            <marker date="1429250871000" expanded="true" signature="3950:3959" placeholder="..." />
+            <marker date="1429250871000" expanded="true" signature="4026:4035" placeholder="..." />
+            <marker date="1429250871000" expanded="true" signature="4103:4112" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -1097,19 +1102,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/homework2.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22900763" vertical-offset="2115" max-vertical-offset="3975">
-          <caret line="426" column="37" selection-start-line="426" selection-start-column="37" selection-end-line="426" selection-end-column="37" />
+        <state vertical-scroll-proportion="0.54198474" vertical-offset="2570" max-vertical-offset="3375">
+          <caret line="697" column="12" selection-start-line="697" selection-start-column="12" selection-end-line="697" selection-end-column="12" />
           <folding>
             <element signature="n#nav#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#script#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#script#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#script#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#script#0;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <marker date="1429234327000" expanded="true" signature="3786:3795" placeholder="..." />
-            <marker date="1429234327000" expanded="true" signature="3864:3873" placeholder="..." />
-            <marker date="1429234327000" expanded="true" signature="3940:3949" placeholder="..." />
-            <marker date="1429234327000" expanded="true" signature="4017:4026" placeholder="..." />
+            <marker date="1429250871000" expanded="true" signature="3872:3881" placeholder="..." />
+            <marker date="1429250871000" expanded="true" signature="3950:3959" placeholder="..." />
+            <marker date="1429250871000" expanded="true" signature="4026:4035" placeholder="..." />
+            <marker date="1429250871000" expanded="true" signature="4103:4112" placeholder="..." />
           </folding>
         </state>
       </provider>
