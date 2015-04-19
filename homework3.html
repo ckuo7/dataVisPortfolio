@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>MSAN 622 Homework2</title>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+
+<style type="text/css">
+    body {
+        padding-top: 50px;
+        padding-bottom: 20px;
+    }
+</style>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/d3.min.js"></script>
+</head>
+
+<body>
+<!-- Fixed Navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle Navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/index.html">MSAN 622</a>
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="#homework">Homework</a></li>
+                <li><a href="#project">Project</a></li>
+                <li><a href="#participation">Participation</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class = "container">
+<style>
+
+svg {
+  font: 10px sans-serif;
+}
+
+.area {
+  fill: steelblue;
+  clip-path: url(#clip);
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.focus . area{ fill:steeblue;}
+.context . area{ fill:tomato;}
+/*more specific*/
+
+.brush .extent {
+  stroke: red;
+  fill-opacity: .125;
+  shape-rendering: crispEdges;
+}
+
+</style>
+<script>
+
+var margin = {top: 10, right: 10, bottom: 100, left: 40},
+    margin2 = {top: 430, right: 10, bottom: 20, left: 40},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom,
+    height2 = 500 - margin2.top - margin2.bottom;
+
+//
+var parseDate = d3.time.format("%Y-%m-%d").parse;
+
+var xScale = d3.time.scale().range([0, width]),
+    xScale2 = d3.time.scale().range([0, width]),
+    yScale = d3.scale.linear().range([height, 0]),
+    yScale2 = d3.scale.linear().range([height2, 0]); // scale from the top
+
+var xAxis = d3.svg.axis().scale(xScale).orient("bottom"),
+    xAxis2 = d3.svg.axis().scale(xScale2).orient("bottom"),
+    yAxis = d3.svg.axis().scale(yScale).orient("left").ticks(3);
+
+// brush control along the x direction
+
+var brush = d3.svg.brush()
+    .x(xScale2)
+    .on("brush", brushed);  // gets or sets the listener for the specified event type, the first
+                            // element is evenet listener " can be "brushstart, brush, brushend"
+                            // when event happened call the brushed function
+
+function brushed() {
+
+    xScale.domain( brush.empty() ? xScale2.domain() : brush.extent());
+    // reset the xScale domain to brush range
+    // if brush is empty return every thing, new domain of brush
+    focus1.select("#line").attr("d", line1);
+    focus1.select(".xAxis").call(xAxis);
+}
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
+
+
+svg.append("defs").append("clipPath")
+    .attr("id", "clip")
+  .append("rect")
+    .attr("width", width)
+    .attr("height", height);
+
+var focus1 = svg.append("g")
+    .attr("class", "focus")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var context1 = svg.append("g")
+    .attr("class", "context")
+    .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+
+
+var line1 = d3.svg.line()
+    .interpolate("basis") // smoothing method
+    .x(function(d) { return xScale(d.date); }) // look at the x
+    .y(function(d) { return yScale(d.front); });
+
+var line2 = d3.svg.line()
+    .interpolate("basis") // smoothing method
+    .x(function(d) { return xScale2(d.date); }) // look at the x
+    .y(function(d) { return yScale2(d.front); });
+
+
+var area1 = d3.svg.area()
+    .interpolate("monotone") // use the generator function to generate the data for you
+    .x(function(d) { return xScale(d.date); })
+    .y0(height)
+    .y1(function(d) { return yScale(d.front); });
+
+var area2 = d3.svg.area()
+    .interpolate("monotone") // use the generator function to generate the data for you
+    .x(function(d) { return xScale2(d.date); })
+    .y0(height2)
+    .y1(function(d) { return yScale2(d.front); });
+
+
+
+d3.csv("./data/seatbelts.csv",
+
+        function(d){
+
+            return {    "date" : parseDate(d.date),
+                        "diversKilled" : +d.DriversKilled,
+                        "drivers" : +d.drivers,
+                        "front" : +d.front,
+                        "rear" : +d.rear,
+                        "kms" : +d.kms,
+                        "petrolPrice" : +d.PetrolPrice,
+                        "vanKilled" : +d.VanKilled,
+                        "law" : +d.law}},
+
+        function(error, data) {
+
+                console.log(data);
+        // scale function is the setter if received argument, getter if it's empty
+        xScale.domain(d3.extent(data.map(function(d) { return d.date; })));
+        yScale.domain([0, d3.max(data.map(function(d) { return d.front; }))]);
+        xScale2.domain(xScale.domain());
+        yScale2.domain(yScale.domain());
+
+        var xGuide1 = focus1.append("g")
+            .attr("class", "xAxis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
+
+            xGuide1.select("path").style({"fill":"none","stroke":"black"});
+            xGuide1.selectAll("line").style({"fill":"none"});
+
+        var yGuide1 = focus1.append("g")
+            .attr("class", "y axis")
+            .call(yAxis);
+
+
+//            var xGuide = context1.append('g').attr("transform","translate(" + margin.left "," + margin.top + height + margin)
+//        focus1.append("path") // draw area
+//            .datum(data)
+//            .attr("class", "area")
+//            .attr("d", area1);
+
+        focus1.append("path")
+                .datum(data).attr("id","line").attr("d",line1).style({"fill":"none","stroke":"steelblue","stroke-width":2}).style("clip-path","url(#clip)");
+
+//        focus1.append("g")
+//            .attr("class", "xAxis")
+//            .attr("transform", "translate(0," + height + ")")
+//            .call(xAxis);
+
+        focus1.append("g")
+            .attr("class", "y axis")
+            .call(yAxis);
+
+        context1.append("path")
+              .datum(data)
+              .attr("class", "line")
+              .attr("d", line2).style({"fill":"none","stroke":"black","stroke-width":2});
+
+        var xGuide2 = context1.append("g")
+              .attr("class", "x axis")
+              .attr("transform", "translate(0," + height2 + ")")
+              .call(xAxis2);
+
+        context1.append("g")
+            .attr("class", "x brush")
+            .call(brush) // call the brush function
+            .selectAll("rect")
+            .attr("y", -6) // shift the
+            .attr("height", height2 + 7);
+
+        })
+</script>
+
+    </div>
+</body>
+</html>
