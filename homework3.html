@@ -54,10 +54,11 @@
 </nav>
 
 <div class = "container">
+    <h2>Time Series Plot</h2>
 <style>
 
 svg {
-  font: 10px sans-serif;
+  font: 14px sans-serif;
 }
 
 .area {
@@ -85,11 +86,11 @@ svg {
 </style>
 <script>
 
-var margin = {top: 10, right: 10, bottom: 100, left: 40},
-    margin2 = {top: 430, right: 10, bottom: 20, left: 40},
+var margin = {top: 40, right: 20, bottom: 100, left: 70},
+    margin2 = {top: 250, right: 120, bottom: 20, left: 70},
     width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom,
-    height2 = 500 - margin2.top - margin2.bottom;
+    height = 300 - margin.top - margin.bottom,
+    height2 = 300 - margin2.top - margin2.bottom;
 
 //
 var parseDate = d3.time.format("%Y-%m-%d").parse;
@@ -103,6 +104,7 @@ var xAxis = d3.svg.axis().scale(xScale).orient("bottom"),
     xAxis2 = d3.svg.axis().scale(xScale2).orient("bottom"),
     yAxis = d3.svg.axis().scale(yScale).orient("left").ticks(3);
 
+var bisectDate = d3.bisector(function(d) { return d.date; }).left;
 // brush control along the x direction
 
 var brush = d3.svg.brush()
@@ -131,6 +133,8 @@ svg.append("defs").append("clipPath")
     .attr("width", width)
     .attr("height", height);
 
+svg.append("text").text("Front-seat passengers killed or seriously injured").style("text-anchor", "middle").attr("x",width/2 + margin.left).attr("y",20)
+        .attr("font-size", "24px");
 var focus1 = svg.append("g")
     .attr("class", "focus")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -196,11 +200,14 @@ d3.csv("./data/seatbelts.csv",
             xGuide1.select("path").style({"fill":"none","stroke":"black"});
             xGuide1.selectAll("line").style({"fill":"none"});
 
+
+
         var yGuide1 = focus1.append("g")
             .attr("class", "y axis")
             .call(yAxis);
 
-
+            yGuide1.append('text').text("Toll").attr("x",-35);
+            xGuide1.append('text').text("Time").attr("x",width - 30).attr("y",-5);
 //            var xGuide = context1.append('g').attr("transform","translate(" + margin.left "," + margin.top + height + margin)
 //        focus1.append("path") // draw area
 //            .datum(data)
@@ -236,6 +243,37 @@ d3.csv("./data/seatbelts.csv",
             .attr("y", -6) // shift the
             .attr("height", height2 + 7);
 
+//            begin tooltip
+
+        var focusDot = focus1.append("g").style("display","none");
+            focusDot.append("circle").attr("r",5).style("fill","steelblue").style("strok","white");
+            focusDot.append("text").attr("x",10).attr("dy", ".35em").style("font-size",16);
+
+        focus1.append("rect")
+        .attr("width", width)
+        .attr("height", height)
+        .style("fill", "none")
+        .style("pointer-events", "all")
+        .on("mouseover", function() { focusDot.style("display", null); })
+        .on("mouseout", function() { focusDot.style("display", "none"); })
+        .on("mousemove", mousemove);
+
+
+
+        function mousemove() {
+//            console.log(d3.mouse(this));
+            var x0 = xScale.invert(d3.mouse(this)[0]),
+
+            i = bisectDate(data, x0, 1),
+            d0 = data[i - 1],
+            d1 = data[i],
+            d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+            console.log(x0);
+            console.log("ii");
+            console.log(i);
+            focusDot.attr("transform", "translate(" + xScale(d.date) + "," + yScale(d.front) + ")");
+            focusDot.select("text").text(d.front);
+  }
         })
 </script>
 
