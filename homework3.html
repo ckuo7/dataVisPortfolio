@@ -55,7 +55,13 @@
 
 <div class = "container">
     <h2>Time Series Plot</h2>
-<style>
+    <ul>
+        <li><b>Basic Functionality:</b> Line plot</li>
+        <li><b>Moderate Functionality:</b> Panning, Detail-on-Demand</li>
+        <li><b>Advanced Functionality:</b> Brushing</li>
+    </ul>
+    <div id="chart1" width="2200" height="640">
+        <style>
 
 svg {
   font: 14px sans-serif;
@@ -84,12 +90,12 @@ svg {
 }
 
 </style>
-<script>
+        <script>
 
-var margin = {top: 40, right: 20, bottom: 100, left: 70},
+var margin = {top: 60, right: 20, bottom: 120, left: 70},
     margin2 = {top: 250, right: 120, bottom: 20, left: 70},
     width = 960 - margin.left - margin.right,
-    height = 300 - margin.top - margin.bottom,
+    height = 330 - margin.top - margin.bottom,
     height2 = 300 - margin2.top - margin2.bottom;
 
 //
@@ -122,10 +128,13 @@ function brushed() {
     focus1.select(".xAxis").call(xAxis);
 }
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#chart1").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom);
 
+    svg.append("rect")
+            .attr("width",width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom).style("fill","none").style("stroke","gray");
 
 svg.append("defs").append("clipPath")
     .attr("id", "clip")
@@ -133,7 +142,7 @@ svg.append("defs").append("clipPath")
     .attr("width", width)
     .attr("height", height);
 
-svg.append("text").text("Front-seat passengers killed or seriously injured").style("text-anchor", "middle").attr("x",width/2 + margin.left).attr("y",20)
+svg.append("text").text("Front-seat passengers killed or seriously injured").style("text-anchor", "middle").attr("x",width/2 + margin.left).attr("y",30)
         .attr("font-size", "24px");
 var focus1 = svg.append("g")
     .attr("class", "focus")
@@ -268,14 +277,183 @@ d3.csv("./data/seatbelts.csv",
             d0 = data[i - 1],
             d1 = data[i],
             d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-            console.log(x0);
-            console.log("ii");
-            console.log(i);
+//            console.log(x0);
+//            console.log("ii");
+//            console.log(i);
             focusDot.attr("transform", "translate(" + xScale(d.date) + "," + yScale(d.front) + ")");
             focusDot.select("text").text(d.front);
   }
         })
 </script>
+    </div>
+
+    <div id="chart2" width="2200" height="640">
+    <h2>Cal-Heat Map</h2>
+    <ul>
+    <li><b>Basic Functionality:</b> Calendar Heat Map</li>
+    <li><b>Moderate Functionality:</b> Zooming, Panning, Dragging</li>
+    </ul>
+    <script >
+//var parseDate = d3.time.format("%Y-%m-%d").parse;
+var margin3 = { top: 50, right: 0, bottom: 100, left: 30 },
+    width3 = 960 - margin3.left - margin3.right,
+    height3 = 280 - margin3.top - margin3.bottom,
+    gridSize = Math.floor(width3 / 50),
+    legendElementWidth = gridSize*3,
+    buckets = 9,
+    colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"], // alternatively colorbrewer.YlGnBu[9]
+    days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+    times = ["1a", "2a", "3a", "4a", "5a", "6a", "7a", "8a", "9a", "10a", "11a", "12a", "1p", "2p", "3p", "4p", "5p", "6p", "7p", "8p", "9p", "10p", "11p", "12p"];
+
+var zoom = d3.behavior.zoom()
+    .scaleExtent([1, 10])
+    .on("zoom", zoomed);
+
+var svg3 = d3.select("#chart2").append("svg")
+              .attr("width", width3 + margin3.left + margin3.right)
+              .attr("height", height3 + margin3.top + margin3.bottom);
+var svg3g1 = svg3.append("g")
+              .attr("transform", "translate(" + (margin3.left + 30) +"," + margin3.top + ")").call(zoom);
+
+    svg3.append('rect')
+        .attr("width", width3 + margin3.left + margin3.right)
+        .attr("height", height3 + margin3.top + margin3.bottom).style("fill","none").style("stroke","gray");
+
+var heatMapGroup = svg3g1.append("g");
+var monthName = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+var feature = ["driversKilled","drivers","front","rear"];
+
+function zoomed() {
+             heatMapGroup.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+}
+
+      d3.csv("./data/seatbelts.csv",
+        function(d) {
+          return {
+                  "driversKilled" : +d.DriversKilled,
+                  "drivers" : +d.drivers,
+                  "front" : +d.front,
+                  "rear" : +d.rear,
+                  "kms": +d.PetrolPrice,
+                  "vanKilled" : +d.VanKilled,
+                  "law" : +d.law,
+                  "date" : parseDate(d.date)
+          };
+        },
+        function(error, data) {
+
+            // append new svg
+            var newData = [];
+            for ( i in data){
+                newData.push(data[i].driversKilled);
+                newData.push(data[i].drivers);
+                newData.push(data[i].front);
+                newData.push(data[i].rear);
+            }
+//            console.log(newData);
+//            console.log(data[13].date.getMonth());
+
+//            console.log(data.map(function(d){return d.driversKilled, d.drivers, d.front, d.rear;}));
+
+
+//          var dayLabels = svg.selectAll(".dayLabel")
+//              .data(days)
+//              .enter().append("text")
+//                .text(function (d) { return d; })
+//                .attr("x", 0)
+//                .attr("y", function (d, i) { return i * gridSize; })
+//                .style("text-anchor", "end")
+//                .attr("transform", "translate(-6," + gridSize / 1.5 + ")")
+//                .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "dayLabel mono axis axis-workweek" : "dayLabel mono axis"); });
+
+//          var timeLabels = svg.selectAll(".timeLabel")
+//              .data(times)
+//              .enter().append("text")
+//                .text(function(d) { return d; })
+//                .attr("x", function(d, i) { return i * gridSize; })
+//                .attr("y", 0)
+//                .style("text-anchor", "middle")
+//                .attr("transform", "translate(" + gridSize / 2 + ", -6)")
+//                .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
+//
+
+//            feature.forEach( function(d,i){
+
+            var colorScale = d3.scale.quantile()
+//              .domain([0, buckets - 1, d3.max(newData)])
+                    .domain(d3.extent(newData))
+//                            , function (d) { return d.driverKilled; })])
+              .range(colors);
+
+            console.log("colorScale.domain");
+            console.log(colorScale.domain());
+
+          var heatmap = heatMapGroup.selectAll(".square")
+              .data(newData)
+              .enter().append("rect")
+              .attr("x", function(d,i) { return Math.floor(i/4)* gridSize; })
+//                  .attr("x", 30)
+//              .attr("y", function(d,i) { return i * gridSize; })
+                  .attr("y", function(d,i){ return (i%4)*gridSize})
+              .attr("rx", 4)
+              .attr("ry", 4)
+              .attr("class", "hour bordered")
+              .attr("width", gridSize)
+              .attr("height", gridSize)
+              .style("fill", colors[0]).style("stroke","gray");
+
+                heatmap.transition().duration(2000)
+              .style("fill", function(d) {
+//                            console.log(colorScale(d));
+                            return colorScale(d); });
+
+//            });
+
+            heatMapGroup.selectAll(".month").data(data).enter().append("text").attr("x", function(d,i) { return i * gridSize; }).attr("y", -5)
+                    .text(function(d){return monthName[d.date.getMonth()];}).style("font-size",8);
+
+            heatMapGroup.selectAll(".year").data(data).enter().append("text").attr("x", function(d,i) { return i * gridSize; }).attr("y", -20)
+                    .text(function(d,i){
+                        if (i%12==0){return d.date.getYear();}
+                        else { return "";}});
+
+            heatMapGroup.selectAll(".label").data(feature).enter().append("text").attr("x", -5).attr("y", function(d,i){ return (i+0.7)*gridSize})
+                    .text(function(d){return d}).style("font-size",8).style("text-anchor","end");
+
+
+//
+
+
+//
+//          heatMap.append("title").text(function(d) { return d.value; });
+//
+//            console.log([0].concat(colorScale.quantiles()));
+
+          var legend = svg3g1.selectAll(".legend")
+              .data([0].concat(colorScale.quantiles()), function(d) { return d; })
+              .enter().append("g")
+              .attr("class", "legend");
+//
+          legend.append("rect")
+            .attr("x", function(d, i) { return legendElementWidth * i; })
+            .attr("y", height3 + margin3.top)
+            .attr("width", legendElementWidth )
+            .attr("height", gridSize )
+            .style("fill", function(d, i) { return colors[i]; });
+//
+          legend.append("text")
+            .attr("class", "mono")
+            .text(function(d) { return "≥ " + Math.round(d); }).style("font-size",14)
+            .attr("x", function(d, i) { return legendElementWidth  * i; })
+            .attr("y", height3 + margin3.top + 30);
+
+
+      });
+    </script>
+    </div>
+    <div>
+    <h2>Design Guide</h2>
+
 
     </div>
 </body>
