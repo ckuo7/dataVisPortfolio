@@ -61,6 +61,16 @@
         <li><b>Advanced Functionality:</b> Brushing</li>
     </ul>
     <div id="chart1" width="2200" height="640">
+        <select name="tpi" id="xxxxx">
+        <option selected="selected" value="driversKilled">driversKilled</option>
+        <option value="drivers">drivers</option>
+        <option value="front">front</option>
+        <option value="rear">rear</option>
+        <option value="vanKilled">vanKilled</option>
+            <option value="kms">kms</option>
+            <option value="petrolPrice">petrolPrice</option>
+      </select>
+
         <style>
 
 svg {
@@ -293,6 +303,7 @@ d3.csv("./data/seatbelts.csv",
     <li><b>Basic Functionality:</b> Calendar Heat Map</li>
     <li><b>Moderate Functionality:</b> Zooming, Panning, Dragging</li>
     </ul>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
     <script >
 //var parseDate = d3.time.format("%Y-%m-%d").parse;
 var margin3 = { top: 50, right: 0, bottom: 100, left: 30 },
@@ -320,11 +331,16 @@ var svg3g1 = svg3.append("g")
         .attr("height", height3 + margin3.top + margin3.bottom).style("fill","none").style("stroke","gray");
 
 var heatMapGroup = svg3g1.append("g");
+
 var monthName = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 var feature = ["driversKilled","drivers","front","rear"];
 
+
+
+
 function zoomed() {
-             heatMapGroup.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+            heatMapGroup.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+
 }
 
       d3.csv("./data/seatbelts.csv",
@@ -334,7 +350,8 @@ function zoomed() {
                   "drivers" : +d.drivers,
                   "front" : +d.front,
                   "rear" : +d.rear,
-                  "kms": +d.PetrolPrice,
+                  "kms": +d.kms,
+                  "petrolprice": +d.PetrolPrice,
                   "vanKilled" : +d.VanKilled,
                   "law" : +d.law,
                   "date" : parseDate(d.date)
@@ -355,30 +372,6 @@ function zoomed() {
 
 //            console.log(data.map(function(d){return d.driversKilled, d.drivers, d.front, d.rear;}));
 
-
-//          var dayLabels = svg.selectAll(".dayLabel")
-//              .data(days)
-//              .enter().append("text")
-//                .text(function (d) { return d; })
-//                .attr("x", 0)
-//                .attr("y", function (d, i) { return i * gridSize; })
-//                .style("text-anchor", "end")
-//                .attr("transform", "translate(-6," + gridSize / 1.5 + ")")
-//                .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "dayLabel mono axis axis-workweek" : "dayLabel mono axis"); });
-
-//          var timeLabels = svg.selectAll(".timeLabel")
-//              .data(times)
-//              .enter().append("text")
-//                .text(function(d) { return d; })
-//                .attr("x", function(d, i) { return i * gridSize; })
-//                .attr("y", 0)
-//                .style("text-anchor", "middle")
-//                .attr("transform", "translate(" + gridSize / 2 + ", -6)")
-//                .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
-//
-
-//            feature.forEach( function(d,i){
-
             var colorScale = d3.scale.quantile()
 //              .domain([0, buckets - 1, d3.max(newData)])
                     .domain(d3.extent(newData))
@@ -388,26 +381,51 @@ function zoomed() {
             console.log("colorScale.domain");
             console.log(colorScale.domain());
 
-          var heatmap = heatMapGroup.selectAll(".square")
+            var legend = svg3g1.selectAll(".legend")
+              .data([0].concat(colorScale.quantiles()), function(d) { return d; })
+              .enter().append("g")
+              .attr("class", "legend");
+
+            var heatmap = heatMapGroup.selectAll(".square")
               .data(newData)
               .enter().append("rect")
               .attr("x", function(d,i) { return Math.floor(i/4)* gridSize; })
 //                  .attr("x", 30)
 //              .attr("y", function(d,i) { return i * gridSize; })
-                  .attr("y", function(d,i){ return (i%4)*gridSize})
+              .attr("y", function(d,i){ return (i%4)*gridSize})
               .attr("rx", 4)
               .attr("ry", 4)
               .attr("class", "hour bordered")
               .attr("width", gridSize)
               .attr("height", gridSize)
-              .style("fill", colors[0]).style("stroke","gray");
+              .style("fill", colors[0]).style("stroke","gray")
+              .on('mouseover', function(d){
 
-                heatmap.transition().duration(2000)
+                  var tooltip = legend.append("text")
+                            .attr("id", "tooltip")
+                            .attr("x", legendElementWidth * 9.8)
+                            .attr("y", height3 + margin3.top + gridSize - 3)
+//                            .attr("text-anchor", "middle")
+                            .attr("font-family", "sans-serif")
+                            .attr("font-size", "14px")
+//                            .attr("font-weight", "bold")
+                            .attr("fill","red")
+                            .text(d + "people"); })
+
+
+              .on('mouseout',function(d){
+
+                            legend.select("#tooltip").remove();
+                    });
+
+
+
+          heatmap.transition().duration(2000)
               .style("fill", function(d) {
 //                            console.log(colorScale(d));
                             return colorScale(d); });
 
-//            });
+
 
             heatMapGroup.selectAll(".month").data(data).enter().append("text").attr("x", function(d,i) { return i * gridSize; }).attr("y", -5)
                     .text(function(d){return monthName[d.date.getMonth()];}).style("font-size",8);
@@ -429,10 +447,7 @@ function zoomed() {
 //
 //            console.log([0].concat(colorScale.quantiles()));
 
-          var legend = svg3g1.selectAll(".legend")
-              .data([0].concat(colorScale.quantiles()), function(d) { return d; })
-              .enter().append("g")
-              .attr("class", "legend");
+
 //
           legend.append("rect")
             .attr("x", function(d, i) { return legendElementWidth * i; })
@@ -447,6 +462,7 @@ function zoomed() {
             .attr("x", function(d, i) { return legendElementWidth  * i; })
             .attr("y", height3 + margin3.top + 30);
 
+            legend.append("text").attr("x", legendElementWidth * 9 + 5).attr("y", height3 + margin3.top + gridSize - 3).text("Toll:");
 
       });
     </script>
