@@ -57,18 +57,19 @@
     <h2>Time Series Plot</h2>
     <ul>
         <li><b>Basic Functionality:</b> Line plot</li>
-        <li><b>Moderate Functionality:</b> Panning, Detail-on-Demand</li>
-        <li><b>Advanced Functionality:</b> Brushing</li>
+        <li><b>Moderate Functionality:</b> Panning on brushed window, Detail-on-Demand</li>
+        <li><b>Advanced Functionality:</b> Brushing, Filtering</li>
     </ul>
     <div id="chart1" width="2200" height="640">
         <select name="tpi" id="xxxxx">
-        <option selected="selected" value="driversKilled">driversKilled</option>
-        <option value="drivers">drivers</option>
+        <!--<option value="driversKilled">driversKilled</option>-->
+        <option selected="selected" value="drivers">drivers</option>
         <option value="front">front</option>
         <option value="rear">rear</option>
         <option value="vanKilled">vanKilled</option>
-            <option value="kms">kms</option>
-            <option value="petrolPrice">petrolPrice</option>
+        <option value="kms">kms</option>
+        <option value="petrolPrice">petrolPrice</option>
+        <option value="law">law</option>
       </select>
 
         <style>
@@ -102,6 +103,33 @@ svg {
 </style>
         <script>
 
+var parseDate = d3.time.format("%Y-%m-%d").parse;
+var title = {
+                        "diversKilled" : "Drivers Killed",
+                        "drivers" : "Drivers Killed",
+                        "front" : "Front-seat passengers killed or seriously injured",
+                        "rear" : "Rear-seat passengers killed or seriously injured.",
+                        "kms" : "Distance driven.",
+                        "petrolPrice" : "Petrol Price.",
+                        "vanKilled" : "Number of van (‘light goods vehicle’) drivers.",
+                        "law" : "Was the law in effect that month?"};
+var ylabel = {
+                        "diversKilled" : "Drivers Killed",
+                        "drivers" : "Toll",
+                        "front" : "Toll",
+                        "rear" : "Toll",
+                        "kms" : "",
+                        "petrolPrice" : "",
+                        "vanKilled" : "Toll",
+                        "law" : ""};
+function plot(){
+
+    console.log(document.getElementById("xxxxx").value);
+    d3.select("#mainSVG").remove();
+
+var selected = document.getElementById("xxxxx").value;
+
+
 var margin = {top: 60, right: 20, bottom: 120, left: 70},
     margin2 = {top: 250, right: 120, bottom: 20, left: 70},
     width = 960 - margin.left - margin.right,
@@ -109,7 +137,7 @@ var margin = {top: 60, right: 20, bottom: 120, left: 70},
     height2 = 300 - margin2.top - margin2.bottom;
 
 //
-var parseDate = d3.time.format("%Y-%m-%d").parse;
+
 
 var xScale = d3.time.scale().range([0, width]),
     xScale2 = d3.time.scale().range([0, width]),
@@ -129,6 +157,8 @@ var brush = d3.svg.brush()
                             // element is evenet listener " can be "brushstart, brush, brushend"
                             // when event happened call the brushed function
 
+//var selected = document.getElementById("xxxxx").value;
+
 function brushed() {
 
     xScale.domain( brush.empty() ? xScale2.domain() : brush.extent());
@@ -138,7 +168,7 @@ function brushed() {
     focus1.select(".xAxis").call(xAxis);
 }
 
-var svg = d3.select("#chart1").append("svg")
+var svg = d3.select("#chart1").append("svg").attr("id","mainSVG")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom);
 
@@ -152,7 +182,7 @@ svg.append("defs").append("clipPath")
     .attr("width", width)
     .attr("height", height);
 
-svg.append("text").text("Front-seat passengers killed or seriously injured").style("text-anchor", "middle").attr("x",width/2 + margin.left).attr("y",30)
+svg.append("text").text(title[selected]).style("text-anchor", "middle").attr("x",width/2 + margin.left).attr("y",30)
         .attr("font-size", "24px");
 var focus1 = svg.append("g")
     .attr("class", "focus")
@@ -163,28 +193,34 @@ var context1 = svg.append("g")
     .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
 
+
+
 var line1 = d3.svg.line()
     .interpolate("basis") // smoothing method
     .x(function(d) { return xScale(d.date); }) // look at the x
-    .y(function(d) { return yScale(d.front); });
+//    .y(function(d) { return yScale(d.front); });
+    .y(function(d) { return yScale(d[selected]); });
 
 var line2 = d3.svg.line()
     .interpolate("basis") // smoothing method
     .x(function(d) { return xScale2(d.date); }) // look at the x
-    .y(function(d) { return yScale2(d.front); });
+//    .y(function(d) { return yScale2(d.front); });
+    .y(function(d) { return yScale2(d[selected]); });
 
 
 var area1 = d3.svg.area()
     .interpolate("monotone") // use the generator function to generate the data for you
     .x(function(d) { return xScale(d.date); })
     .y0(height)
-    .y1(function(d) { return yScale(d.front); });
+//    .y1(function(d) { return yScale(d.front); });
+    .y1(function(d) { return yScale(d[selected]); });
 
 var area2 = d3.svg.area()
     .interpolate("monotone") // use the generator function to generate the data for you
     .x(function(d) { return xScale2(d.date); })
     .y0(height2)
-    .y1(function(d) { return yScale2(d.front); });
+//    .y1(function(d) { return yScale2(d.front); });
+    .y1(function(d) { return yScale2(d[selected]); });
 
 
 
@@ -200,14 +236,22 @@ d3.csv("./data/seatbelts.csv",
                         "kms" : +d.kms,
                         "petrolPrice" : +d.PetrolPrice,
                         "vanKilled" : +d.VanKilled,
-                        "law" : +d.law}},
+                        "law" : +d.law};},
 
         function(error, data) {
 
                 console.log(data);
         // scale function is the setter if received argument, getter if it's empty
+//        xScale.domain(d3.extent(data.map(function(d) { return d.date; })));
+//        yScale.domain([0, d3.max(data.map(function(d) { return d.front; }))]);
         xScale.domain(d3.extent(data.map(function(d) { return d.date; })));
-        yScale.domain([0, d3.max(data.map(function(d) { return d.front; }))]);
+        yScale.domain([0, d3.max(data.map(function(d) {
+//            console.log(selected);
+//            console.log(d);
+//            console.log(d['driversKilled']);
+//            console.log(d['drivers']);
+            return d[selected]; }))]);
+
         xScale2.domain(xScale.domain());
         yScale2.domain(yScale.domain());
 
@@ -225,7 +269,7 @@ d3.csv("./data/seatbelts.csv",
             .attr("class", "y axis")
             .call(yAxis);
 
-            yGuide1.append('text').text("Toll").attr("x",-35);
+            yGuide1.append('text').text(ylabel[selected]).attr("x",-35);
             xGuide1.append('text').text("Time").attr("x",width - 30).attr("y",-5);
 //            var xGuide = context1.append('g').attr("transform","translate(" + margin.left "," + margin.top + height + margin)
 //        focus1.append("path") // draw area
@@ -290,10 +334,16 @@ d3.csv("./data/seatbelts.csv",
 //            console.log(x0);
 //            console.log("ii");
 //            console.log(i);
-            focusDot.attr("transform", "translate(" + xScale(d.date) + "," + yScale(d.front) + ")");
-            focusDot.select("text").text(d.front);
+//            focusDot.attr("transform", "translate(" + xScale(d.date) + "," + yScale(d.front) + ")");
+              focusDot.attr("transform", "translate(" + xScale(d.date) + "," + yScale(d[selected]) + ")");
+//            focusDot.select("text").text(d.front);
+            focusDot.select("text").text(d[selected]);
   }
-        })
+        });
+
+    };
+plot();
+document.getElementById("xxxxx").onchange = plot;
 </script>
     </div>
 
@@ -301,11 +351,12 @@ d3.csv("./data/seatbelts.csv",
     <h2>Cal-Heat Map</h2>
     <ul>
     <li><b>Basic Functionality:</b> Calendar Heat Map</li>
-    <li><b>Moderate Functionality:</b> Zooming, Panning, Dragging</li>
+    <li><b>Moderate Functionality:</b> Zooming, Panning, Dragging, and Detail-on-Demand</li>
     </ul>
     <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
     <script >
 //var parseDate = d3.time.format("%Y-%m-%d").parse;
+
 var margin3 = { top: 50, right: 0, bottom: 100, left: 30 },
     width3 = 960 - margin3.left - margin3.right,
     height3 = 280 - margin3.top - margin3.bottom,
@@ -343,7 +394,8 @@ function zoomed() {
 
 }
 
-      d3.csv("./data/seatbelts.csv",
+d3.csv("./data/seatbelts.csv",
+
         function(d) {
           return {
                   "driversKilled" : +d.DriversKilled,
@@ -360,6 +412,8 @@ function zoomed() {
         function(error, data) {
 
             // append new svg
+            console.log("second chart")
+            console.log(data);
             var newData = [];
             for ( i in data){
                 newData.push(data[i].driversKilled);
@@ -372,6 +426,7 @@ function zoomed() {
 
 //            console.log(data.map(function(d){return d.driversKilled, d.drivers, d.front, d.rear;}));
 
+            console.log(newData);
             var colorScale = d3.scale.quantile()
 //              .domain([0, buckets - 1, d3.max(newData)])
                     .domain(d3.extent(newData))
@@ -440,15 +495,6 @@ function zoomed() {
 
 
 //
-
-
-//
-//          heatMap.append("title").text(function(d) { return d.value; });
-//
-//            console.log([0].concat(colorScale.quantiles()));
-
-
-//
           legend.append("rect")
             .attr("x", function(d, i) { return legendElementWidth * i; })
             .attr("y", height3 + margin3.top)
@@ -469,8 +515,23 @@ function zoomed() {
     </div>
     <div>
     <h2>Design Guide</h2>
+        <p>
+            Seatbelts dataset has 8 variables in total. Each one of them has very different domain range, making it very difficult to visualize them all in one plot. So, I created a drop down
+            list to sort of filtering the data and just plot one variable at a time. To increase the explorability of my line chart, I added an overview at the bottom to maintain the context and
+            created a brushing function so that more focus can be applied to the main one. I chose the "basis" method to interpolate the line path, which makes the whole visualization
+            a lot smoother than other methods. However, the trade-off is introducing more lie-factor in the chart. Hence, I created a blue dot to indicate the exact value of variable when mouse is in
+            the plotting region.<br><br>
+            For the cal-heatmap, I implemented zooming and dragging functionality on it so that users can resize the chart and drag to the part that they are interested. Also, to provide more detail
+            on each block, I added a fixed tooltip besides the color scale to indicate the actual number for each data point.
 
-
+        </p>
+    <h2>Reference</h2>
+        <ul>
+            <li><a href="http://bl.ocks.org/mbostock/1667367">focus+context</a></li>
+            <li><a href="http://www.d3noob.org/2014/07/my-favourite-tooltip-method-for-line.html">tooltip for line chart</a> </li>
+            <li><a href="http://bl.ocks.org/tjdecke/5558084">calendar heatmap</a> </li>
+            <li><a href="http://bl.ocks.org/mbostock/6123708">drag and zoom</a></li>
+        </ul>
     </div>
 </body>
 </html>
