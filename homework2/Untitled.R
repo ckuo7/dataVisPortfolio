@@ -35,3 +35,13 @@ write.csv(
   file = "stateX77aggregate.csv", 
   row.names = FALSE
 )
+
+
+# hw4
+library(ggplot2)
+
+mov_ <- movies[ is.na(movies$budget) == T,]
+nrow(mov_)
+
+write.csv(movies,'./moviesWhole.csv',row.names=F)
+write.csv(mov_,'./movieRna.csv',row.names=F)
