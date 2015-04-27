@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4da44846-0f61-4340-bdca-234c9e532f52" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/homework2/Untitled.R" afterPath="$PROJECT_DIR$/homework2/Untitled.R" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/homework4.html" afterPath="$PROJECT_DIR$/homework4.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/homework4/prototype.twb" afterPath="$PROJECT_DIR$/homework4/prototype.twb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="spring-2015-msan622.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -76,8 +73,8 @@
       <file leaf-file-name="homework3.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/homework3.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.041667" vertical-offset="503" max-vertical-offset="4980">
-              <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+            <state vertical-scroll-proportion="-25.916666" vertical-offset="83" max-vertical-offset="4980">
+              <caret line="72" column="15" selection-start-line="63" selection-start-column="8" selection-end-line="72" selection-end-column="15" />
               <folding>
                 <element signature="n#nav#0;n#body#0;n#html#0;n#!!top" expanded="false" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
@@ -90,11 +87,9 @@
       <file leaf-file-name="homework4.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/homework4.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6260997" vertical-offset="2168" max-vertical-offset="3525">
-              <caret line="194" column="41" selection-start-line="194" selection-start-column="41" selection-end-line="194" selection-end-column="41" />
-              <folding>
-                <element signature="n#head#0;n#html#0;n#!!top" expanded="false" />
-              </folding>
+            <state vertical-scroll-proportion="0.6480938" vertical-offset="2753" max-vertical-offset="4665">
+              <caret line="213" column="53" selection-start-line="213" selection-start-column="53" selection-end-line="213" selection-end-column="53" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -429,7 +424,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="826" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
@@ -1051,6 +1046,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/homework1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-30.291666" vertical-offset="2588" max-vertical-offset="4425">
+          <caret line="299" column="26" selection-start-line="299" selection-start-column="26" selection-end-line="299" selection-end-column="26" />
+          <folding>
+            <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="e#9331#9396#0" expanded="false" />
+            <element signature="e#10549#10623#0" expanded="false" />
+            <element signature="e#10676#11751#0" expanded="false" />
+            <element signature="n#section#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#p#1;n#section#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#2;n#section#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#4;n#section#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#footer#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#p#0;n#footer#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/projectDataset.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-19.041666" vertical-offset="353" max-vertical-offset="1095">
@@ -1083,8 +1098,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/homework3.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.041667" vertical-offset="503" max-vertical-offset="4980">
-          <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+        <state vertical-scroll-proportion="-25.916666" vertical-offset="83" max-vertical-offset="4980">
+          <caret line="72" column="15" selection-start-line="63" selection-start-column="8" selection-end-line="72" selection-end-column="15" />
           <folding>
             <element signature="n#nav#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
@@ -1093,33 +1108,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/homework1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-30.291666" vertical-offset="2588" max-vertical-offset="4425">
-          <caret line="299" column="26" selection-start-line="299" selection-start-column="26" selection-end-line="299" selection-end-column="26" />
-          <folding>
-            <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="e#9331#9396#0" expanded="false" />
-            <element signature="e#10549#10623#0" expanded="false" />
-            <element signature="e#10676#11751#0" expanded="false" />
-            <element signature="n#section#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#p#1;n#section#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#2;n#section#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#4;n#section#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#footer#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#p#0;n#footer#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/homework4.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6260997" vertical-offset="2168" max-vertical-offset="3525">
-          <caret line="194" column="41" selection-start-line="194" selection-start-column="41" selection-end-line="194" selection-end-column="41" />
-          <folding>
-            <element signature="n#head#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="0.6480938" vertical-offset="2753" max-vertical-offset="4665">
+          <caret line="213" column="53" selection-start-line="213" selection-start-column="53" selection-end-line="213" selection-end-column="53" />
+          <folding />
         </state>
       </provider>
     </entry>

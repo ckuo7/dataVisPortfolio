@@ -66,13 +66,13 @@
 
 .inner {
     width: 1600px;
-    height: 960px;
-    overflow: scroll;
+    height: 600px;
+    overflow: auto;
 }
 #dashboard{
     width: 1600px;
-    height: 2000px;
-    /*height: 100%;*/
+    height: 1600px;
+    overflow: scroll;
 }
 </style>
 <div id="chart1" class="inner">
@@ -95,18 +95,30 @@
 //            dropDownList.appendChild(select);
         })
     </script>
-    <svg id="dashboard" width="1600" height="3000"></svg>
+    <select name="tpi" id="genre">
+        <option selected="selected" value="none">none</option>
+        <option value="action">action</option>
+        <option value="animation">animation</option>
+        <option value="comedy">comedy</option>
+        <option value="drama">drama</option>
+        <option value="documentary">documentary</option>
+        <option value="romance">romance</option>
+        <option value="short">short</option>
+      </select>
     <script>
 
 
 
     var margin = {top: 40, right: 20, bottom: 30, left: 40},
         width = 500 - margin.left - margin.right,
-        height = 960 - margin.top - margin.bottom;
+        height = 6000 - margin.top - margin.bottom;
 
-    var frameRect = d3.select('svg').append('rect').attr('width',1600).attr("height",1200).style("fill","none").style("stroke","gray");
-    var chart1 = d3.select('svg').append('g');
+    var svg = d3.select("#chart1").append('svg').attr("width",1600);
+//            .attr("height", (height + margin.top + margin.left));
 
+    var frameRect = d3.select('svg').append('rect').attr('width',1600).style("fill","none").style("stroke","gray");
+
+    var chart1 = d3.select('svg').append('g').attr("id","barGroup");
 
     var xScale = d3.scale.linear()
             .range([0, width]).domain([0,10]);
@@ -114,103 +126,143 @@
     // .rangeRoundBands([0, width], .1, 1)
     // .rangeRoundBands([0, width], .1,.2)
 
-    var yScale = d3.scale.ordinal()
-            .rangeBands([0, height],.1,.3);
+
     // .domain([0, d3.max(wordList, function(d){return d.frequency;})]);
 
     var xAxis = d3.svg.axis()
             .scale(xScale)
             .orient("top").ticks(10);
 
-    var yAxis = d3.svg.axis()
-            .scale(yScale)
-            .orient("left");
+
 //            .ticks(d3.max(wordList, function (d) {
 //                return d.frequency
 //            }));
     // .tickFormat(formatPercent);
+    var xGuide = chart1.append("g")
+                            .attr("class", "x axis")
+                            .attr("id", "axis")
+                            .call(xAxis);
+    xGuide.selectAll('line').style({"fill": "none", "stroke": "black"});
+    xGuide.selectAll('path').style({"fill": "none", "stroke": "black"});
+
 
     var movieData = [];
     var uniqueYear = [];
 
-d3.csv("./data/moviesWhole.csv",
+    function plotBar() {
 
-        function(d){
+        d3.selectAll(".bar").remove();
+        d3.select("#yAxis").remove();
+//        var chart1 = d3.select('svg').append('g').attr("id","barGroup");
+        d3.csv("./data/moviesWhole.csv",
 
-            return {    "title" : d.title,
-                        "year" : +d.year,
-                        "length" : +d.Length,
-                        "budget" : +d.budget,
-                        "mpaa" : d.mpaa,
-                        "votes" : +d.votes,
-                        "rating" : +d.rating,
-                        "action" : +d.Action,
-                        "animation" : +d.Animation,
-                        "comedy" : +d.Comedy,
-                        "drama" : +d.Drama,
-                        "documentary" : +d.Documentary,
-                        "romance" : +d.Romance,
-                        "short" : +d.Short
+                function (d) {
+
+                    return {
+                        "title": d.title,
+                        "year": +d.year,
+                        "length": +d.Length,
+                        "budget": +d.budget,
+                        "mpaa": d.mpaa,
+                        "votes": +d.votes,
+                        "rating": +d.rating,
+                        "action": +d.Action,
+                        "animation": +d.Animation,
+                        "comedy": +d.Comedy,
+                        "drama": +d.Drama,
+                        "documentary": +d.Documentary,
+                        "romance": +d.Romance,
+                        "short": +d.Short
                     };
-                    },
+                },
 
-        function(error, data) {
-            console.log(error);
+                function (error, data) {
+                    console.log(error);
 
-            console.log(document.getElementById("selectYear").value);
-            var sYear = +document.getElementById("selectYear").value;
-            console.log(sYear);
+//                    console.log(document.getElementById("selectYear").value);
+                    var sYear = +document.getElementById("selectYear").value;
+                    var mGenre = document.getElementById("genre").value;
+                    console.log(sYear);
+                    console.log(mGenre);
 
-            var data_ = [];
-            data.forEach(function(d){
-                if (d.year === sYear){data_.push(d);}});
+                    var data_ = [];
+
+                    if (mGenre === "none") {
+                        data.forEach(function (d) {
+                            if (d.year === sYear) {
+                                data_.push(d);
+                            }
+                        });
+                    }
+                    else{
+                        data.forEach(function (d) {
+                            if (d.year === sYear && d[mGenre] === 1) {
+                                data_.push(d);
+                            }
+                        });
+
+                    }
 
 
+                    var sortData_ = data_.sort(function (a, b) {
+                        return a.rating - b.rating;}).reverse();
+                    var numOfMovies = sortData_.length;
 
-            var sortData_ = data_.sort(function(a,b){ return a.rating - b.rating;}).reverse().slice(0,20);
-            var leftmargin = d3.max( sortData_, function(d){return d.title.length;});
-            console.log(leftmargin);
-            chart1.attr("transform","translate(" + (leftmargin*6 + margin.left) + "," + margin.top + ")");
+                    console.log(numOfMovies);
+                    var height_ = numOfMovies*30;
+                    svg.attr("height",height_);
+                    frameRect.attr('height',height_);
+                    var yScale = d3.scale.ordinal().rangeBands([0, height_],.1,.3);
+                    var yAxis = d3.svg.axis().scale(yScale).orient("left");
 
-            console.log(sortData_);
 
-            yScale.domain(sortData_.map(function (d) {return d.title;}));
-            chart1.selectAll('rect').data(sortData_).enter().append("rect")
-                    .attr('class',"bar")
-                    .attr("x", 0)
-                    .attr("y", function(d){return yScale(d.title);})
-                    .attr("width",0)
+                    var leftmargin = d3.max(sortData_, function (d) {
+                        return d.title.length;
+                    });
+                    console.log(leftmargin);
+                    chart1.attr("transform", "translate(" + (leftmargin * 6 + margin.left) + "," + margin.top + ")");
+
+                    console.log(sortData_);
+
+                    yScale.domain(sortData_.map(function (d) {
+                        return d.title;
+                    }));
+                    chart1.selectAll('rect').data(sortData_).enter().append("rect")
+                            .attr('class', "bar")
+                            .attr("x", 0)
+                            .attr("y", function (d) {
+                                return yScale(d.title);
+                            })
+                            .attr("width", 0)
 //                    .attr("width",function(d){
 //                        console.log(xScale(d.rating));
 //                        return xScale(d.rating);})
-                    .attr("height", yScale.rangeBand())
-                    .style("fill","steelblue");
+                            .attr("height", yScale.rangeBand())
+                            .style("fill", "steelblue");
 
-            d3.selectAll(".bar").data(sortData_)
-                    .transition().duration(400).delay(function (d, i) {return 200 * i;})
-                    .attr("width", function (d) {
-                        return xScale(d.rating);});
+                    d3.selectAll(".bar").data(sortData_)
+                            .transition().duration(400).delay(function (d, i) {
+                                return 50 * i;
+                            })
+                            .attr("width", function (d) {
+                                return xScale(d.rating);
+                            });
 //            })
 //            .attr("y", function (d) {
 //                return (y(d.frequency))
 //            });
 
-            var xGuide = chart1.append("g")
-                .attr("class", "x axis")
-                .attr("id","axis")
-                .call(xAxis);
 
 
-            var yGuide = chart1.append("g")
-                    .attr("class", "y axis")
-                    .attr("id","axis")
-                    .call(yAxis);
 
-            xGuide.selectAll('line').style({"fill": "none", "stroke": "black"});
-            xGuide.selectAll('path').style({"fill": "none", "stroke": "black"});
+                    var yGuide = chart1.append("g")
+                            .attr("class", "y axis")
+                            .attr("id", "yAxis")
+                            .call(yAxis);
 
-            yGuide.selectAll('line').style({"fill": "none", "stroke": "none"});
-            yGuide.selectAll('path').style({"fill": "none", "stroke": "none"});
+
+                    yGuide.selectAll('line').style({"fill": "none", "stroke": "none"});
+                    yGuide.selectAll('path').style({"fill": "none", "stroke": "none"});
 
 
 //            console.log(uniqueYear);
@@ -237,14 +289,17 @@ d3.csv("./data/moviesWhole.csv",
 //            console.log(select);
 //            dropDownList.appendChild(select);
 
-        });
-
+                });
+    }
 //console.log(movieData);
 
 //        var uniqueYear = movieData.map(function(d){
 //            console.log(d);
 //            return d.year;});
 //        console.log(uniqueYear)
+        document.getElementById("selectYear").onchange = plotBar;
+        document.getElementById("genre").onchange = plotBar;
+        plotBar()
     </script>
 </div>
 
