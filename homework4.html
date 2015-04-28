@@ -74,6 +74,15 @@
     height: 1600px;
     overflow: scroll;
 }
+path.slice{
+	stroke-width:2px;
+}
+polyline{
+	opacity: .3;
+	stroke: black;
+	stroke-width: 2px;
+	fill: none;
+}
 </style>
 <div id="chart1" class="inner">
     <script>
@@ -111,7 +120,8 @@
 
     var margin = {top: 40, right: 20, bottom: 30, left: 40},
         width = 500 - margin.left - margin.right,
-        height = 6000 - margin.top - margin.bottom;
+        height = 6000 - margin.top - margin.bottom,
+        radius = 180;
 
     var svg = d3.select("#chart1").append('svg').attr("width",1600);
 //            .attr("height", (height + margin.top + margin.left));
@@ -120,34 +130,177 @@
 
     var chart1 = d3.select('svg').append('g').attr("id","barGroup");
 
-    var xScale = d3.scale.linear()
-            .range([0, width]).domain([0,10]);
-    // .domain(wordList.map(function(d){return d.letter;}));
-    // .rangeRoundBands([0, width], .1, 1)
-    // .rangeRoundBands([0, width], .1,.2)
+    var xScale = d3.scale.linear().range([0, width]).domain([0,10]);
 
+    var xAxis = d3.svg.axis().scale(xScale).orient("top").ticks(10);
 
-    // .domain([0, d3.max(wordList, function(d){return d.frequency;})]);
-
-    var xAxis = d3.svg.axis()
-            .scale(xScale)
-            .orient("top").ticks(10);
-
-
-//            .ticks(d3.max(wordList, function (d) {
-//                return d.frequency
-//            }));
-    // .tickFormat(formatPercent);
-    var xGuide = chart1.append("g")
-                            .attr("class", "x axis")
-                            .attr("id", "axis")
-                            .call(xAxis);
+    var xGuide = chart1.append("g").attr("class", "x axis").attr("id", "axis").call(xAxis);
     xGuide.selectAll('line').style({"fill": "none", "stroke": "black"});
     xGuide.selectAll('path').style({"fill": "none", "stroke": "black"});
 
 
     var movieData = [];
     var uniqueYear = [];
+
+    var donut = svg.append("g");
+
+    donut.append("g").attr("class", "slices");
+    donut.append("g").attr("class", "labels");
+    donut.append("g").attr("class", "lines");
+
+    var pie = d3.layout.pie()
+	    .sort(null)
+	    .value(function(d) {
+		    return d.value;
+	        });
+
+    var arc = d3.svg.arc()
+	    .outerRadius(radius * 0.8)
+	    .innerRadius(radius * 0.4);
+
+    var outerArc = d3.svg.arc()
+	    .innerRadius(radius * 0.9)
+	    .outerRadius(radius * 0.9);
+
+    donut.attr("transform", "translate(300,360)");
+
+    var key = function(d){
+        console.log(d);
+        return d.data.label; };
+
+    var color = d3.scale.ordinal()
+	    .domain(["action","animation","comedy","drama","documentary","romance","short"])
+	    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+//function randomData (){
+//	var labels = color.domain();
+//	return labels.map(function(label){
+//		return { label: label, value: Math.random() }
+//	});
+//}
+
+    d3.csv("./data/movieGenreYear.csv",
+        function(d){
+                return {
+                    "year": +d.year,
+                    "action": +d.action,
+                    "animation": +d.animation,
+                    "comedy": +d.comedy,
+                    "drama": +d.drama,
+                    "documentary": +d.documentary,
+                    "romance": +d.romance,
+                    "short": +d.short,
+                    "sum" : +d.sum };
+        },
+        function(error,data){
+
+            var data_ = [];
+            var sum_ = null;
+            data.forEach(function(d){
+                if(d.year===2005){
+                    console.log(d);
+                    data_.push({"label":"action","value":d.action});
+                    data_.push({"label":"animation","value":d.animation});
+                    data_.push({"label":"comedy","value":d.comedy});
+                    data_.push({"label":"drama","value": d.drama});
+                    data_.push({"label":"documentary","value":d.documentary});
+                    data_.push({"label":"romance","value":d.romance});
+                    data_.push({"label":"short","value":d.short});
+                    sum_ = d.sum;}});
+
+//            console.log(data_);
+//            console.log(sum_);
+
+
+            console.log(error);
+            console.log(pie(data_));
+
+            var slice = donut.select(".slices").selectAll("path.slice").data(pie(data_), key);
+//            console.log(slice);
+
+            slice.enter()
+                .insert("path")
+                .style("fill", function(d) { return color(d.data.label); })
+                .attr("class", "slice");
+
+            slice.transition().duration(1000)
+                .attrTween("d", function(d) {
+                    this._current = this._current || d;
+                    var interpolate = d3.interpolate(this._current, d);
+                    this._current = interpolate(0);
+                    return function(t) {
+                        return arc(interpolate(t));
+                    };
+                });
+
+        	slice.exit().remove();
+
+
+            var text = donut.select(".labels").selectAll("text")
+		        .data(pie(data_), key);
+
+            text.enter()
+                .append("text")
+                .attr("dy", ".35em")
+                .text(function(d) {
+                    return d.data.label;
+                });
+
+            function midAngle(d){
+                return d.startAngle + (d.endAngle - d.startAngle)/2;
+            }
+
+            text.transition().duration(1000)
+                .attrTween("transform", function(d) {
+                    this._current = this._current || d;
+                    var interpolate = d3.interpolate(this._current, d);
+                    this._current = interpolate(0);
+                    return function(t) {
+                        var d2 = interpolate(t);
+                        var pos = outerArc.centroid(d2);
+                        pos[0] = radius * (midAngle(d2) < Math.PI ? 1 : -1);
+                        return "translate("+ pos +")";
+                    };
+                })
+                .styleTween("text-anchor", function(d){
+                    this._current = this._current || d;
+                    var interpolate = d3.interpolate(this._current, d);
+                    this._current = interpolate(0);
+                    return function(t) {
+                        var d2 = interpolate(t);
+                        return midAngle(d2) < Math.PI ? "start":"end";
+                    };
+                });
+
+            text.exit()
+                .remove();
+
+
+            var polyline = donut.select(".lines").selectAll("polyline")
+                .data(pie(data_), key);
+
+            polyline.enter()
+                .append("polyline");
+
+            polyline.transition().duration(1000)
+                .attrTween("points", function(d){
+                    this._current = this._current || d;
+                    var interpolate = d3.interpolate(this._current, d);
+                    this._current = interpolate(0);
+                    return function(t) {
+                        var d2 = interpolate(t);
+                        var pos = outerArc.centroid(d2);
+                        pos[0] = radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
+                        return [arc.centroid(d2), outerArc.centroid(d2), pos];
+                    };
+                });
+
+            polyline.exit()
+                .remove();
+
+        }
+    );
+
 
     function plotBar() {
 
@@ -219,10 +372,10 @@
                     var leftmargin = d3.max(sortData_, function (d) {
                         return d.title.length;
                     });
-                    console.log(leftmargin);
-                    chart1.attr("transform", "translate(" + (leftmargin * 6 + margin.left) + "," + margin.top + ")");
+//                    console.log(leftmargin);
+                    chart1.attr("transform", "translate(" + (leftmargin * 6 + margin.left + 480) + "," + margin.top + ")");
 
-                    console.log(sortData_);
+//                    console.log(sortData_);
 
                     yScale.domain(sortData_.map(function (d) {
                         return d.title;
@@ -291,12 +444,7 @@
 
                 });
     }
-//console.log(movieData);
 
-//        var uniqueYear = movieData.map(function(d){
-//            console.log(d);
-//            return d.year;});
-//        console.log(uniqueYear)
         document.getElementById("selectYear").onchange = plotBar;
         document.getElementById("genre").onchange = plotBar;
         plotBar()
