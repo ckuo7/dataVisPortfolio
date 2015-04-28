@@ -43,7 +43,13 @@ library(ggplot2)
 mov_ <- movies[ is.na(movies$budget) == T,]
 nrow(mov_)
 
-write.csv(movies,'./moviesWhole.csv',row.names=F,na="")
+movies_ <- movies
+names(movies_) <- c(names(movies_)[1:2],"Length",names(movies_)[4:24])
+
+year <- data.frame(year = sort(unique(movies$year),decreasing=T))
+
+write.csv(movies_,'../data/moviesWhole.csv',row.names=F,na="")
+write.csv(year,'../data/moviesYear.csv',row.names=F,na="")
 write.csv(mov_,'./movieRna.csv',row.names=F)
 
 mv0 <- data.frame(unique(movies$year))
