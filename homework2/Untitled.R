@@ -38,6 +38,7 @@ write.csv(
 
 
 # hw4
+setwd('~/Desktop/MSAN622/spring-2015-msan622/data/')
 library(ggplot2)
 
 mov_ <- movies[ is.na(movies$budget) == T,]
@@ -85,3 +86,8 @@ mv01234567 <- merge(mv0123456,mv7,by='year',all.x=T)
 names(mv01234567) <- c('year','romance','documentary',"action","animation","drama","comedy","short")
 
 head(mv01234567)
+
+mvsum <- mv01234567$romance + mv01234567$documentary + mv01234567$action + mv01234567$animation + mv01234567$drama + mv01234567$comedy +mv01234567$short
+mv01234567$sum <- mvsum
+
+write.csv(mv01234567,"./movieGenreYear.csv",row.names=F)
