@@ -91,3 +91,78 @@ mvsum <- mv01234567$romance + mv01234567$documentary + mv01234567$action + mv012
 mv01234567$sum <- mvsum
 
 write.csv(mv01234567,"./movieGenreYear.csv",row.names=F)
+
+############# chart3 #############
+
+names(movies_)
+
+movies1 <- movies_[is.na(movies_$budget) == F,]
+nrow(movies_)
+nrow(movies1)
+
+mv3_1 <- aggregate(movies1$budget, by = list(movies1$year),mean)
+
+mv3_2 <- movies1[ movies1$Action == 1,]
+mv3_2_ <- aggregate(mv3_2$budget, by = list(mv3_2$year),mean)
+nrow(mv3_2_)
+
+mv3_3 <- movies1[ movies1$Animation == 1,]
+mv3_3_ <- aggregate(mv3_3$budget, by = list(mv3_3$year),mean)
+nrow(mv3_3_)
+
+mv3_4 <- movies1[ movies1$Drama == 1,]
+mv3_4_ <- aggregate(mv3_4$budget, by = list(mv3_4$year),mean)
+nrow(mv3_4_)
+
+mv3_5 <- movies1[ movies1$Documentary == 1,]
+mv3_5_ <- aggregate(mv3_5$budget, by = list(mv3_5$year),mean)
+nrow(mv3_5_)
+
+mv3_6 <- movies1[ movies1$Comedy == 1,]
+mv3_6_ <- aggregate(mv3_6$budget, by = list(mv3_6$year),mean)
+nrow(mv3_6_)
+
+mv3_7 <- movies1[ movies1$Romance == 1,]
+mv3_7_ <- aggregate(mv3_7$budget, by = list(mv3_7$year),mean)
+nrow(mv3_7_)
+
+mv3_8 <- movies1[ movies1$Short == 1,]
+mv3_8_ <- aggregate(mv3_8$budget, by = list(mv3_8$year),mean)
+nrow(mv3_8_)
+
+mv3_12 <- merge(mv3_1,mv3_2_,by='Group.1',all.x=T)
+names(mv3_12) <- c('Group.1','total','action')
+
+mv3_123 <- merge(mv3_12,mv3_3_,by='Group.1',all.x=T)
+names(mv3_123) <- c('Group.1','total','action','animation')
+
+mv3_1234 <- merge(mv3_123,mv3_4_,by='Group.1',all.x=T)
+names(mv3_1234) <- c('Group.1','total','action','animation','drama')
+
+mv3_12345 <- merge(mv3_1234,mv3_5_,by='Group.1',all.x=T)
+names(mv3_12345) <- c('Group.1','total','action','animation','drama','documentary')
+
+mv3_123456 <- merge(mv3_12345,mv3_6_,by='Group.1',all.x=T)
+names(mv3_123456) <- c('Group.1','total','action','animation','drama','documentary','comedy')
+
+mv3_1234567 <- merge(mv3_123456,mv3_7_,by='Group.1',all.x=T)
+names(mv3_1234567) <- c('Group.1','total','action','animation','drama','documentary','comedy','short')
+
+mv3_12345678 <- merge(mv3_1234567,mv3_8_,by='Group.1',all.x=T)
+names(mv3_12345678) <- c('year','total','action','animation','drama','documentary','comedy','short','romance')
+
+
+
+head(mv3_12345678)
+summary(mv3_12345678)
+
+mv3_12345678[ is.na(mv3_12345678$action)==T, ]$action <- 0
+mv3_12345678[ is.na(mv3_12345678$animation)==T, ]$animation <- 0
+mv3_12345678[ is.na(mv3_12345678$comedy)==T, ]$comedy <- 0
+mv3_12345678[ is.na(mv3_12345678$documentary)==T, ]$documentary <- 0
+mv3_12345678[ is.na(mv3_12345678$drama)==T, ]$drama <- 0
+mv3_12345678[ is.na(mv3_12345678$romance)==T, ]$romance <- 0
+mv3_12345678[ is.na(mv3_12345678$short)==T, ]$short <- 0
+
+write.csv(mv3_12345678,'./moviesBudget.csv', row.names=F, na="")
+

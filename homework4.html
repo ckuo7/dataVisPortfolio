@@ -55,7 +55,11 @@
 
 <div class = "container"></div>
 <div>
-    <h2><a href="https://public.tableau.com/views/prototype_0/Dashboard1?:embed=y&:showTabs=y&:display_count=yes">Prototype</a></h2>
+    <ul>
+        <h2><a href="https://public.tableau.com/views/prototype_0/Dashboard1?:embed=y&:showTabs=y&:display_count=yes">Prototype</a></h2>
+        <h2>Data Preprocessing</h2>
+    </ul>
+
 </div>
 <style>
     svg {
@@ -119,12 +123,12 @@ polyline{
   opacity: 0.5 ;
 }
 </style>
-<div id="chart1" class="inner">
-    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+<ul id = "filter">
+
     <script>
         var select = document.createElement("select");
         select.setAttribute("id","selectYear");
-        var dropDownList = document.getElementById("chart1");
+        var dropDownList = document.getElementById("filter");
         dropDownList.appendChild(select);
         d3.csv('../data/moviesYear.csv', function(d){ return d.year;}, function(error,data){
             data.forEach( function(d){
@@ -136,8 +140,6 @@ polyline{
                 option.appendChild(textnode);
                 select.appendChild(option);
             });
-//            console.log(select);
-//            dropDownList.appendChild(select);
         })
     </script>
     <select name="tpi" id="genre">
@@ -150,6 +152,30 @@ polyline{
         <option value="romance">romance</option>
         <option value="short">short</option>
       </select>
+</ul>
+
+<div id="chart1" class="inner">
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+    <!--<script>-->
+        <!--var select = document.createElement("select");-->
+        <!--select.setAttribute("id","selectYear");-->
+        <!--var dropDownList = document.getElementById("chart1");-->
+        <!--dropDownList.appendChild(select);-->
+        <!--d3.csv('../data/moviesYear.csv', function(d){ return d.year;}, function(error,data){-->
+            <!--data.forEach( function(d){-->
+
+                <!--var option = document.createElement("option");-->
+
+                <!--option.setAttribute("value",d);-->
+                <!--var textnode = document.createTextNode(d);-->
+                <!--option.appendChild(textnode);-->
+                <!--select.appendChild(option);-->
+            <!--});-->
+<!--//            console.log(select);-->
+<!--//            dropDownList.appendChild(select);-->
+        <!--})-->
+    <!--</script>-->
+
     <script>
 
 
@@ -157,12 +183,13 @@ polyline{
     var margin = {top: 40, right: 20, bottom: 30, left: 200},
         width = 400 - margin.left - margin.right,
         height = 6000 - margin.top - margin.bottom,
-        radius = 180;
+        radius = 150;
 
     var svg = d3.select("#chart1").append('svg').attr("width",1600);
 //            .attr("height", (height + margin.top + margin.left));
 
-    var frameRect = d3.select('svg').append('rect').attr('width',1600).style("fill","none").style("stroke","gray");
+    var frameRect = d3.select('svg').append('rect').attr('width',1200).style("fill","none").style("stroke","gray")
+            .on('click',updateLine("total"));
 
     var chart1 = d3.select('svg').append('g').attr("id","barGroup");
 
@@ -173,12 +200,18 @@ polyline{
     var xGuide = chart1.append("g").attr("class", "x axis").attr("id", "axis").call(xAxis);
     xGuide.selectAll('line').style({"fill": "none", "stroke": "black"});
     xGuide.selectAll('path').style({"fill": "none", "stroke": "black"});
+    xGuide.append("text").attr("x", width+15).attr("dy",-9).text("Rating");
 
 
     var movieData = [];
     var uniqueYear = [];
 
     var donut = svg.append("g");
+    donut.append("text").text("2005")
+                    .attr("text-anchor","middle")
+                    .attr("id","textYear")
+                    .attr("dy",5)
+                    .style({"font-family":"georgia, serif", "font-size":40, "font-weight":"bold","fill":"silver"});
 
     donut.append("g").attr("class", "slices");
     donut.append("g").attr("class", "labels");
@@ -198,15 +231,17 @@ polyline{
 	    .innerRadius(radius * 0.9)
 	    .outerRadius(radius * 0.9);
 
-    donut.attr("transform", "translate(800,200)");
+    donut.attr("transform", "translate(800," + (radius + 30) + ")");
+
 
     var key = function(d){
-        console.log(d);
+//        console.log(d);
         return d.data.label; };
 
     var color = d3.scale.ordinal()
 	    .domain(["action","animation","comedy","drama","documentary","romance","short"])
-	    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+//	    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+        .range(["#8DD3C7", "#FFFFB3", "#BEBADA", "#FB8072", "#80B1D3", "#FDB462", "#B3DE69"]);
 
     var tip = d3.tip()
         .attr('class', 'd3-tip')
@@ -218,12 +253,107 @@ polyline{
                     "<strong>MPAA:</strong> <span style='color:red'>" + d.mpaa + "</span>";;
             });
     chart1.call(tip);
-//function randomData (){
-//	var labels = color.domain();
-//	return labels.map(function(label){
-//		return { label: label, value: Math.random() }
-//	});
-//}
+
+    var width3 = 450, height3 = 150;
+    var xScale3 = d3.time.scale().range([0,width3]);
+    var yScale3 = d3.scale.linear().range([height3,0]);
+    var color3 = d3.scale.category10();
+    var xAxis3 = d3.svg.axis().scale(xScale3).orient("bottom");
+    var format3 = d3.format("$,d");
+    var yAxis3 = d3.svg.axis().scale(yScale3).orient("left").tickFormat(format3).ticks(5);
+
+    function value(d){return d.value;}
+    var line3 = d3.svg.line().interpolate("basis")
+            .x(function(d){ return xScale3(d.year);})
+            .y(function(d){ return yScale3(value(d));});
+
+    var lineChart = svg.append("g")
+//        .attr("width", width + margin.left + margin.right)
+//        .attr("height", height + margin.top + margin.bottom)
+//
+            .attr("transform", "translate(600," + (radius*2 + 50) + ")");
+    var parseYear = d3.time.format("%Y").parse;
+
+
+
+
+function plotLine(){
+
+    d3.csv('./data/moviesBudget.csv',function(d){
+        return {    "year": parseYear(d.year),
+//                    "action": +d.action,
+//                    "animation": +d.animation,
+//                    "comedy": +d.comedy,
+//                    "drama": +d.drama,
+//                    "documentary": +d.documentary,
+//                    "romance": +d.romance,
+//                    "short": +d.short,
+//                    "total": +d.total
+                    "value": +d.total
+                    };
+    }, function(error,data){
+
+        console.log(error);
+        console.log(data);
+
+        xScale3.domain(d3.extent(data, function(d) {return d.year;}));
+        yScale3.domain([0,57000000]);
+
+        var xGuide3 = lineChart.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height3 + ")")
+            .call(xAxis3);
+
+        var yGuide3 = lineChart.append("g")
+            .attr("class", "y axis")
+            .call(yAxis3);
+//            .append("text")
+//            .attr("transform", "rotate(-90, 0," + height3 + ")")
+//            .attr("y", height3)
+//            .attr("x", 75)
+//            .attr("dy", "1.1em")
+//            .style("text-anchor", "end")
+//            .text("Temperature (ºF)"); // rotate along the center
+
+        yGuide3.selectAll('line').style({"fill": "none", "stroke": "black"});
+        yGuide3.selectAll('path').style({"fill": "none", "stroke": "black"});
+        xGuide3.selectAll('line').style({"fill": "none", "stroke": "black"});
+        xGuide3.selectAll('path').style({"fill": "none", "stroke": "black"});
+
+        xGuide3.append('text').attr("x",width3).attr("dy",18).text("Year");
+        yGuide3.append('text').text("Budget").attr("dx",-10).attr("text-anchor","end");
+
+        var budget = lineChart.append("path").datum(data)
+                .attr("id", "linechart")
+                .attr("d", line3)
+                .style("stroke", function(d) { return color3(d.value); })
+                .style({"fill":"none","stroke-width":2});
+
+
+    });
+    }
+
+function updateLine(genre_){
+    console.log(genre_);
+    d3.csv('./data/moviesBudget.csv',function(d){
+        return {    "year": parseYear(d.year),
+//                    "action": +d.action,
+//                    "animation": +d.animation,
+//                    "comedy": +d.comedy,
+//                    "drama": +d.drama,
+//                    "documentary": +d.documentary,
+//                    "romance": +d.romance,
+//                    "short": +d.short,
+//                    "total": +d.total
+                    "value": +d[genre_]
+                    };
+    }, function(error,data){
+
+    d3.select("#linechart").datum(data).transition().duration(1000).attr("d",line3);
+    });
+
+}
+
 function plotDonut(){
 
     var sYear = +document.getElementById("selectYear").value;
@@ -271,7 +401,21 @@ function plotDonut(){
             slice.enter()
                 .insert("path")
                 .style("fill", function(d) { return color(d.data.label); })
-                .attr("class", "slice");
+                .attr("class", "slice")
+                    .on('mouseover',function(d){
+
+                        d3.select(this).style("opacity","0.6");
+                    })
+                    .on('mouseout', function(d){
+
+                        d3.select(this).style("opacity",1);
+                    })
+                    .on('click', function(d){
+
+                        console.log(d.data.label);
+                        plotBar(d.data.label);
+                        updateLine(d.data.label);
+                    });
 
             slice.transition().duration(1000)
                 .attrTween("d", function(d) {
@@ -348,13 +492,14 @@ function plotDonut(){
             polyline.exit()
                 .remove();
 
+            d3.select("#textYear").transition().duration(400).text(document.getElementById("selectYear").value);
         }
     );}
 
 
 
-function plotBar() {
-
+function plotBar(genre_) {
+        console.log(genre_);
         d3.selectAll(".bar").remove();
         d3.select("#yAxis").remove();
 //        var chart1 = d3.select('svg').append('g').attr("id","barGroup");
@@ -385,9 +530,12 @@ function plotBar() {
 
 //                    console.log(document.getElementById("selectYear").value);
                     var sYear = +document.getElementById("selectYear").value;
-                    var mGenre = document.getElementById("genre").value;
-                    console.log(sYear);
-                    console.log(mGenre);
+
+
+                    var mGenre = genre_ === undefined ? document.getElementById("genre").value : genre_ ;
+
+//                    console.log(sYear);
+//                    console.log(mGenre);
 
                     var data_ = [];
 
@@ -442,7 +590,7 @@ function plotBar() {
 //                        console.log(xScale(d.rating));
 //                        return xScale(d.rating);})
                             .attr("height", yScale.rangeBand())
-                            .style("fill", "steelblue")
+                            .style("fill", "#80B1D3")
                             .on("mouseover", tip.show)
                             .on("mouseout", tip.hide);
 
@@ -503,14 +651,19 @@ function plotBar() {
         document.getElementById("genre").onchange = plotBar;
 
 function plotDashboard(){
+
         plotDonut();
         plotBar();
+
 
     }
 
+        plotLine();
         plotBar();
         plotDonut();
     </script>
+    <ul>
+    </ul>
 </div>
 
 </body>
