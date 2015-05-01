@@ -53,12 +53,47 @@
     </div>
 </nav>
 
-<div class = "container"></div>
+<div class = "container">
 <div>
-    <ul>
-        <h2><a href="https://public.tableau.com/views/prototype_0/Dashboard1?:embed=y&:showTabs=y&:display_count=yes">Prototype</a></h2>
+
+        <h5>Author: <a href="www.linkedin.com/in/ckuo7">Chi-Liang "Daniel" Kuo</a></h5>
+        <h5>HW4 <a href="https://github.com/ckuo7/msan622">Repo</a> (Private)</h5>
+        <h2><a href="https://public.tableau.com/views/prototype_0/Dashboard1?:embed=y&:showTabs=y&:display_count=yes">Tableau Prototype</a></h2>
         <h2>Data Preprocessing</h2>
-    </ul>
+        <p>I did most of my data preprocessing in R to create three separate csv files for my plots. For donut and line chart, I aggregated number of movies and average
+            budgets by different genres and year. For the bar chart, I used the original dataset. The preprocessing facilitated the data preparation in D3 so the browser
+            can render the visualization more quickly.
+        </p>
+        <h2>Basic Functionality</h2>
+        <ul>
+            <li>Horizontal bar chart sorted by ratings of movies (rows: title, column: year)</li>
+            <li>Donut chart (category: genre, measure: percentage)</li>
+            <li>Line chart (rows: year, columns: budget)</li>
+        </ul>
+        <h2>Moderate Functionality</h2>
+        <ul>
+            <li>A horizontal bar chart with ratings on x axis and titles as y axis</li>
+            <li>A donut chart with genres as categories and percentage as angles</li>
+            <li>A line chart with time as x axis and average budgets as y axis</li>
+        </ul>
+        <h2>Advanced Functionality</h2>
+        <ul>
+            <li>Filtering movies of different years by the drop-down list</li>
+            <li>Filtering movies of different genres by clicking segments of donut chart</li>
+            <li>Filtering average budget of different genres by clicking segments of donut chart</li>
+        </ul>
+        <h2>User Guide</h2>
+        <p>
+            When I started this homework, I was thinking about how to make the best use of this dataset to benefit my normal life. I like to watch movies but sometimes it is
+            just too difficult to find a right one. So, I decided to use this dataset to build up a movie recommendation dashboard. It has two filter
+            function to help you select movies. The First one is the drop-down list on the top left corner of the dashboard where you can select movies from a particular year. After selecting a year, the barchart would automatically sort by
+            ratings of movies that belongs to the selected year in descending order. Then we can easily know which ones have highest ratings in a given year. Detail information about a movie is provided when its bar is hovered.
+            The second filter aims at selecting movies of a given year by genres. This is achived by clicking different segments of donut chart. For example, if you want to check romance movies, just click the orange segment!
+            This interactivity provides users an easy and quick access to all the highest rated movies of different genre of a given year. In addition,
+            the line chart, which shows the average budgets for making movies of corresponding genre, would also change if we click the segments.
+
+        </p>
+
 
 </div>
 <style>
@@ -69,7 +104,7 @@
     }
 
 .inner {
-    width: 1600px;
+    width: 1150px;
     height: 600px;
     overflow: auto;
 }
@@ -142,16 +177,16 @@ polyline{
             });
         })
     </script>
-    <select name="tpi" id="genre">
-        <option selected="selected" value="none">none</option>
-        <option value="action">action</option>
-        <option value="animation">animation</option>
-        <option value="comedy">comedy</option>
-        <option value="drama">drama</option>
-        <option value="documentary">documentary</option>
-        <option value="romance">romance</option>
-        <option value="short">short</option>
-      </select>
+    <!--<select name="tpi" id="genre">-->
+        <!--<option selected="selected" value="none">none</option>-->
+        <!--<option value="action">action</option>-->
+        <!--<option value="animation">animation</option>-->
+        <!--<option value="comedy">comedy</option>-->
+        <!--<option value="drama">drama</option>-->
+        <!--<option value="documentary">documentary</option>-->
+        <!--<option value="romance">romance</option>-->
+        <!--<option value="short">short</option>-->
+      <!--</select>-->
 </ul>
 
 <div id="chart1" class="inner">
@@ -188,8 +223,8 @@ polyline{
     var svg = d3.select("#chart1").append('svg').attr("width",1600);
 //            .attr("height", (height + margin.top + margin.left));
 
-    var frameRect = d3.select('svg').append('rect').attr('width',1200).style("fill","none").style("stroke","gray")
-            .on('click',updateLine("total"));
+    var frameRect = d3.select('svg').append('rect').attr('width',1130).style("fill","none").style("stroke","gray");
+
 
     var chart1 = d3.select('svg').append('g').attr("id","barGroup");
 
@@ -328,6 +363,14 @@ function plotLine(){
                 .attr("d", line3)
                 .style("stroke", function(d) { return color3(d.value); })
                 .style({"fill":"none","stroke-width":2});
+        console.log(data[data.length-1]["year"]);
+        console.log(yScale3(data[data.length-1]["value"]));
+        lineChart.append("text")
+            .attr("id","lineLabel")
+            .attr("transform", "translate(" + width3 + "," + yScale3(data[data.length-1]["value"]) + ")")
+            .attr("x", 3)
+            .attr("dy", ".35em")
+            .text("total");
 
 
     });
@@ -337,19 +380,13 @@ function updateLine(genre_){
     console.log(genre_);
     d3.csv('./data/moviesBudget.csv',function(d){
         return {    "year": parseYear(d.year),
-//                    "action": +d.action,
-//                    "animation": +d.animation,
-//                    "comedy": +d.comedy,
-//                    "drama": +d.drama,
-//                    "documentary": +d.documentary,
-//                    "romance": +d.romance,
-//                    "short": +d.short,
-//                    "total": +d.total
+
                     "value": +d[genre_]
                     };
     }, function(error,data){
 
     d3.select("#linechart").datum(data).transition().duration(1000).attr("d",line3);
+    d3.select("#lineLabel").transition().duration(800).attr("transform", "translate(" + width3 + "," + yScale3(data[data.length-1]["value"]) + ")").text(genre_)
     });
 
 }
@@ -437,7 +474,8 @@ function plotDonut(){
                 .append("text")
                 .attr("dy", ".35em")
                 .text(function(d) {
-                    return d.data.label + "(" + Math.round(d.data.value/sum_*100) + "%)";
+//                        return d.data.label + "(" + Math.round(d.value/sum_*100) + "%)";
+                        return d.data.label ;
                 });
 
             function midAngle(d){
@@ -454,6 +492,8 @@ function plotDonut(){
                         var pos = outerArc.centroid(d2);
                         pos[0] = radius * (midAngle(d2) < Math.PI ? 1 : -1);
                         return "translate("+ pos +")";
+
+
                     };
                 })
                 .styleTween("text-anchor", function(d){
@@ -532,7 +572,8 @@ function plotBar(genre_) {
                     var sYear = +document.getElementById("selectYear").value;
 
 
-                    var mGenre = genre_ === undefined ? document.getElementById("genre").value : genre_ ;
+//                    var mGenre = genre_ === undefined ? document.getElementById("genre").value : genre_ ;
+                    var mGenre = genre_ === undefined ? "none" : genre_ ;
 
 //                    console.log(sYear);
 //                    console.log(mGenre);
@@ -648,7 +689,7 @@ function plotBar(genre_) {
     }
 
         document.getElementById("selectYear").onchange = plotDashboard;
-        document.getElementById("genre").onchange = plotBar;
+//        document.getElementById("genre").onchange = plotBar;
 
 function plotDashboard(){
 
@@ -661,9 +702,10 @@ function plotDashboard(){
         plotLine();
         plotBar();
         plotDonut();
+        frameRect.on('click',updateLine("total"));
     </script>
     <ul>
     </ul>
 </div>
-
+</div>
 </body>

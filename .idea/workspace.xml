@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4da44846-0f61-4340-bdca-234c9e532f52" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/homework2/Untitled.R" afterPath="$PROJECT_DIR$/homework2/Untitled.R" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/homework4.html" afterPath="$PROJECT_DIR$/homework4.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="spring-2015-msan622.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -73,7 +71,7 @@
       <file leaf-file-name="homework3.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/homework3.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.75" vertical-offset="3285" max-vertical-offset="4980">
+            <state vertical-scroll-proportion="-134.375" vertical-offset="390" max-vertical-offset="4980">
               <caret line="294" column="89" selection-start-line="294" selection-start-column="31" selection-end-line="294" selection-end-column="89" />
               <folding>
                 <element signature="n#nav#0;n#body#0;n#html#0;n#!!top" expanded="false" />
@@ -87,17 +85,18 @@
       <file leaf-file-name="homework4.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/homework4.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.8884026" vertical-offset="3488" max-vertical-offset="6870">
-              <caret line="190" column="67" selection-start-line="190" selection-start-column="67" selection-end-line="190" selection-end-column="67" />
+            <state vertical-scroll-proportion="0.625" vertical-offset="680" max-vertical-offset="6195">
+              <caret line="72" column="39" selection-start-line="72" selection-start-column="39" selection-end-line="72" selection-end-column="39" />
               <folding>
-                <element signature="n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
-                <element signature="n#select#0;n#ul#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-                <element signature="e#8897#10954#0" expanded="false" />
-                <element signature="e#16972#22500#0" expanded="false" />
-                <marker date="1430436047000" expanded="true" signature="7625:7634" placeholder="..." />
-                <marker date="1430436047000" expanded="true" signature="7725:7734" placeholder="..." />
-                <marker date="1430436047000" expanded="true" signature="7825:7834" placeholder="..." />
-                <marker date="1430436047000" expanded="true" signature="7934:7943" placeholder="..." />
+                <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+                <element signature="n#ul#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+                <element signature="e#11820#14249#0" expanded="false" />
+                <element signature="e#14370#14464#0" expanded="false" />
+                <element signature="e#20123#25727#0" expanded="false" />
+                <marker date="1430462918000" expanded="true" signature="10548:10557" placeholder="..." />
+                <marker date="1430462918000" expanded="true" signature="10648:10657" placeholder="..." />
+                <marker date="1430462918000" expanded="true" signature="10748:10757" placeholder="..." />
+                <marker date="1430462918000" expanded="true" signature="10857:10866" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -181,9 +180,9 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="206" />
+    <option name="y" value="23" />
     <option name="width" value="1387" />
-    <option name="height" value="601" />
+    <option name="height" value="784" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -460,7 +459,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="206" width="1387" height="601" extended-state="6" />
+    <frame x="0" y="23" width="1387" height="784" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -469,7 +468,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24684015" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24684015" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
@@ -550,8 +549,13 @@
           <url>file://$PROJECT_DIR$/homework3.html</url>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/homework4.html</url>
+          <line>381</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="10" />
+      <option name="time" value="11" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1124,7 +1128,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/homework3.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.75" vertical-offset="3285" max-vertical-offset="4980">
+        <state vertical-scroll-proportion="-134.375" vertical-offset="390" max-vertical-offset="4980">
           <caret line="294" column="89" selection-start-line="294" selection-start-column="31" selection-end-line="294" selection-end-column="89" />
           <folding>
             <element signature="n#nav#0;n#body#0;n#html#0;n#!!top" expanded="false" />
@@ -1136,17 +1140,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/homework4.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.8884026" vertical-offset="3488" max-vertical-offset="6870">
-          <caret line="190" column="67" selection-start-line="190" selection-start-column="67" selection-end-line="190" selection-end-column="67" />
+        <state vertical-scroll-proportion="0.625" vertical-offset="680" max-vertical-offset="6195">
+          <caret line="72" column="39" selection-start-line="72" selection-start-column="39" selection-end-line="72" selection-end-column="39" />
           <folding>
-            <element signature="n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#select#0;n#ul#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="e#8897#10954#0" expanded="false" />
-            <element signature="e#16972#22500#0" expanded="false" />
-            <marker date="1430436047000" expanded="true" signature="7625:7634" placeholder="..." />
-            <marker date="1430436047000" expanded="true" signature="7725:7734" placeholder="..." />
-            <marker date="1430436047000" expanded="true" signature="7825:7834" placeholder="..." />
-            <marker date="1430436047000" expanded="true" signature="7934:7943" placeholder="..." />
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#ul#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="e#11820#14249#0" expanded="false" />
+            <element signature="e#14370#14464#0" expanded="false" />
+            <element signature="e#20123#25727#0" expanded="false" />
+            <marker date="1430462918000" expanded="true" signature="10548:10557" placeholder="..." />
+            <marker date="1430462918000" expanded="true" signature="10648:10657" placeholder="..." />
+            <marker date="1430462918000" expanded="true" signature="10748:10757" placeholder="..." />
+            <marker date="1430462918000" expanded="true" signature="10857:10866" placeholder="..." />
           </folding>
         </state>
       </provider>
