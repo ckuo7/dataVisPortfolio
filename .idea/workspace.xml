@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4da44846-0f61-4340-bdca-234c9e532f52" name="Default" comment="" />
+    <list default="true" id="4da44846-0f61-4340-bdca-234c9e532f52" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/homework4.html" afterPath="$PROJECT_DIR$/homework4.html" />
+    </list>
     <ignored path="spring-2015-msan622.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -83,18 +85,18 @@
       <file leaf-file-name="homework4.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/homework4.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6015625" vertical-offset="485" max-vertical-offset="6210">
-              <caret line="58" column="62" selection-start-line="58" selection-start-column="29" selection-end-line="58" selection-end-column="62" />
+            <state vertical-scroll-proportion="0.953125" vertical-offset="710" max-vertical-offset="6210">
+              <caret line="88" column="66" selection-start-line="88" selection-start-column="66" selection-end-line="88" selection-end-column="66" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
                 <element signature="n#ul#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-                <element signature="e#11907#14336#0" expanded="false" />
-                <element signature="e#14457#14551#0" expanded="false" />
-                <element signature="e#20210#25814#0" expanded="false" />
-                <marker date="1430463400000" expanded="true" signature="10635:10644" placeholder="..." />
-                <marker date="1430463400000" expanded="true" signature="10735:10744" placeholder="..." />
-                <marker date="1430463400000" expanded="true" signature="10835:10844" placeholder="..." />
-                <marker date="1430463400000" expanded="true" signature="10944:10953" placeholder="..." />
+                <element signature="e#11977#14406#0" expanded="false" />
+                <element signature="e#14527#14621#0" expanded="false" />
+                <element signature="e#20280#25884#0" expanded="false" />
+                <marker date="1430463801000" expanded="true" signature="10705:10714" placeholder="..." />
+                <marker date="1430463801000" expanded="true" signature="10805:10814" placeholder="..." />
+                <marker date="1430463801000" expanded="true" signature="10905:10914" placeholder="..." />
+                <marker date="1430463801000" expanded="true" signature="11014:11023" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -1138,18 +1140,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/homework4.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6015625" vertical-offset="485" max-vertical-offset="6210">
-          <caret line="58" column="62" selection-start-line="58" selection-start-column="29" selection-end-line="58" selection-end-column="62" />
+        <state vertical-scroll-proportion="0.953125" vertical-offset="710" max-vertical-offset="6210">
+          <caret line="88" column="66" selection-start-line="88" selection-start-column="66" selection-end-line="88" selection-end-column="66" />
           <folding>
             <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#ul#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="e#11907#14336#0" expanded="false" />
-            <element signature="e#14457#14551#0" expanded="false" />
-            <element signature="e#20210#25814#0" expanded="false" />
-            <marker date="1430463400000" expanded="true" signature="10635:10644" placeholder="..." />
-            <marker date="1430463400000" expanded="true" signature="10735:10744" placeholder="..." />
-            <marker date="1430463400000" expanded="true" signature="10835:10844" placeholder="..." />
-            <marker date="1430463400000" expanded="true" signature="10944:10953" placeholder="..." />
+            <element signature="e#11977#14406#0" expanded="false" />
+            <element signature="e#14527#14621#0" expanded="false" />
+            <element signature="e#20280#25884#0" expanded="false" />
+            <marker date="1430463801000" expanded="true" signature="10705:10714" placeholder="..." />
+            <marker date="1430463801000" expanded="true" signature="10805:10814" placeholder="..." />
+            <marker date="1430463801000" expanded="true" signature="10905:10914" placeholder="..." />
+            <marker date="1430463801000" expanded="true" signature="11014:11023" placeholder="..." />
           </folding>
         </state>
       </provider>
