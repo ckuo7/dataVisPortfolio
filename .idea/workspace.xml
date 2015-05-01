@@ -85,18 +85,18 @@
       <file leaf-file-name="homework4.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/homework4.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.625" vertical-offset="680" max-vertical-offset="6195">
-              <caret line="72" column="39" selection-start-line="72" selection-start-column="39" selection-end-line="72" selection-end-column="39" />
+            <state vertical-scroll-proportion="0.71875" vertical-offset="965" max-vertical-offset="6210">
+              <caret line="95" column="25" selection-start-line="95" selection-start-column="25" selection-end-line="95" selection-end-column="25" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
                 <element signature="n#ul#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-                <element signature="e#11820#14249#0" expanded="false" />
-                <element signature="e#14370#14464#0" expanded="false" />
-                <element signature="e#20123#25727#0" expanded="false" />
-                <marker date="1430462918000" expanded="true" signature="10548:10557" placeholder="..." />
-                <marker date="1430462918000" expanded="true" signature="10648:10657" placeholder="..." />
-                <marker date="1430462918000" expanded="true" signature="10748:10757" placeholder="..." />
-                <marker date="1430462918000" expanded="true" signature="10857:10866" placeholder="..." />
+                <element signature="e#11899#14328#0" expanded="false" />
+                <element signature="e#14449#14543#0" expanded="false" />
+                <element signature="e#20202#25806#0" expanded="false" />
+                <marker date="1430463302000" expanded="true" signature="10627:10636" placeholder="..." />
+                <marker date="1430463302000" expanded="true" signature="10727:10736" placeholder="..." />
+                <marker date="1430463302000" expanded="true" signature="10827:10836" placeholder="..." />
+                <marker date="1430463302000" expanded="true" signature="10936:10945" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -551,7 +551,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/homework4.html</url>
-          <line>381</line>
+          <line>382</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
@@ -1140,18 +1140,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/homework4.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.625" vertical-offset="680" max-vertical-offset="6195">
-          <caret line="72" column="39" selection-start-line="72" selection-start-column="39" selection-end-line="72" selection-end-column="39" />
+        <state vertical-scroll-proportion="0.71875" vertical-offset="965" max-vertical-offset="6210">
+          <caret line="95" column="25" selection-start-line="95" selection-start-column="25" selection-end-line="95" selection-end-column="25" />
           <folding>
             <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#ul#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="e#11820#14249#0" expanded="false" />
-            <element signature="e#14370#14464#0" expanded="false" />
-            <element signature="e#20123#25727#0" expanded="false" />
-            <marker date="1430462918000" expanded="true" signature="10548:10557" placeholder="..." />
-            <marker date="1430462918000" expanded="true" signature="10648:10657" placeholder="..." />
-            <marker date="1430462918000" expanded="true" signature="10748:10757" placeholder="..." />
-            <marker date="1430462918000" expanded="true" signature="10857:10866" placeholder="..." />
+            <element signature="e#11899#14328#0" expanded="false" />
+            <element signature="e#14449#14543#0" expanded="false" />
+            <element signature="e#20202#25806#0" expanded="false" />
+            <marker date="1430463302000" expanded="true" signature="10627:10636" placeholder="..." />
+            <marker date="1430463302000" expanded="true" signature="10727:10736" placeholder="..." />
+            <marker date="1430463302000" expanded="true" signature="10827:10836" placeholder="..." />
+            <marker date="1430463302000" expanded="true" signature="10936:10945" placeholder="..." />
           </folding>
         </state>
       </provider>
