@@ -166,7 +166,7 @@ polyline{
         select.setAttribute("id","selectYear");
         var dropDownList = document.getElementById("filter");
         dropDownList.appendChild(select);
-        d3.csv('../data/moviesYear.csv', function(d){ return d.year;}, function(error,data){
+        d3.csv('./data/moviesYear.csv', function(d){ return d.year;}, function(error,data){
             data.forEach( function(d){
 
                 var option = document.createElement("option");
