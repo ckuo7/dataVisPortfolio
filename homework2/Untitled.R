@@ -166,3 +166,8 @@ mv3_12345678[ is.na(mv3_12345678$short)==T, ]$short <- 0
 
 write.csv(mv3_12345678,'./moviesBudget.csv', row.names=F, na="")
 
+
+names(movies_)
+movies2 <- movies_[c(1:5,17:24)]
+names(movies2)
+write.csv(movies2,'../data/moviesWhole.csv',row.names=F,na="")

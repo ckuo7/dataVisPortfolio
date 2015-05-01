@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4da44846-0f61-4340-bdca-234c9e532f52" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/homework4.html" afterPath="$PROJECT_DIR$/homework4.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/homework2/Untitled.R" afterPath="$PROJECT_DIR$/homework2/Untitled.R" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/moviesWhole.csv" afterPath="$PROJECT_DIR$/data/moviesWhole.csv" />
     </list>
     <ignored path="spring-2015-msan622.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -85,14 +86,13 @@
       <file leaf-file-name="homework4.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/homework4.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.953125" vertical-offset="710" max-vertical-offset="6210">
-              <caret line="88" column="66" selection-start-line="88" selection-start-column="66" selection-end-line="88" selection-end-column="66" />
+            <state vertical-scroll-proportion="-0.3125" vertical-offset="5990" max-vertical-offset="8430">
+              <caret line="541" column="0" selection-start-line="541" selection-start-column="0" selection-end-line="541" selection-end-column="0" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
                 <element signature="n#ul#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
                 <element signature="e#11977#14406#0" expanded="false" />
                 <element signature="e#14527#14621#0" expanded="false" />
-                <element signature="e#20280#25884#0" expanded="false" />
                 <marker date="1430463801000" expanded="true" signature="10705:10714" placeholder="..." />
                 <marker date="1430463801000" expanded="true" signature="10805:10814" placeholder="..." />
                 <marker date="1430463801000" expanded="true" signature="10905:10914" placeholder="..." />
@@ -554,8 +554,13 @@
           <line>382</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/homework4.html</url>
+          <line>541</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="11" />
+      <option name="time" value="12" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1140,14 +1145,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/homework4.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.953125" vertical-offset="710" max-vertical-offset="6210">
-          <caret line="88" column="66" selection-start-line="88" selection-start-column="66" selection-end-line="88" selection-end-column="66" />
+        <state vertical-scroll-proportion="-0.3125" vertical-offset="5990" max-vertical-offset="8430">
+          <caret line="541" column="0" selection-start-line="541" selection-start-column="0" selection-end-line="541" selection-end-column="0" />
           <folding>
             <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#ul#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="e#11977#14406#0" expanded="false" />
             <element signature="e#14527#14621#0" expanded="false" />
-            <element signature="e#20280#25884#0" expanded="false" />
             <marker date="1430463801000" expanded="true" signature="10705:10714" placeholder="..." />
             <marker date="1430463801000" expanded="true" signature="10805:10814" placeholder="..." />
             <marker date="1430463801000" expanded="true" signature="10905:10914" placeholder="..." />
