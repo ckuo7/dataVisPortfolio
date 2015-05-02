@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>MSAN 622 Homework1</title>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+
+<style type="text/css">
+    body {
+        padding-top: 50px;
+        padding-bottom: 20px;
+    }
+</style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/d3.min.js"></script>
+
+<![endif]-->
+</head>
+<body>
+<!-- Fixed Navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle Navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="../index.html">MSAN 622</a>
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="#homework">Homework</a></li>
+                <li><a href="#project">Project</a></li>
+                <li><a href="#participation">Participation</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+<style>
+    h2 {
+  /*font-size:15px;*/
+  /*line-height: 20px;*/
+  /*text-align: left;*/
+  /*padding: 50px 20px 10px 40px;*/
+}
+    .tftextinput2{
+        paddingLeft:40px;
+
+    }
+
+svg {
+    background-color: white;
+    margin: 0px;
+    float: left;
+}
+
+#block {
+    max-width: 950px;
+}
+
+#log {
+    color: dimgray;
+
+    font-size: 10px;
+    font-style: italic;
+    text-align: center;
+
+    margin: 0px;
+    padding: 0px;
+}
+
+.country {
+    fill: gainsboro;
+}
+
+.state {
+    fill: none;
+}
+
+/*
+ * Setting "opacity" can affect both
+ * fill and stroke. We want to set
+ * both of those separately.
+ */
+
+.symbol {
+    fill: royalblue;
+    fill-opacity: 0.25;
+
+    stroke: royalblue;
+    stroke-width: 1px;
+    stroke-opacity: 1.0;
+}
+
+circle.highlight {
+    stroke: orangered;
+    stroke-width: 2px;
+}
+</style>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="http://d3js.org/d3.geo.projection.v0.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<!--<link rel="stylesheet" href="./homework5/style.css">-->
+<script src="./homework5/script.js"></script>
+
+<div class = "container" width="960" height="540">
+    <h2>Basic functionality</h2>
+    <!--<ul>-->
+        <li>Plot a symbol map using natural earth projection.</li>
+        <li>Encode magnitude of earthquakes into size of circles.</li>
+    <li>Change the text at the bottom to provide detail information about each earthquake.</li>
+    <!--</ul>-->
+    <h2>Moderate Functionality</h2>
+    <!--<ul>-->
+        <li>Encode depth of earthquakes with threshold color scale.</li>
+    <!--</ul>-->
+    <h2>Advanced Functionality</h2>
+    <!--<ul>-->
+        <li>
+            Enable panning
+        </li>
+    <!--</ul>-->
+    <h2>Design Guide</h2>
+    <h2>Earthquakes Visulization</h2>
+    <svg id="map" width="960" height="480"></svg>
+    <p id="log">Loading map... please wait.</p>
+    <script>
+/*
+ * For sample TopoJSON files, go to:
+ * https://gist.github.com/mbostock/4090846
+ */
+var base = "https://gist.githubusercontent.com/mbostock/4090846/raw/";
+var url = {
+//    country: base + "us.json",
+//    states:  base + "us-state-names.tsv",
+    precip:  "usprecip.json", // relative URL
+    world: base + "world-50m.json",
+    _45_month: "./homework5/4.5_month.csv"
+};
+
+// Uses reusable chart model
+// See http://bost.ocks.org/mike/chart/
+var chart = symbolMap();
+
+// Update how we access data (need the precip property)
+chart = chart.value(function(d) { return d.mag; });
+
+// Nested calls to trigger drawing in proper order
+console.log(url);
+d3.json(url.world, function(mapError, mapJSON) {
+
+    if (processError(mapError)) return;
+
+    // update map data
+    chart = chart.map(mapJSON);
+
+    // Wait until the map is drawn before loading
+    // and drawing the data values
+    d3.csv(url._45_month, function(dataError, dataJSON) {
+        if (processError(dataError)) return;
+
+        chart = chart.values(dataJSON);
+        chart("map");
+    });
+});
+
+// Load state lookup information
+// Possible some lookups will fail until this loads
+//d3.tsv(url.states, parseStateName, function(error, data) {
+//        if (processError(error)) return;
+//        chart = chart.lookup(data);
+//    }
+//);
+
+</script>
+
+</div>
+</body>
+</html>
