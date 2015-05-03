@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>MSAN 622 Information Visualization</title>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+
+<style type="text/css">
+    body {
+        padding-top: 50px;
+        padding-bottom: 20px;
+    }
+    svg {
+    background-color: white;
+    margin: 1px;
+    float: left;
+    }
+
+    dashboard{
+    padding-top: 100px;
+    }
+</style>
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+<![endif]-->
+</head>
+
+<body>
+
+<!-- Fixed Navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle Navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="../index.html">MSAN 622</a>
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="#homework">Homework</a></li>
+                <li><a href="#project">Project</a></li>
+                <li><a href="#participation">Participation</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/d3.min.js"></script>
+<div class="container">
+
+    <div id = "dashboard">
+<script>
+
+
+var framewidth = 1200,
+    frameheight = 4800;
+
+    var margin1 = {"left":50,"top":50,"right":50,"bottom":50 };
+    var width1 = 600 - margin1.left - margin1.right,
+            height1 = 2400;
+
+    var svg = d3.select("#dashboard").append("svg").attr("width",framewidth).attr("height",frameheight);
+
+    var twoSidedBar = svg.append("g").attr("transform","translate(" + (margin1.left + 100) + "," + margin1.top + ")");
+
+    var xScale = d3.scale.linear().range([0, width1]);
+    var xAxis = d3.svg.axis().scale(xScale).orient("top");
+
+
+
+//    xGuide.append("text").attr("x", width1+15).attr("dy",-9).text("Bikes");
+
+    var yScale = d3.scale.ordinal().rangeBands([0, height1], .1, .5);
+    var yAxis = d3.svg.axis().scale(yScale).orient("left");
+
+
+
+function plotTwoSideBar(){
+
+
+    d3.csv("./data/bs_2012_11_19_clean.csv",
+        function(d){
+                return {
+                    "hour": +d.hour,
+                    "net": +d.net,
+                    "station": d.station
+                };
+        },
+        function(error,data){
+
+            console.log(error);
+//            console.log(data);
+
+
+
+            var hour = 15;
+            var data_ = [];
+            data.forEach(function(d){
+                if (d.hour === hour){ data_.push(d);}
+            });
+
+            console.log(data_);
+
+//            xScale.domain([d3.min(data, function(d){return d.net;}),d3.max(data, function(d){return d.net;})]);
+            xScale.domain([-10,10]);
+            yScale.domain( data_.map(function (d) {return d.station;}));
+
+            console.log(xScale(10));
+
+            var xGuide = twoSidedBar.append("g").attr("class", "x axis").attr("id", "xAxis1").call(xAxis);
+            var yGuide = twoSidedBar.append("g").attr("class", "y axis").attr("id", "yAxis").call(yAxis);
+
+            xGuide.selectAll('line').style({"fill": "none", "stroke": "black"});
+            xGuide.selectAll('path').style({"fill": "none", "stroke": "black"});
+
+            yGuide.selectAll('line').style({"fill": "none", "stroke": "black"});
+            yGuide.selectAll('path').style({"fill": "none", "stroke": "black"});
+
+            var grid = twoSidedBar.append("g");
+
+            grid.append("line").attr("class","grid")
+                    .attr("x1", xScale(0))
+                    .attr("x2", xScale(0))
+                    .attr("y2", height1).style({"fill":"none","stroke":"black"});
+
+            grid.selectAll(".grid").data(data_).enter().append("line")
+                    .attr("x1",0)
+                    .attr("y1",function(d){return yScale(d.station) - 0.05*yScale.rangeBand();})
+                    .attr("x2",width1)
+                    .attr("y2",function(d){return yScale(d.station) - 0.05*yScale.rangeBand();}).style({"fill":"none","stroke":"gray","stroke-width":0.5});
+
+
+            var bars = twoSidedBar.selectAll(".bar").data(data_).enter().append('rect')
+                    .attr("class","bars")
+                    .attr("id", function(d,i){ return "bar" + i})
+                    .attr("x",  function(d){
+                        if(d.net>=0){return xScale(0);}
+                        else{ return xScale(d.net);}
+                    })
+                    .attr("y",  function(d){return yScale(d.station);})
+                    .attr("height", yScale.rangeBand())
+                    .attr("width", function(d){
+
+                        if(d.net>=0){return xScale(d.net) - xScale(0);}
+                        else{ return xScale(0) - xScale(d.net);}
+                    })
+                    .style("fill","steelblue");
+
+
+
+        })
+
+}
+
+function updateTwoSideBar(hour){
+
+        d3.csv("./data/bs_2012_11_19_clean.csv",
+        function(d){
+                return {
+                    "hour": +d.hour,
+                    "net": +d.net,
+                    "station": d.station
+                };
+        },
+        function(error,data) {
+
+            console.log(error);
+//            console.log(data);
+
+            console.log(hour);
+
+//            var hour = 15;
+            var data_ = [];
+            data.forEach(function(d){
+                if (d.hour === hour){ data_.push(d);}
+            });
+
+            console.log(data_);
+
+            data_.forEach( function(d,i){
+                console.log(d);
+                var bar = "#bar" + i;
+//                console.log(bar);
+//                console.log(d3.select(bar).attr("x"));
+                d3.select(bar).datum(d).transition().duration(1000)
+                    .attr("x", function(d){
+                            console.log(d);
+                        if(d.net >=0 ){return xScale(0);}
+                        else{return xScale(d.net);}})
+                    .attr("width", function(d){
+                        if(d.net >=0 ){return xScale(d.net)-xScale(0);}
+                        else{return xScale(0)-xScale(d.net);}})
+                });
+//            d3.selectAll(".bars").datum(data_)
+
+                    });
+
+}
+
+    plotTwoSideBar()
+</script>
+
+    </div>
+    </div>
+
+</body>
+</html>
