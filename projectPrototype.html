@@ -25,6 +25,11 @@
     dashboard{
     padding-top: 100px;
     }
+    #dashboard{
+    width: 1200px;
+    height: 800px;
+    overflow: scroll;
+}
 </style>
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -68,9 +73,80 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/d3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
 <div class="container">
+<div id = "dashboard2">
 
-    <div id = "dashboard">
+<script>
+var framewidth2 = 1200,
+    frameheight2 = 400;
+    radius = 160;
+
+var color = d3.scale.linear().range(["#ef8a62","#67a9cf"]).domain([0,24]);
+
+var arc = d3.svg.arc()
+    .outerRadius(radius *.6)
+    .innerRadius(radius *.4);
+
+var outerArc = d3.svg.arc()
+	    .innerRadius(radius * 0.7)
+	    .outerRadius(radius * 0.7);
+
+var hour = [];
+for ( var i = 0 ; i<24 ;i++){ hour.push({"label":i,"value":1})}
+
+var pie = d3.layout.pie()
+    .sort(null)
+    .value(function(d) { return d.value; });
+
+var dashboard2 = d3.select("#dashboard2").append("svg")
+        .attr("width", framewidth2)
+        .attr("height", frameheight2);
+
+var donutChart = dashboard2
+        .append("g")
+        .attr("transform", "translate(" + framewidth2 / 2 + "," + frameheight2 / 2 + ")");
+
+var donut = donutChart.selectAll(".arc")
+        .data(pie(hour))
+        .enter().append("g")
+        .attr("class", "arc");
+
+    donut.append("path")
+        .attr("d", arc)
+        .style("fill", function(d) { return color(d.data.label)}).style("stroke","white")
+            .on("mouseover", function(d){
+                d3.select(this).style("opacity",0.5);
+            })
+            .on("mouseout", function(d){
+                d3.select(this).style("opacity",1);
+            })
+            .on("click", function(d){
+                console.log(d);
+                updateTwoSideBar(+d.data.label)});
+
+    donut.append("text")
+      .attr("transform", function(d) { return "translate(" + outerArc.centroid(d) + ")"; })
+      .attr("dy", ".35em")
+      .style("text-anchor", "middle")
+      .text(function(d) { return d.data.label; }).style({"fill":"gray","font-size":18});
+
+//
+//var dcmap = dashboard2.append("g").attr("transform","translate(600,400)");
+var projection = d3.geo.conicEqualArea().center([-77.0164,38.9047]).scale(10);
+var path = d3.geo.path().projection(projection);
+//d3.json("./data/topodcZip.json", function(error,dc){
+//
+//        if (error) return console.error(error);
+//        console.log(topojson.feature(dc, dc.objects.dcZip));
+//
+//        dashboard2.selectAll('path')
+//            .data(topojson.feature(dc, dc.objects.dcZip).features).enter().append('path')
+//            .attr("d", path);
+//    });
+</script>
+</div>
+<div id = "dashboard">
 <script>
 
 
@@ -83,7 +159,7 @@ var framewidth = 1200,
 
     var svg = d3.select("#dashboard").append("svg").attr("width",framewidth).attr("height",frameheight);
 
-    var twoSidedBar = svg.append("g").attr("transform","translate(" + (margin1.left + 100) + "," + margin1.top + ")");
+    var twoSidedBar = svg.append("g").attr("transform","translate(" + (margin1.left + 200) + "," + margin1.top + ")");
 
     var xScale = d3.scale.linear().range([0, width1]);
     var xAxis = d3.svg.axis().scale(xScale).orient("top");
@@ -223,7 +299,7 @@ function updateTwoSideBar(hour){
 </script>
 
     </div>
-    </div>
+</div>
 
 </body>
 </html>

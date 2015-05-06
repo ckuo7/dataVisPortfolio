@@ -123,23 +123,27 @@ circle.highlight {
 <script src="./homework5/script.js"></script>
 
 <div class = "container" width="960" height="540">
+    <h5><a href="https://www.linkedin.com/in/ckuo7">Chi-Liang "Daniel" Kuo</a></h5>
+    <h5>HW5 <a href="https://github.com/ckuo7/msan622">Repo</a> (Private)</h5>
     <h2>Basic functionality</h2>
     <!--<ul>-->
-        <li>Plot a symbol map using natural earth projection.</li>
-        <li>Encode magnitude of earthquakes into size of circles.</li>
+    <li>Plot a symbol map using natural earth projection.</li>
+    <li>Encode magnitude of earthquakes into size of circles.</li>
     <li>Change the text at the bottom to provide detail information about each earthquake.</li>
     <!--</ul>-->
     <h2>Moderate Functionality</h2>
     <!--<ul>-->
-        <li>Encode depth of earthquakes with threshold color scale.</li>
+    <li>Encode depth of earthquakes with threshold color scale. The deeper the earthquake is, the deeper the color.</li>
     <!--</ul>-->
     <h2>Advanced Functionality</h2>
     <!--<ul>-->
-        <li>
-            Enable panning
-        </li>
+    <li>
+    Enable panning of the map.
+    </li>
     <!--</ul>-->
     <h2>Design Guide</h2>
+    To navigate through this visualization, you can pan the map horizontally to shift the center to the place you want. The color of stroke of the circles will become
+    red if being hovered. In addition, the text bar at the bottom of the map would display detail information about the selected data point.
     <h2>Earthquakes Visulization</h2>
     <svg id="map" width="960" height="480"></svg>
     <p id="log">Loading map... please wait.</p>
