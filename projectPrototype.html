@@ -22,13 +22,39 @@
     float: left;
     }
 
-    dashboard{
-    padding-top: 100px;
-    }
-    #dashboard{
-    width: 1200px;
-    height: 800px;
-    overflow: scroll;
+    /*dashboard{*/
+    /*padding-top: 100px;*/
+    /*}*/
+    /*#dashboard{*/
+    /*width: 1050px;*/
+    /*height: 800px;*/
+    /*overflow: scroll;*/
+/*}*/
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
 }
 </style>
 
@@ -74,13 +100,38 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/d3.min.js"></script>
 <script src="http://d3js.org/topojson.v1.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 <div class="container">
+    <h2><a href="./projectDataset.html">Dataset Summary</a></h2>
+    <p>My project works on two bikeshare datasets. The first one is trip history where each row contains <b>starting station,
+    ending station, starting time, ending time and duration</b> of a trip. To visualize net bikes number (number of bikes coming in minus number of bikes coming out) of a
+    given station in a particular time, I aggregated this dataset by station names and hour to obtain the number. In addition, to be able to plot
+    each station on map, I included geolocation information for each station. The final dataset has following columns:</p>
+    <ul>
+        <li><b>station</b>: name of the station</li>
+        <li><b>hour</b></li>
+        <li><b>output</b>: number of bikes coming out</li>
+        <li><b>input</b>: number of bikes coming in</li>
+        <li><b>net</b>: input minus output</li>
+        <li><b>lon</b>: longitude of the station</li>
+        <li><b>lad</b>: latitude of the station</li>
+        <li><b>zip code</b></li>
+        <li><b>geo information</b>: other geolocation information.</li>
+    </ul>
+    <p>The second dataset includes extraneous variables such as <b>temperature, wind speed, and humidity</b></p>
+
+    <h2><a href = "./projectSketch.html">Sketch Summary</a></h2>
+    <p>The whole purpose of this data visualization project is to understand the distribution of bikes for a given time. To achieve
+    this goal, I decided to create a dashboard with three separate visualization. The first one is a two-sided bar chart that shows the
+    net number of bikes for each station at a given hour. The second one is a line chart to display my time-series variables such as temperature and humidity.
+    The last one is a map that indicates the location of each station.</p>
+    <h2><a href = "#dashboard2">Visualization Prototype</a></h2>
 <div id = "dashboard2">
 
 <script>
-var framewidth2 = 1200,
-    frameheight2 = 400;
-    radius = 160;
+var framewidth2 = 1000,
+    frameheight2 = 700;
+    radius = 100;
 
 var color = d3.scale.linear().range(["#ef8a62","#67a9cf"]).domain([0,24]);
 
@@ -91,6 +142,8 @@ var arc = d3.svg.arc()
 var outerArc = d3.svg.arc()
 	    .innerRadius(radius * 0.7)
 	    .outerRadius(radius * 0.7);
+
+var margin2 = {"left":50,"top":50,"right":50,"bottom":50};
 
 var hour = [];
 for ( var i = 0 ; i<24 ;i++){ hour.push({"label":i,"value":1})}
@@ -105,7 +158,7 @@ var dashboard2 = d3.select("#dashboard2").append("svg")
 
 var donutChart = dashboard2
         .append("g")
-        .attr("transform", "translate(" + framewidth2 / 2 + "," + frameheight2 / 2 + ")");
+        .attr("transform", "translate(" + (margin2.left + 100) + "," + (frameheight2 - 100) + ")");
 
 var donut = donutChart.selectAll(".arc")
         .data(pie(hour))
@@ -129,21 +182,118 @@ var donut = donutChart.selectAll(".arc")
       .attr("transform", function(d) { return "translate(" + outerArc.centroid(d) + ")"; })
       .attr("dy", ".35em")
       .style("text-anchor", "middle")
-      .text(function(d) { return d.data.label; }).style({"fill":"gray","font-size":18});
+      .text(function(d) { return d.data.label; }).style({"fill":"gray","font-size":12});
+
+
+var width2 = 250;
+var height2 = 100;
+
+var xScale1 = d3.time.scale().range([0, width2]),
+    yScale1 = d3.scale.linear().range([height2, 0]);
+
+var xAxis1 = d3.svg.axis().scale(xScale1).orient("bottom").ticks(3),
+    yAxis1 = d3.svg.axis().scale(yScale1).orient("left").ticks(3);
+
+var line1 = d3.svg.line()
+    .interpolate("basis") // smoothing method
+    .x(function(d) { return xScale1(d.datetime); })
+    .y(function(d) { return yScale1(d["temp"]); });
+
+var parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
+var lineChart1 = dashboard2.append("g").attr("transform", "translate(" + margin2.left + "," + margin2.top +")");
+var dcmap = dashboard2.append("g").attr("transform", "translate(" + 280 + "," + margin2.top +")");
+
+d3.csv("./data/projectData.csv",
+
+        function(d){
+
+            return {    "datetime" : parseDate(d.datetime),
+                        "season" : +d.season,
+                        "holiday" : +d.holiday,
+                        "workingday" : +d.workingday,
+                        "weather" : +d.weather,
+                        "temp" : +d.temp,
+                        "atemp" : +d.atemp,
+                        "humidity" : +d.humidity,
+                        "windspeed" : +d.windspeed};},
+
+        function(error, data) {
+            console.log(error);
+            console.log(data);
+
+            xScale1.domain(d3.extent(data.map(function(d) { return d.datetime; })));
+            yScale1.domain([0, d3.max(data.map(function(d) {return d["temp"]; }))]);
+//            console.log(yScale1.domain())
+
+
+            var xGuide1 = lineChart1.append("g")
+            .attr("class", "xAxis")
+            .attr("transform", "translate(0," + height2 + ")")
+            .call(xAxis1);
+
+            xGuide1.select("path").style({"fill":"none","stroke":"black"});
+            xGuide1.selectAll("line").style({"fill":"none"});
+
+            var yGuide1 = lineChart1.append("g")
+                .attr("class", "y axis")
+                .call(yAxis1);
+
+            yGuide1.select("path").style({"fill":"none","stroke":"black"});
+            yGuide1.selectAll("line").style({"fill":"none"});
+
+
+
+//                yGuide1.append('text').text(ylabel[selected]).attr("x",-35);
+//                xGuide1.append('text').text("Time").attr("x",width - 30).attr("y",-5);
+
+            lineChart1.append("path")
+                .datum(data).attr("id","line").attr("d",line1).style({"fill":"none","stroke":"steelblue","stroke-width":2})
+
+//
+        });
+
 
 //
 //var dcmap = dashboard2.append("g").attr("transform","translate(600,400)");
-var projection = d3.geo.conicEqualArea().center([-77.0164,38.9047]).scale(10);
+//conicEqualArea()
+var projection = d3.geo.mercator().center([-77.0164,38.9047]).scale(120000).rotate([0,0,0]);
 var path = d3.geo.path().projection(projection);
-//d3.json("./data/topodcZip.json", function(error,dc){
-//
-//        if (error) return console.error(error);
+
+var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+//            console.log(d);
+//            d3.select(this).style("fill","green");
+    return "<strong>zipcode:</strong> <span style='color:red'>" + d.properties.ZIPCODE + "</span>";
+//            "<br><strong>Income:</strong> <span style='color:red'>" + d.Income + "</span><br><strong>hsGrad:</strong> <span style='color:red'>" + d.hsGrad + "</span><br><strong>LifeExp:</strong> <span style='color:red'>" + d.lifeExp + "</span>";
+  });
+dcmap.call(tip);
+d3.json("./data/dczipcode.geojson", function(error,dc){
+
+        if (error) return console.error(error);
+        console.log(dc);
 //        console.log(topojson.feature(dc, dc.objects.dcZip));
-//
-//        dashboard2.selectAll('path')
-//            .data(topojson.feature(dc, dc.objects.dcZip).features).enter().append('path')
-//            .attr("d", path);
-//    });
+
+//        console.log(topojson.feature(dc, dc.objects.dczipcode));
+        dcmap.selectAll('path')
+//            .data(topojson.feature(dc, dc.objects.dczipcode).features).enter().append('path')
+            .data(dc.features).enter().append('path').attr("translate","transform(" + margin2.left + "," + (margin2.top + 200) +")")
+            .attr("d", path).style("fill","steelblue").style("opacity",0.5).style({"stroke":"white","stroke-width":2})
+                .on("mouseover",
+                tip.show
+//                function(d){
+//                    console.log(tip.show);
+//                    console.log(d);
+//                    d3.select(this).style("fill","green")}
+                )
+                .on("mouseout",
+                tip.hide
+//                    function(d){
+//                    d3.select(this).style("fill","steelblue")}
+                );
+//                function(d){ console.log(d); return "steeblue";});
+    });
 </script>
 </div>
 <div id = "dashboard">
