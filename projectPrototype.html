@@ -30,15 +30,16 @@
     /*height: 800px;*/
     /*overflow: scroll;*/
 /*}*/
-.d3-tip {
+.tooltip {
   line-height: 1;
   font-weight: bold;
   padding: 12px;
   background: rgba(0, 0, 0, 0.8);
   color: #fff;
-  border-radius: 2px;
+  border-radius: 4px;
+    white-space: nowrap;
 }
-.d3-tip:after {
+.tooltip:after {
   box-sizing: border-box;
   display: inline;
   font-size: 10px;
@@ -51,11 +52,25 @@
 }
 
 /* Style northward tooltips differently */
-.d3-tip.n:after {
+.tooltip.n:after {
   margin: -1px 0 0 0;
   top: 100%;
   left: 0;
 }
+/*.tooltip {*/
+    /*box-sizing: border-box;*/
+    /*display: inline;*/
+    /*line-height: 1;*/
+    /*font-weight: bold;*/
+    /*display: inline;*/
+    /*padding: 12px;*/
+    /*width: 100%;*/
+    /*height:100%;*/
+
+  /*background: rgba(0, 0, 0, 0.8);*/
+  /*color: #fff;*/
+  /*border-radius: 2px;*/
+    /*}*/
 </style>
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -156,7 +171,8 @@ var outerArc = d3.svg.arc()
 var margin2 = {"left":50,"top":50,"right":50,"bottom":50};
 
 var hour = [];
-var hour2 = ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"];
+var hour2 = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"];
+var date2 = ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"];
 for ( var i = 0 ; i<24 ;i++){ hour.push({"label":i,"value":1})}
 var date = [];
 for ( var j = 0 ; j<30 ;j++){ date.push({"label":j,"value":1})}
@@ -177,9 +193,12 @@ var gridSize = radius*2/7;
 
 var selectDate = 1;
 var selectHour = 15;
-var file = "./data/bikeshare/bs_2012_11_".concat(hour2[0] + ".csv");
+var file = "./data/bikeshare/bs_2012_11_".concat(date2[0] + ".csv");
 
-var calmap = calender.selectAll(".rect").data(date).enter().append("rect")
+
+var calmap = calender.append("g");
+
+  calmap.selectAll(".rect").data(date).enter().append("rect")
         .attr("x", function(d,i) { return ((i+4)%7)* gridSize; })
         .attr("y", function(d,i){ return Math.floor((i+4)/7)*gridSize})
         .attr("rx", 2)
@@ -197,13 +216,24 @@ var calmap = calender.selectAll(".rect").data(date).enter().append("rect")
             console.log(selectDate_);
             d3.select(selectDate_).transition().duration(300).style("fill","silver");
             selectDate = +d.label+1;
-            file = "./data/bikeshare/bs_2012_11_".concat(hour2[+d.label] + ".csv");
-            updateCircle()
+            file = "./data/bikeshare/bs_2012_11_".concat(date2[+d.label] + ".csv");
+
+            d3.selectAll(".station").remove();
+            plotCircle();
+
+
         });
 
+var days = ["Sun","Mon","Tue","Wed","Thur","Fri","Sat"];
+var daysText = calender.append("g");
+    daysText.selectAll(".days").data(days).enter().append("text").attr("x", function(d,i) { return (i+0.5) * gridSize; }).attr("y", -5)
+                    .text(function(d){return d;}).style({"font-size":10,"text-anchor":"middle","font-family":"georgia, serif","font-weight":"bold"});
 
-
-
+var dateText = calender.append("g");
+    dateText.selectAll(".date").data(date).enter().append("text")
+            .attr("x", function(d,i) { return ( ((i+4)%7) + 0.5)* gridSize; })
+            .attr("y", function(d,i){ return (Math.floor((i+4)/7) + 0.5)*gridSize})
+            .text(function(d){return (+d.label+1);}).style({"font-size":10,"text-anchor":"middle","font-family":"georgia, serif","font-weight":"bold"});
 
 var donutChart = widget.append("g").attr("transform", "translate(" + radius + "," + (radius + gridSize*5) + ")");
 
@@ -212,6 +242,13 @@ var donut = donutChart.selectAll(".arc")
         .data(pie(hour))
         .enter().append("g")
         .attr("class", "arc");
+
+//    donut.append("text").datum(hour2[selectHour]).text(function(d){return d + ":00";})
+//                    .attr("text-anchor","middle")
+//                    .attr("id","texthour")
+//                    .attr("dy",5)
+//                    .style({"font-family":"georgia, serif", "font-size":20,"fill":"silver"});
+
 
     donut.append("path")
         .attr("d", arc)
@@ -224,15 +261,22 @@ var donut = donutChart.selectAll(".arc")
             })
             .on("click", function(d){
                 console.log(d);
+                selectHour = +d.data.label;
                 updateTwoSideBar(+d.data.label);
-                updateCircle(+d.data.label);
-                selectHour = +d.data.label});
+                updateCircle(selectHour);
+//                d3.select("#texthour").datum(hour2[selectHour]).transition().duration(100).text(function(d){return d + ":00";});
+                });
 
     donut.append("text")
       .attr("transform", function(d) { return "translate(" + outerArc.centroid(d) + ")"; })
       .attr("dy", ".35em")
+      .attr("id", function(d){ return "hourText"+d.data.label;})
       .style("text-anchor", "middle")
-      .text(function(d) { return d.data.label; }).style({"fill":"gray","font-size":12});
+      .text(function(d) { return d.data.label; }).style("fill","gray");
+
+
+//      .style("fill",function(d){ return fill = (d.data.label===selectHour)? "black" : "gray";});
+//            .style("font-size",function(d){ return fontsize = (d.data.label===selectHour)? 16 : 12;});
 
 var starthour = 15;
 
@@ -251,57 +295,57 @@ var line1 = d3.svg.line()
     .y(function(d) { return yScale1(d["temp"]); });
 
 var parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
-var lineChart1 = dashboard2.append("g").attr("transform", "translate(" + margin2.left + "," + margin2.top +")");
+var lineChart1 = dashboard2.append("g").attr("transform", "translate(" + margin2.left + "," + (margin2.top + radius*2 + gridSize*5) +")");
 var dcmap = dashboard2.append("g").attr("transform", "translate(" + 280 + "," + margin2.top +")");
 
-//d3.csv("./data/projectData.csv",
+d3.csv("./data/projectData.csv",
+
+        function(d){
+
+            return {    "datetime" : parseDate(d.datetime),
+                        "season" : +d.season,
+                        "holiday" : +d.holiday,
+                        "workingday" : +d.workingday,
+                        "weather" : +d.weather,
+                        "temp" : +d.temp,
+                        "atemp" : +d.atemp,
+                        "humidity" : +d.humidity,
+                        "windspeed" : +d.windspeed};},
+
+        function(error, data) {
+            console.log(error);
+            console.log(data);
+
+            xScale1.domain(d3.extent(data.map(function(d) { return d.datetime; })));
+            yScale1.domain([0, d3.max(data.map(function(d) {return d["temp"]; }))]);
+//            console.log(yScale1.domain())
+
+
+            var xGuide1 = lineChart1.append("g")
+            .attr("class", "xAxis")
+            .attr("transform", "translate(0," + height2 + ")")
+            .call(xAxis1);
+
+            xGuide1.select("path").style({"fill":"none","stroke":"black"});
+            xGuide1.selectAll("line").style({"fill":"none"});
+
+            var yGuide1 = lineChart1.append("g")
+                .attr("class", "y axis")
+                .call(yAxis1);
+
+            yGuide1.select("path").style({"fill":"none","stroke":"black"});
+            yGuide1.selectAll("line").style({"fill":"none"});
+
+
+
+//                yGuide1.append('text').text(ylabel[selected]).attr("x",-35);
+//                xGuide1.append('text').text("Time").attr("x",width - 30).attr("y",-5);
+
+            lineChart1.append("path")
+                .datum(data).attr("id","line").attr("d",line1).style({"fill":"none","stroke":"steelblue","stroke-width":2})
+
 //
-//        function(d){
-//
-//            return {    "datetime" : parseDate(d.datetime),
-//                        "season" : +d.season,
-//                        "holiday" : +d.holiday,
-//                        "workingday" : +d.workingday,
-//                        "weather" : +d.weather,
-//                        "temp" : +d.temp,
-//                        "atemp" : +d.atemp,
-//                        "humidity" : +d.humidity,
-//                        "windspeed" : +d.windspeed};},
-//
-//        function(error, data) {
-//            console.log(error);
-//            console.log(data);
-//
-//            xScale1.domain(d3.extent(data.map(function(d) { return d.datetime; })));
-//            yScale1.domain([0, d3.max(data.map(function(d) {return d["temp"]; }))]);
-////            console.log(yScale1.domain())
-//
-//
-//            var xGuide1 = lineChart1.append("g")
-//            .attr("class", "xAxis")
-//            .attr("transform", "translate(0," + height2 + ")")
-//            .call(xAxis1);
-//
-//            xGuide1.select("path").style({"fill":"none","stroke":"black"});
-//            xGuide1.selectAll("line").style({"fill":"none"});
-//
-//            var yGuide1 = lineChart1.append("g")
-//                .attr("class", "y axis")
-//                .call(yAxis1);
-//
-//            yGuide1.select("path").style({"fill":"none","stroke":"black"});
-//            yGuide1.selectAll("line").style({"fill":"none"});
-//
-//
-//
-////                yGuide1.append('text').text(ylabel[selected]).attr("x",-35);
-////                xGuide1.append('text').text("Time").attr("x",width - 30).attr("y",-5);
-//
-//            lineChart1.append("path")
-//                .datum(data).attr("id","line").attr("d",line1).style({"fill":"none","stroke":"steelblue","stroke-width":2})
-//
-////
-//        });
+        });
 
 
 //
@@ -316,12 +360,16 @@ var tip = d3.tip()
   .html(function(d) {
 
     d3.select(this).style("opacity",.3);
-    return "<strong>zipcode:</strong> <span style='color:red'>" + d.properties.ZIPCODE + "</span>";
+    return "<strong>zipcode:</strong> <span style='color:red'>" + d.station + "</span>";
         });
 
 dcmap.call(tip);
 
 var opacity = d3.scale.linear().range([0.5,.9]);
+
+var tooltip1 = d3.select("body").append("div")
+    			 .attr("class", "tooltip")
+   				 .style("opacity", 0.9);
 
 function plotCircle(){
 
@@ -344,14 +392,16 @@ function plotCircle(){
 
             var data_ = [];
             data.forEach(function(d){
-                if (d.hour === starthour){ data_.push(d);}
+                if (d.hour === selectHour){ data_.push(d);}
             });
 
-//            console.log(data_);
+            console.log(data_);
 
         opacity.domain(d3.extent(data_.map(function(d){ return Math.abs(d.net);})));
 //            console.log(opacity.domain());
 //            console.log(opacity.range());
+
+
     dcmap.selectAll("circle")
                 .data(data_)
                 .enter()
@@ -373,11 +423,34 @@ function plotCircle(){
                 })
                 .style("opacity", function(d){
                     return opa = (d.net === 0) ? 0 :opacity(Math.abs(d.net));
-                });
+                })
 //                .on("mouseover", showHighlight)
 //                .on("mouseout", hideHighlight);
+                .on("mouseover", function(d) {
+                    tooltip1.transition()
+                        .duration(200)
+                        .style("opacity", 1);
+                    console.log(d.station);
+                    tooltip1.html("<strong>Station: </strong><span style='color:red'>" +d.station+ "</span><br><strong>Net bikes number: </strong><span style='color:red'>" + d.net + "</span>")
+                       .style("left", (event.pageX + 15) + "px")
+                       .style("top", (event.pageY - 10) + "px");
+                    d3.select(this).style("stroke", "black");
+                    })
+                .on("mouseout", function(d){
+                    tooltip1.transition()
+                           .style("opacity", 0);
+                    d3.select(this).style("stroke", "none");
+                 });
             });
 
+    function showHighlight(d) {
+        // highlight symbol
+        d3.select(this).style("stroke","black");
+        console.log(d);}
+    function hideHighlight(d) {
+        // highlight symbol
+        d3.select(this).style("stroke","none");}
+    return plotCircle;
     }
 
 d3.json("./data/dczipcode.geojson", function(error,dc){
@@ -390,19 +463,19 @@ d3.json("./data/dczipcode.geojson", function(error,dc){
         dcmap.selectAll('path')
 //            .data(topojson.feature(dc, dc.objects.dczipcode).features).enter().append('path')
             .data(dc.features).enter().append('path').attr("translate","transform(" + margin2.left + "," + (margin2.top + 200) +")")
-            .attr("d", path).style("fill","steelblue").style("opacity",0.5).style({"stroke":"white","stroke-width":2})
-                .on("mouseover",
-                tip.show
+            .attr("d", path).style("fill","rgb(192, 192, 192)").style({"stroke":"white","stroke-width":2});
+//                .on("mouseover",
+//                tip.show
 //                function(d){
 //                    console.log(tip.show);
 //                    console.log(d);
 //                    d3.select(this).style("fill","green")}
-                )
-                .on("mouseout",
-                tip.hide
+//                )
+//                .on("mouseout",
+//                tip.hide
 //                    function(d){
 //                    d3.select(this).style("fill","steelblue")}
-                );
+//                );
         plotCircle();
 //                function(d){ console.log(d); return "steeblue";});
     });
@@ -433,6 +506,7 @@ function updateCircle(hour) {
                     }
                 });
 
+
 //                console.log(data_);
                 data_.forEach(function (d, i) {
 //                    console.log(d);
@@ -446,6 +520,7 @@ function updateCircle(hour) {
                             .style("opacity", function (d) {
                                 return opa = (d.net === 0) ? 0 :opacity(Math.abs(d.net));
                             });
+
 
                 });
             });
@@ -502,7 +577,7 @@ function plotTwoSideBar(){
 
             var data_ = [];
             data.forEach(function(d){
-                if (d.hour === hour){ data_.push(d);}
+                if (d.hour === selectHour){ data_.push(d);}
             });
 
 //            console.log(data_);
@@ -570,10 +645,10 @@ function updateTwoSideBar(hour){
         },
         function(error,data) {
 
-            console.log(error);
+//            console.log(error);
 //            console.log(data);
 
-            console.log(hour);
+//            console.log(hour);
 
 //            var hour = 15;
             var data_ = [];
