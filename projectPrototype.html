@@ -290,66 +290,346 @@ var xAxis1 = d3.svg.axis().scale(xScale1).orient("bottom").ticks(3),
     yAxis1 = d3.svg.axis().scale(yScale1).orient("left").ticks(3);
 
 var line1 = d3.svg.line()
-    .interpolate("basis") // smoothing method
-    .x(function(d) { return xScale1(d.datetime); })
-    .y(function(d) { return yScale1(d["temp"]); });
+    .interpolate("cardinal") // smoothing method
+    .x(function(d) { return xScale1(d.hour); })
+    .y(function(d) { return yScale1(d["net"]); });
 
 var parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
-var lineChart1 = dashboard2.append("g").attr("transform", "translate(" + margin2.left + "," + (margin2.top + radius*2 + gridSize*5) +")");
+var parseDate2 = d3.time.format("%H").parse;
+var temperatureHeight = 100;
+var lineChart1 = dashboard2.append("g").attr("transform", "translate(" + margin2.left + "," + (margin2.top + radius*2 + gridSize*5 + temperatureHeight) +")");
 var dcmap = dashboard2.append("g").attr("transform", "translate(" + 280 + "," + margin2.top +")");
 
-d3.csv("./data/projectData.csv",
+
+function compare(a,b) {
+  if (a.hour < b.hour)
+     return -1;
+  if (a.hour > b.hour)
+    return 1;
+  return 0;
+}
+var lineChartLegend = ["steelblue","black"];
+var legend = lineChart1.selectAll(".legend")
+      .data(lineChartLegend)
+    .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d, i) { return "translate(0," + (1+(i+2)/5)*height2 + ")"; });
+
+var legendline = legend.append("line")
+      .attr("x1", 5)
+      .attr("y1", 0)
+      .attr("x2", 15)
+        .style("stroke",function(d){return d;})
+        .style({"fill":"none","stroke-width":2});
+
+
+
+var linevalues0 = null;
+var linevalues1 = null;
+var linedata = null;
+d3.csv("./data/bikeshare/bs_2012_11_01.csv",
 
         function(d){
 
-            return {    "datetime" : parseDate(d.datetime),
-                        "season" : +d.season,
-                        "holiday" : +d.holiday,
-                        "workingday" : +d.workingday,
-                        "weather" : +d.weather,
-                        "temp" : +d.temp,
-                        "atemp" : +d.atemp,
-                        "humidity" : +d.humidity,
-                        "windspeed" : +d.windspeed};},
+            return {
+                    "hour": parseDate2(d.hour),
+                    "net": +d.net,
+                    "station": d.station,
+                    "lat" : +d.lat,
+                    "lon" : +d.lon,
+                    "zipcode" : d.postal_code};},
 
-        function(error, data) {
+        function(error,data){
+
             console.log(error);
-            console.log(data);
-
-            xScale1.domain(d3.extent(data.map(function(d) { return d.datetime; })));
-            yScale1.domain([0, d3.max(data.map(function(d) {return d["temp"]; }))]);
-//            console.log(yScale1.domain())
 
 
-            var xGuide1 = lineChart1.append("g")
+            var data_ = [];
+            var data2_ = [];
+
+//            console.log(file);
+            data.forEach(function(d){
+                if (d.station === "10th & E St NW"){  data_.push(d);}
+                if (d.station === "16th & Harvard St NW"){ data2_.push(d);}
+
+            });
+
+            data_.sort(compare);
+            data2_.sort(compare);
+//            console.log(data_);
+//            console.log(data2_);
+            plotLineChart.values0(data_);
+            plotLineChart.values1(data2_);
+            plotLineChart.data(data);
+            plotLineChart();
+//
+
+        });
+function plotLineChart() {
+
+
+
+
+    xScale1.domain(d3.extent(linedata.map(function (d) {return d.hour;}))).ticks(4);
+
+    yScale1.domain(d3.extent(linedata.map(function (d) {return d["net"];})));
+
+    var xGuide1 = lineChart1.append("g")
             .attr("class", "xAxis")
             .attr("transform", "translate(0," + height2 + ")")
             .call(xAxis1);
 
-            xGuide1.select("path").style({"fill":"none","stroke":"black"});
-            xGuide1.selectAll("line").style({"fill":"none"});
+    xGuide1.select("path").style({"fill": "none", "stroke": "black"});
+    xGuide1.selectAll("line").style({"fill": "none"});
 
-            var yGuide1 = lineChart1.append("g")
-                .attr("class", "y axis")
-                .call(yAxis1);
+    var yGuide1 = lineChart1.append("g")
+            .attr("class", "y axis")
+            .call(yAxis1);
 
-            yGuide1.select("path").style({"fill":"none","stroke":"black"});
-            yGuide1.selectAll("line").style({"fill":"none"});
-
-
-
-//                yGuide1.append('text').text(ylabel[selected]).attr("x",-35);
-//                xGuide1.append('text').text("Time").attr("x",width - 30).attr("y",-5);
-
-            lineChart1.append("path")
-                .datum(data).attr("id","line").attr("d",line1).style({"fill":"none","stroke":"steelblue","stroke-width":2})
-
-//
-        });
+    yGuide1.select("path").style({"fill": "none", "stroke": "black"});
+    yGuide1.selectAll("line").style({"fill": "none"});
+    yGuide1.append("text").text("Bike Demand").style("text-anchor", "middle").attr("y", -10);
 
 
-//
-//var dcmap = dashboard2.append("g").attr("transform","translate(600,400)");
+    lineChart1.append("path")
+            .datum(linevalues0).attr("id", "line0").attr("d", line1).style({
+                "fill": "none",
+                "stroke": "steelblue",
+                "stroke-width": 2
+            });
+
+
+    lineChart1.append("path")
+            .datum(linevalues1).attr("id", "line1").attr("d", line1).style({
+                "fill": "none",
+                "stroke": "black",
+                "stroke-width": 2
+            });
+
+
+    legend.data([linevalues0[0]["station"], linevalues1[0]["station"]]).append("text").attr("id", function (d, i) {
+        return "linelegendlabel" + i;})
+            .attr("transform","translate(140,0)")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("dy", ".35em")
+            .text(function (d) {
+                return  d;
+            });
+
+    legend.data([linevalues0[0]["net"], linevalues1[0]["net"]]).append("text").attr("id", function (d, i) {
+        return "linelegendBikeNumber" + i;
+    })
+            .attr("x", 20)
+            .attr("y", 0)
+            .attr("dy", ".35em")
+            .text(function (d) {
+                return "Bike Demand: " + d;
+            });
+
+
+
+    var focus = lineChart1.append("g")
+            .style("display", "none");
+
+    // append the x line
+    focus.append("line")
+            .attr("id", "linetipx")
+            .style("stroke", "blue")
+            .style("stroke-dasharray", "3,3")
+            .style("opacity", 0.5)
+            .attr("y1", 0)
+            .attr("y2", height2);
+
+    // append the y line0
+    focus.append("line")
+            .attr("id", "linetipy0")
+            .style("stroke", "blue")
+            .style("stroke-dasharray", "3,3")
+            .style("opacity", 0.5)
+            .attr("x1", width2)
+            .attr("x2", width2);
+
+    // append the y line1
+    focus.append("line")
+            .attr("id", "linetipy1")
+            .style("stroke", "black")
+            .style("stroke-dasharray", "3,3")
+            .style("opacity", 0.5)
+            .attr("x1", width2)
+            .attr("x2", width2);
+
+    // circle 1
+    focus.append("circle")
+            .attr("id", "linetip0")
+            .style("fill", "none")
+            .style("stroke", "steelblue")
+            .attr("r", 4);
+
+    // circle 2
+    focus.append("circle")
+            .attr("id", "linetip1")
+            .style("fill", "none")
+            .style("stroke", "black")
+            .attr("r", 4);
+
+    // append hour text
+    focus.append("text")
+        .attr("id", "hourtip")
+//        .style("stroke", "white")
+        .style("stroke-width", "3.5px")
+        .style("opacity", 0.8)
+        .attr("dx", 8)
+        .attr("dy", "-.5em");
+//    focus.append("text")
+//        .attr("class", "y2")
+//        .attr("dx", 8)
+//        .attr("dy", "-.3em");
+
+
+    lineChart1.append("rect")
+            .attr("width", width2)
+            .attr("height", height2)
+            .style("fill", "none")
+            .style("pointer-events", "all")
+            .on("mouseover", function () {
+                focus.style("display", null);
+            })
+            .on("mouseout", function () {
+                focus.style("display", "none");
+            })
+            .on("mousemove", mousemove);
+
+    var bisectDate = d3.bisector(function (d) {
+        return d.hour;
+    }).left;
+
+    function mousemove() {
+
+        var x0 = xScale1.invert(d3.mouse(this)[0]),
+                i = bisectDate(linevalues0, x0, 1),
+                d0 = linevalues0[i - 1],
+                d1 = linevalues0[i],
+                d = x0 - d0.hour > d1.hour - x0 ? d1 : d0,
+
+                d0_ = linevalues1[i - 1],
+                d1_ = linevalues1[i],
+                d_ = x0 - d0_.hour > d1_.hour - x0 ? d1_ : d0_;
+
+        focus.select("#linetip0")
+                .attr("transform",
+                "translate(" + xScale1(d.hour) + "," +
+                yScale1(d.net) + ")");
+
+        focus.select("#linetip1")
+                .attr("transform",
+                "translate(" + xScale1(d_.hour) + "," +
+                yScale1(d_.net) + ")");
+
+        var tempheight = d.net > d_.net ? d.net : d_.net;
+
+        focus.select("#linetipx")
+                .attr("transform",
+                "translate(" + xScale1(d.hour) + "," +
+                yScale1(tempheight) + ")")
+                .attr("y2", height2 - yScale1(tempheight));
+
+        focus.select("#linetipy0")
+                .attr("transform",
+                "translate(0," + yScale1(d.net) + ")").attr("x2",0);
+
+        focus.select("#linetipy1")
+                .attr("transform",
+                "translate(0," + yScale1(d_.net) + ")").attr("x2",0);
+
+        focus.select("#hourtip").attr("transform",
+                "translate(" + xScale1(d.hour) + "," +
+                yScale1(tempheight) + ")").text(d.hour.getHours() +":00");
+
+        d3.select("#linelegendBikeNumber0").transition().duration(1000).text("Bike Demand: " + d.net);
+        d3.select("#linelegendBikeNumber1").transition().duration(1000).text("Bike Demand: " + d_.net);
+    }
+
+}
+
+// updates the symbols values, must happen before drawing
+plotLineChart.values0 = function(_) {
+        if (!arguments.length) {return linevalues0;}
+        linevalues0 = _;
+        return plotLineChart;
+        };
+plotLineChart.values1 = function(_) {
+        if (!arguments.length) {return linevalues1;}
+        linevalues1 = _;
+        return plotLineChart;
+        };
+plotLineChart.data = function(_) {
+        if (!arguments.length) {return linedata;}
+        linedata = _;
+        return plotLineChart;
+        };
+plotLineChart.update1 = function(_){
+
+
+};
+
+
+var lineCount = 0; // for selecting the line chart
+function updatelineChart(station, net){
+
+
+//    var line_ = "#line" + (lineCount%2);
+//    var linelabel_ = "#linelegendlabel" + (lineCount%2);
+
+
+    d3.csv(file,
+
+        function(d){
+
+                return {
+                    "hour": parseDate2(d.hour),
+                    "net": +d.net,
+                    "station": d.station,
+                    "lat" : +d.lat,
+                    "lon" : +d.lon,
+                    "zipcode" : d.postal_code};},
+
+        function(error,data) {
+
+
+            var data_ = [];
+
+            data.forEach(function (d) {
+                if (d.station === station) {
+                    data_.push(d);
+                }
+            });
+            data_.sort(compare);
+
+            if (lineCount%2 === 0){
+                plotLineChart.values0(data_);
+                d3.select("#line0").datum(linevalues0).transition().duration(1000).attr("d", line1);
+                d3.select("#linelegendlabel0").transition().duration(1000).text(station);
+
+            }
+            else{
+                plotLineChart.values1(data_);
+                d3.select("#line1").datum(linevalues1).transition().duration(1000).attr("d", line1);
+                d3.select("#linelegendlabel1").transition().duration(1000).text(station);
+
+            }
+            lineCount++;
+//            d3.select(line_).datum(data_).transition().duration(1000).attr("d", line1);
+//            d3.select(linelabel_).transition().duration(1000).text(station);
+
+
+        })
+
+
+}
+
+
+
 //conicEqualArea()
 var projection = d3.geo.mercator().center([-77.0164,38.9047]).scale(120000).rotate([0,0,0]);
 var path = d3.geo.path().projection(projection);
@@ -435,12 +715,18 @@ function plotCircle(){
                        .style("left", (event.pageX + 15) + "px")
                        .style("top", (event.pageY - 10) + "px");
                     d3.select(this).style("stroke", "black");
+
                     })
                 .on("mouseout", function(d){
                     tooltip1.transition()
                            .style("opacity", 0);
                     d3.select(this).style("stroke", "none");
-                 });
+                 })
+                .on("click", function(d){
+
+                updatelineChart(d.station, d.net);
+              console.log("xxx")
+            });
             });
 
     function showHighlight(d) {
