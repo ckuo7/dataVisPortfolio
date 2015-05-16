@@ -182,10 +182,15 @@ var calmap = calender.append("g");
             console.log(selectDate_);
             d3.select(selectDate_).transition().duration(300).style("fill","silver");
             selectDate = +d.label+1;
+
+            // selected file change
             file = "./data/bikeshare/bs_2012_11_".concat(date2[+d.label] + ".csv");
 
             d3.selectAll(".station").remove();
+              //
             plotCircle();
+            updateCal(file);
+//            plotLineChart.value
 
 
         });
@@ -818,10 +823,6 @@ var framewidth = 1200,
     var xScale = d3.scale.linear().range([0, width1]);
     var xAxis = d3.svg.axis().scale(xScale).orient("top");
 
-
-
-//    xGuide.append("text").attr("x", width1+15).attr("dy",-9).text("Bikes");
-
     var yScale = d3.scale.ordinal().rangeBands([0, height1], .1, .5);
     var yAxis = d3.svg.axis().scale(yScale).orient("left");
 
@@ -884,17 +885,21 @@ function plotTwoSideBar(){
     console.log(data_);
     console.log(bardata);
     var xGuide = twoSidedBar.append("g").attr("class", "x axis").attr("id", "xAxis1").call(xAxis);
-    var yGuide = twoSidedBar.append("g").attr("class", "y axis").attr("id", "yAxis").call(yAxis);
+    var yGuide = twoSidedBar.append("g").attr("class", "y axis").attr("id", "yAxis1").call(yAxis);
 
     xGuide.selectAll('line').style({"fill": "none", "stroke": "black"});
     xGuide.selectAll('path').style({"fill": "none", "stroke": "black"});
 
+    var xGuideText = xGuide.append("text").attr("transform","translate(" + width1/2 + ",0)").attr("y",-30).text("Bike Demand").style("text-anchor","middle");
+
     yGuide.selectAll('line').style({"fill": "none", "stroke": "black"});
     yGuide.selectAll('path').style({"fill": "none", "stroke": "black"});
 
+    var yGuideText = yGuide.append("text").attr("y", -60).attr("x", -height1/2).attr("transform", "rotate(-90)").text("zipcode").style("text-anchor","middle");
+
     var grid = twoSidedBar.append("g");
 
-    grid.append("line").attr("class","grid")
+    grid.append("line").attr("class","grid").attr("id","zeroGrid")
             .attr("x1", xScale(0))
             .attr("x2", xScale(0))
             .attr("y2", height1).style({"fill":"none","stroke":"black"});
@@ -931,17 +936,20 @@ plotTwoSideBar.values = function(_) {
         };
 plotTwoSideBar.update = function(_){
         if (!arguments.length) {return bardata;}
-        //data transformation
+
+        // data transformation
+        // select the data that corresponds to selected hour
         var data_ = [];
         bardata.forEach(function(d){
             if (+d.key === _ ){
                 d.values.forEach(function(e){ data_.push(e);});
             } });
+
+        // update the bar chart
         data_.forEach( function(d){
-//                console.log(d);
+
                 var bar = "#bar" + d.key;
-//                console.log(bar);
-//                console.log(d3.select(bar).attr("x"));
+
                 d3.select(bar).datum(d).transition().duration(1000)
                     .attr("x", function(d){
                         if(d.values >=0 ){return xScale(0);}
@@ -950,9 +958,61 @@ plotTwoSideBar.update = function(_){
                         if(d.values >=0 ){return xScale(d.values)-xScale(0);}
                         else{return xScale(0)-xScale(d.values);}})
                 });
-//            d3.selectAll(".bars").datum(data_)
+
         return plotTwoSideBar;
         };
+
+plotTwoSideBar.updateAxis = function(){
+
+    var dataRange = [];
+    bardata.forEach(function(d){d.values.forEach(function(e){ dataRange.push(e.values);});});
+    xScale.domain(d3.extent(dataRange));
+    xAxis.scale(xScale);
+    d3.select("#xAxis1").transition().duration(1000).call(xAxis);
+    var xGuide_ = d3.select("#xAxis1");
+    xGuide_.selectAll('line').style({"fill": "none", "stroke": "black"});
+    xGuide_.selectAll('path').style({"fill": "none", "stroke": "black"});
+
+    d3.select("#zeroGrid").transition().duration(1000)
+            .attr("x1", xScale(0))
+            .attr("x2", xScale(0));
+
+//    yScale.domain( bardata[0].values.map(function (d) {return d.key;}));
+//    console.log(yScale.domain().length);
+//    yAxis.scale(yScale);
+//    d3.select("#yAxis1").transition().duration(1000).call(yAxis);
+};
+function updateCal(file) {
+    // read the new data from new file
+    d3.csv(file,
+            // parse the new data
+            function (d) {
+                return {
+                    "hour": +d.hour,
+                    "net": +d.net,
+                    "station": d.station,
+                    "lat": +d.lat,
+                    "lon": +d.lon,
+                    "zipcode": d.postal_code
+                };
+            },
+            // create data for barplot
+            function (error, data) {
+
+                // update two sided bar chart
+                var temp = d3.nest().key(function (d) {return d.hour})
+                        .key(function (d) {return d.zipcode;}).sortKeys(d3.ascending)
+                        .rollup(function (d) {return d3.sum(d, function (e) {return e.net;});
+                        }).entries(data);
+
+                // update bardata
+                plotTwoSideBar.values(temp);
+                plotTwoSideBar.updateAxis();
+                console.log(selectHour);
+                plotTwoSideBar.update(selectHour);
+
+            });
+}
 function updateClock(hour){
 
         d3.csv(file,

@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4da44846-0f61-4340-bdca-234c9e532f52" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/projectReport.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/projectPrototype.html" afterPath="$PROJECT_DIR$/projectPrototype.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/projectReport.html" afterPath="$PROJECT_DIR$/projectReport.html" />
     </list>
     <ignored path="spring-2015-msan622.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -71,18 +68,23 @@
       <file leaf-file-name="projectReport.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/projectReport.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.55" vertical-offset="6645" max-vertical-offset="9810">
-              <caret line="811" column="24" selection-start-line="811" selection-start-column="24" selection-end-line="811" selection-end-column="24" />
+            <state vertical-scroll-proportion="0.45666668" vertical-offset="7151" max-vertical-offset="9420">
+              <caret line="897" column="123" selection-start-line="897" selection-start-column="123" selection-end-line="897" selection-end-column="123" />
               <folding>
-                <element signature="e#11243#17039#0" expanded="false" />
-                <element signature="e#17135#17254#0" expanded="false" />
-                <element signature="e#17292#17411#0" expanded="false" />
-                <element signature="e#17446#17559#0" expanded="false" />
-                <element signature="e#17694#19132#0" expanded="false" />
-                <element signature="e#19806#23444#0" expanded="false" />
-                <marker date="1431796194000" expanded="true" signature="19479:19488" placeholder="..." />
-                <marker date="1431796194000" expanded="true" signature="21875:21884" placeholder="..." />
-                <marker date="1431796194000" expanded="true" signature="21960:21969" placeholder="..." />
+                <element signature="e#11360#17156#0" expanded="false" />
+                <element signature="e#17252#17371#0" expanded="false" />
+                <element signature="e#17409#17528#0" expanded="false" />
+                <element signature="e#17563#17676#0" expanded="false" />
+                <element signature="e#17955#18228#0" expanded="false" />
+                <element signature="e#18260#19244#0" expanded="false" />
+                <element signature="e#19923#23561#0" expanded="false" />
+                <element signature="e#23617#24728#0" expanded="false" />
+                <element signature="e#24760#26177#0" expanded="false" />
+                <element signature="e#30695#30807#0" expanded="false" />
+                <element signature="e#30844#31760#0" expanded="false" />
+                <marker date="1431819062000" expanded="true" signature="19596:19605" placeholder="..." />
+                <marker date="1431819062000" expanded="true" signature="21992:22001" placeholder="..." />
+                <marker date="1431819062000" expanded="true" signature="22077:22086" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -1143,18 +1145,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/projectReport.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.55" vertical-offset="6645" max-vertical-offset="9810">
-          <caret line="811" column="24" selection-start-line="811" selection-start-column="24" selection-end-line="811" selection-end-column="24" />
+        <state vertical-scroll-proportion="0.45666668" vertical-offset="7151" max-vertical-offset="9420">
+          <caret line="897" column="123" selection-start-line="897" selection-start-column="123" selection-end-line="897" selection-end-column="123" />
           <folding>
-            <element signature="e#11243#17039#0" expanded="false" />
-            <element signature="e#17135#17254#0" expanded="false" />
-            <element signature="e#17292#17411#0" expanded="false" />
-            <element signature="e#17446#17559#0" expanded="false" />
-            <element signature="e#17694#19132#0" expanded="false" />
-            <element signature="e#19806#23444#0" expanded="false" />
-            <marker date="1431796194000" expanded="true" signature="19479:19488" placeholder="..." />
-            <marker date="1431796194000" expanded="true" signature="21875:21884" placeholder="..." />
-            <marker date="1431796194000" expanded="true" signature="21960:21969" placeholder="..." />
+            <element signature="e#11360#17156#0" expanded="false" />
+            <element signature="e#17252#17371#0" expanded="false" />
+            <element signature="e#17409#17528#0" expanded="false" />
+            <element signature="e#17563#17676#0" expanded="false" />
+            <element signature="e#17955#18228#0" expanded="false" />
+            <element signature="e#18260#19244#0" expanded="false" />
+            <element signature="e#19923#23561#0" expanded="false" />
+            <element signature="e#23617#24728#0" expanded="false" />
+            <element signature="e#24760#26177#0" expanded="false" />
+            <element signature="e#30695#30807#0" expanded="false" />
+            <element signature="e#30844#31760#0" expanded="false" />
+            <marker date="1431819062000" expanded="true" signature="19596:19605" placeholder="..." />
+            <marker date="1431819062000" expanded="true" signature="21992:22001" placeholder="..." />
+            <marker date="1431819062000" expanded="true" signature="22077:22086" placeholder="..." />
           </folding>
         </state>
       </provider>
