@@ -116,45 +116,11 @@
 <script src="js/d3.min.js"></script>
 <script src="http://d3js.org/topojson.v1.min.js"></script>
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
 <div class="container">
-    <h2><a href="./projectDataset.html">Dataset Summary</a></h2>
-    <p>My project works on two bikeshare datasets. The first one is trip history where each row contains <b>starting station,
-    ending station, starting time, ending time and duration</b> of a trip. To visualize net bikes number (number of bikes coming in minus number of bikes coming out) of a
-    given station in a particular time, I aggregated this dataset by station names and hour to obtain the number. In addition, to be able to plot
-    each station on map, I included geolocation information for each station. The final dataset has following columns:</p>
-    <ul>
-        <li><b>station</b>: name of the station</li>
-        <li><b>hour</b></li>
-        <li><b>output</b>: number of bikes coming out</li>
-        <li><b>input</b>: number of bikes coming in</li>
-        <li><b>net</b>: input minus output</li>
-        <li><b>lon</b>: longitude of the station</li>
-        <li><b>lad</b>: latitude of the station</li>
-        <li><b>zip code</b></li>
-        <li><b>geo information</b>: other geolocation information.</li>
-    </ul>
-    <p>The second dataset includes extraneous variables such as <b>temperature, wind speed, and humidity</b></p>
-
-    <h2><a href = "./projectSketch.html">Sketch Summary</a></h2>
-    <p>The whole purpose of this data visualization project is to understand the distribution of bikes for a given time. To achieve
-    this goal, I decided to create a dashboard with three separate visualization. The first one is a two-sided bar chart that shows the
-    net number of bikes for each station at a given hour. The second one is a line chart to display my time-series variables such as temperature and humidity.
-    The last one is a map that indicates the location of each station.</p>
-    <h2><a href = "#dashboard2">Visualization Prototype</a></h2>
-    <h2>To do</h2>
-    <ul>
-        <li>more data: include the data of all 30 days of Nov. 2012</li>
-        <li>change the yaixs of barchart to zip code ( barchart no idea left hand side middle)</li>
-        <li>zoomable may</li>
-        <li>detail on demand of each dot on the map</li>
-        <li>pop up the line chart ( bottom )</li>
-        <li>date widget (clock, calendar, weather, and ( top )</li>
-
-    </ul>
-
 <div id = "dashboard2">
 <script>
-var framewidth2 = 1000,
+var framewidth2 = 1400,
     frameheight2 = 700;
     radius = 105;
 
@@ -251,8 +217,8 @@ var donut = donutChart.selectAll(".arc")
 
 
     donut.append("path")
-        .attr("d", arc)
-        .style("fill", function(d) { return color(d.data.label)}).style("stroke","white")
+            .attr("d", arc)
+            .style("fill", function(d) { return color(d.data.label)}).style({"stroke":"white","stroke-width":"1"})
             .on("mouseover", function(d){
                 d3.select(this).style("opacity",0.5);
             })
@@ -262,19 +228,25 @@ var donut = donutChart.selectAll(".arc")
             .on("click", function(d){
                 console.log(d);
                 selectHour = +d.data.label;
-                updateTwoSideBar(+d.data.label);
+                selectHourText.transition().duration(1000).style("fill","gray");
+                updateClock(+d.data.label);
                 updateCircle(selectHour);
+                selectHourText = d3.select("#hourText"+selectHour);
+                selectHourText.style("fill","#fb8072");
 //                d3.select("#texthour").datum(hour2[selectHour]).transition().duration(100).text(function(d){return d + ":00";});
                 });
+
 
     donut.append("text")
       .attr("transform", function(d) { return "translate(" + outerArc.centroid(d) + ")"; })
       .attr("dy", ".35em")
       .attr("id", function(d){ return "hourText"+d.data.label;})
       .style("text-anchor", "middle")
-      .text(function(d) { return d.data.label; }).style("fill","gray");
+      .text(function(d) { return d.data.label; })
+            .style("fill",function(d){return (d.data.label === selectHour) ? "#fb8072" : "gray";})
+            .style("font-size",14);
 
-
+var selectHourText = d3.select("#hourText15");
 //      .style("fill",function(d){ return fill = (d.data.label===selectHour)? "black" : "gray";});
 //            .style("font-size",function(d){ return fontsize = (d.data.label===selectHour)? 16 : 12;});
 
@@ -298,7 +270,7 @@ var parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
 var parseDate2 = d3.time.format("%H").parse;
 var temperatureHeight = 100;
 var lineChart1 = dashboard2.append("g").attr("transform", "translate(" + margin2.left + "," + (margin2.top + radius*2 + gridSize*5 + temperatureHeight) +")");
-var dcmap = dashboard2.append("g").attr("transform", "translate(" + 280 + "," + margin2.top +")");
+var dcmap = dashboard2.append("g").attr("transform", "translate(" + 500 + "," + margin2.top +")");
 
 
 function compare(a,b) {
@@ -356,13 +328,12 @@ d3.csv("./data/bikeshare/bs_2012_11_01.csv",
 
             data_.sort(compare);
             data2_.sort(compare);
-//            console.log(data_);
-//            console.log(data2_);
+
             plotLineChart.values0(data_);
             plotLineChart.values1(data2_);
             plotLineChart.data(data);
             plotLineChart();
-//
+
 
         });
 function plotLineChart() {
@@ -581,7 +552,6 @@ function updatelineChart(station, net){
 //    var line_ = "#line" + (lineCount%2);
 //    var linelabel_ = "#linelegendlabel" + (lineCount%2);
 
-
     d3.csv(file,
 
         function(d){
@@ -651,6 +621,9 @@ var tooltip1 = d3.select("body").append("div")
     			 .attr("class", "tooltip")
    				 .style("opacity", 0.9);
 
+var selectCircle0 = null;
+var selectCircle1 = null;
+var circleCount = 0;
 function plotCircle(){
 
 //    d3.csv("./data/bs_2012_11_19_clean.csv",
@@ -714,18 +687,31 @@ function plotCircle(){
                     tooltip1.html("<strong>Station: </strong><span style='color:red'>" +d.station+ "</span><br><strong>Net bikes number: </strong><span style='color:red'>" + d.net + "</span>")
                        .style("left", (event.pageX + 15) + "px")
                        .style("top", (event.pageY - 10) + "px");
-                    d3.select(this).style("stroke", "black");
+//                    d3.select(this).style("stroke", "black");
+                    d3.select(this).attr("r", 7);
 
                     })
                 .on("mouseout", function(d){
                     tooltip1.transition()
                            .style("opacity", 0);
-                    d3.select(this).style("stroke", "none");
+                    d3.select(this).attr("r", 5);
                  })
                 .on("click", function(d){
 
                 updatelineChart(d.station, d.net);
-              console.log("xxx")
+
+                if (circleCount%2 === 0){
+
+                    if (selectCircle0 !== null) {selectCircle0.style("stroke", "none");}
+                    selectCircle0 = d3.select(this);
+                    selectCircle0.style({"stroke": "black", "stroke-width": 2});
+                }
+                else{
+                    if (selectCircle1 != null) {selectCircle1.style("stroke", "none");}
+                    selectCircle1 = d3.select(this);
+                    selectCircle1.style({"stroke": "black", "stroke-width": 2});
+                }
+                circleCount++;
             });
             });
 
@@ -813,21 +799,21 @@ function updateCircle(hour) {
 }
 
 </script>
-</div>
-<div id = "dashboard">
+    </div>
+    <div id = "dashboard">
 <script>
 
 
 var framewidth = 1200,
-    frameheight = 4800;
+    frameheight = 1200;
 
     var margin1 = {"left":50,"top":50,"right":50,"bottom":50 };
-    var width1 = 600 - margin1.left - margin1.right,
-            height1 = 2400;
+    var width1 = 400 - margin1.left - margin1.right,
+            height1 = 560;
 
     var svg = d3.select("#dashboard").append("svg").attr("width",framewidth).attr("height",frameheight);
 
-    var twoSidedBar = svg.append("g").attr("transform","translate(" + (margin1.left + 200) + "," + margin1.top + ")");
+    var twoSidedBar = dashboard2.append("g").attr("transform","translate(" + (margin2.left + gridSize*12) + "," + margin2.top + ")");
 
     var xScale = d3.scale.linear().range([0, width1]);
     var xAxis = d3.svg.axis().scale(xScale).orient("top");
@@ -839,134 +825,171 @@ var framewidth = 1200,
     var yScale = d3.scale.ordinal().rangeBands([0, height1], .1, .5);
     var yAxis = d3.svg.axis().scale(yScale).orient("left");
 
+var bardata = null;
+var nestedBarData = null;
 
-
-function plotTwoSideBar(){
-
-
-    d3.csv("./data/bs_2012_11_19_clean.csv",
+function compare2(a,b) {
+  if (+a.hour < +b.hour)
+     return -1;
+  if (+a.hour > +b.hour)
+    return 1;
+  return 0;
+}
+d3.csv(file,
+//        "./data/bs_2012_11_19_clean.csv",
         function(d){
                 return {
                     "hour": +d.hour,
                     "net": +d.net,
-                    "station": d.station
+                    "station": d.station,
+                    "zipcode": +d.postal_code
                 };
         },
         function(error,data){
 
             console.log(error);
+
+//            xScale.domain(d3.extent(data,function(d){return d;}));
+
+
+//            xScale.domain([d3.min(data, function(d){return d.net;}),d3.max(data, function(d){return d.net;})]);
+
+            var temp = d3.nest().key(function(d){return d.hour})
+                    .key(function(d){return d.zipcode;}).sortKeys(d3.ascending)
+                    .rollup(function(d){ return d3.sum(d, function(e){ return e.net;});}).entries(data);
+
+//            console.log(dataRange);
+//            console.log(temp);
+            plotTwoSideBar.values(temp);
+            plotTwoSideBar();
+        });
 //            console.log(data);
 
 
 
 
-            var data_ = [];
-            data.forEach(function(d){
-                if (d.hour === selectHour){ data_.push(d);}
-            });
+function plotTwoSideBar(){
 
-//            console.log(data_);
+    var dataRange = [];
+    bardata.forEach(function(d){d.values.forEach(function(e){ dataRange.push(e.values);});});
+    xScale.domain(d3.extent(dataRange));
+    yScale.domain( bardata[0].values.map(function (d) {return d.key;}));
+    var data_ = [];
+    bardata.forEach(function(d){
+        if (+d.key === selectHour){
+            d.values.forEach(function(e){ data_.push(e);});
+        } });
 
-//            xScale.domain([d3.min(data, function(d){return d.net;}),d3.max(data, function(d){return d.net;})]);
-            xScale.domain([-10,10]);
-            yScale.domain( data_.map(function (d) {return d.station;}));
+    console.log(yScale.domain());
+    console.log(data_);
+    console.log(bardata);
+    var xGuide = twoSidedBar.append("g").attr("class", "x axis").attr("id", "xAxis1").call(xAxis);
+    var yGuide = twoSidedBar.append("g").attr("class", "y axis").attr("id", "yAxis").call(yAxis);
 
-            console.log(xScale(10));
+    xGuide.selectAll('line').style({"fill": "none", "stroke": "black"});
+    xGuide.selectAll('path').style({"fill": "none", "stroke": "black"});
 
-            var xGuide = twoSidedBar.append("g").attr("class", "x axis").attr("id", "xAxis1").call(xAxis);
-            var yGuide = twoSidedBar.append("g").attr("class", "y axis").attr("id", "yAxis").call(yAxis);
+    yGuide.selectAll('line').style({"fill": "none", "stroke": "black"});
+    yGuide.selectAll('path').style({"fill": "none", "stroke": "black"});
 
-            xGuide.selectAll('line').style({"fill": "none", "stroke": "black"});
-            xGuide.selectAll('path').style({"fill": "none", "stroke": "black"});
+    var grid = twoSidedBar.append("g");
 
-            yGuide.selectAll('line').style({"fill": "none", "stroke": "black"});
-            yGuide.selectAll('path').style({"fill": "none", "stroke": "black"});
+    grid.append("line").attr("class","grid")
+            .attr("x1", xScale(0))
+            .attr("x2", xScale(0))
+            .attr("y2", height1).style({"fill":"none","stroke":"black"});
 
-            var grid = twoSidedBar.append("g");
-
-            grid.append("line").attr("class","grid")
-                    .attr("x1", xScale(0))
-                    .attr("x2", xScale(0))
-                    .attr("y2", height1).style({"fill":"none","stroke":"black"});
-
-            grid.selectAll(".grid").data(data_).enter().append("line")
-                    .attr("x1",0)
-                    .attr("y1",function(d){return yScale(d.station) - 0.05*yScale.rangeBand();})
-                    .attr("x2",width1)
-                    .attr("y2",function(d){return yScale(d.station) - 0.05*yScale.rangeBand();}).style({"fill":"none","stroke":"gray","stroke-width":0.5});
-
-
-            var bars = twoSidedBar.selectAll(".bar").data(data_).enter().append('rect')
-                    .attr("class","bars")
-                    .attr("id", function(d,i){ return "bar" + i})
-                    .attr("x",  function(d){
-                        if(d.net>=0){return xScale(0);}
-                        else{ return xScale(d.net);}
-                    })
-                    .attr("y",  function(d){return yScale(d.station);})
-                    .attr("height", yScale.rangeBand())
-                    .attr("width", function(d){
-
-                        if(d.net>=0){return xScale(d.net) - xScale(0);}
-                        else{ return xScale(0) - xScale(d.net);}
-                    })
-                    .style("fill","steelblue");
+    grid.selectAll(".grid").data(data_).enter().append("line")
+            .attr("x1",0)
+            .attr("y1",function(d){return yScale(d.key) - 0.05*yScale.rangeBand();})
+            .attr("x2",width1)
+            .attr("y2",function(d){return yScale(d.key) - 0.05*yScale.rangeBand();}).style({"fill":"none","stroke":"gray","stroke-width":0.5});
 
 
+    var bars = twoSidedBar.selectAll(".bar").data(data_).enter().append('rect')
+            .attr("class","bars")
+            .attr("id", function(d,i){ return "bar" + d.key})
+            .attr("x",  function(d){
+                if(d.values>=0){return xScale(0);}
+                else{ return xScale(d.values);}
+            })
+            .attr("y",  function(d){return yScale(d.key);})
+            .attr("height", yScale.rangeBand())
+            .attr("width", function(d){
 
-        })
+                if(d.values>=0){return xScale(d.values) - xScale(0);}
+                else{ return xScale(0) - xScale(d.values);}
+            })
+            .style("fill","steelblue");
 
 }
 
-function updateTwoSideBar(hour){
-
-        d3.csv("./data/bs_2012_11_19_clean.csv",
-        function(d){
-                return {
-                    "hour": +d.hour,
-                    "net": +d.net,
-                    "station": d.station
-                };
-        },
-        function(error,data) {
-
-//            console.log(error);
-//            console.log(data);
-
-//            console.log(hour);
-
-//            var hour = 15;
-            var data_ = [];
-            data.forEach(function(d){
-                if (d.hour === hour){ data_.push(d);}
-            });
-
-//            console.log(data_);
-
-            data_.forEach( function(d,i){
+plotTwoSideBar.values = function(_) {
+        if (!arguments.length) {return bardata;}
+        bardata = _;
+        return plotTwoSideBar;
+        };
+plotTwoSideBar.update = function(_){
+        if (!arguments.length) {return bardata;}
+        //data transformation
+        var data_ = [];
+        bardata.forEach(function(d){
+            if (+d.key === _ ){
+                d.values.forEach(function(e){ data_.push(e);});
+            } });
+        data_.forEach( function(d){
 //                console.log(d);
-                var bar = "#bar" + i;
+                var bar = "#bar" + d.key;
 //                console.log(bar);
 //                console.log(d3.select(bar).attr("x"));
                 d3.select(bar).datum(d).transition().duration(1000)
                     .attr("x", function(d){
-//                            console.log(d);
-                        if(d.net >=0 ){return xScale(0);}
-                        else{return xScale(d.net);}})
+                        if(d.values >=0 ){return xScale(0);}
+                        else{return xScale(d.values);}})
                     .attr("width", function(d){
-                        if(d.net >=0 ){return xScale(d.net)-xScale(0);}
-                        else{return xScale(0)-xScale(d.net);}})
+                        if(d.values >=0 ){return xScale(d.values)-xScale(0);}
+                        else{return xScale(0)-xScale(d.values);}})
                 });
 //            d3.selectAll(".bars").datum(data_)
+        return plotTwoSideBar;
+        };
+function updateClock(hour){
+
+        d3.csv(file,
+        function(d){
+                return {
+                    "hour": +d.hour,
+                    "net": +d.net,
+                    "station": d.station,
+                    "lat" : +d.lat,
+                    "lon" : +d.lon,
+                    "zipcode" : d.postal_code
+                };
+        },
+        function(error,data) {
+
+//            console.log(data);
+//            console.log(hour);
+
+
+            // update two sided bar chart
+            var temp = d3.nest().key(function(d){return d.hour})
+                    .key(function(d){return d.zipcode;}).sortKeys(d3.ascending)
+                    .rollup(function(d){ return d3.sum(d, function(e){ return e.net;});}).entries(data);
+
+            plotTwoSideBar.values(temp);
+            plotTwoSideBar.update(hour);
+
+//            console.log(data_);
+
+
 
                     });
 
 }
 
-    plotTwoSideBar()
 </script>
+    </div>
 </div>
-</div>
-
 </body>
 </html>

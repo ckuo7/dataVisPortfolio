@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4da44846-0f61-4340-bdca-234c9e532f52" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/projectReport.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/projectPrototype.html" afterPath="$PROJECT_DIR$/projectPrototype.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -31,7 +33,7 @@
       <file leaf-file-name="homework1.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/homework1.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="3315" max-vertical-offset="4425">
+            <state vertical-scroll-proportion="57.5" vertical-offset="3315" max-vertical-offset="4425">
               <caret line="207" column="44" selection-start-line="207" selection-start-column="12" selection-end-line="207" selection-end-column="44" />
               <folding>
                 <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="false" />
@@ -50,19 +52,37 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="projectPrototype.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="projectPrototype.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/projectPrototype.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.68899524" vertical-offset="3948" max-vertical-offset="14445">
-              <caret line="292" column="26" selection-start-line="292" selection-start-column="26" selection-end-line="292" selection-end-column="26" />
+            <state vertical-scroll-proportion="-23.0" vertical-offset="1728" max-vertical-offset="2535">
+              <caret line="152" column="9" selection-start-line="152" selection-start-column="9" selection-end-line="152" selection-end-column="9" />
               <folding>
-                <element signature="e#12228#12497#0" expanded="false" />
-                <element signature="e#19079#19198#0" expanded="false" />
-                <element signature="e#19236#19355#0" expanded="false" />
-                <marker date="1431706505000" expanded="true" signature="18085:18585" placeholder="..." />
-                <marker date="1431706505000" expanded="true" signature="21424:21433" placeholder="..." />
-                <marker date="1431706505000" expanded="true" signature="23747:23756" placeholder="..." />
-                <marker date="1431706505000" expanded="true" signature="23832:23841" placeholder="..." />
+                <element signature="n#script#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+                <element signature="n#script#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+                <marker date="1431746960000" expanded="true" signature="21432:21441" placeholder="..." />
+                <marker date="1431746960000" expanded="true" signature="23755:23764" placeholder="..." />
+                <marker date="1431746960000" expanded="true" signature="23840:23849" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="projectReport.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/projectReport.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.55" vertical-offset="6645" max-vertical-offset="9810">
+              <caret line="811" column="24" selection-start-line="811" selection-start-column="24" selection-end-line="811" selection-end-column="24" />
+              <folding>
+                <element signature="e#11243#17039#0" expanded="false" />
+                <element signature="e#17135#17254#0" expanded="false" />
+                <element signature="e#17292#17411#0" expanded="false" />
+                <element signature="e#17446#17559#0" expanded="false" />
+                <element signature="e#17694#19132#0" expanded="false" />
+                <element signature="e#19806#23444#0" expanded="false" />
+                <marker date="1431796194000" expanded="true" signature="19479:19488" placeholder="..." />
+                <marker date="1431796194000" expanded="true" signature="21875:21884" placeholder="..." />
+                <marker date="1431796194000" expanded="true" signature="21960:21969" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -118,8 +138,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-22.5" vertical-offset="0" max-vertical-offset="1815">
-              <caret line="93" column="63" selection-start-line="93" selection-start-column="63" selection-end-line="93" selection-end-column="63" />
+            <state vertical-scroll-proportion="-13.75" vertical-offset="150" max-vertical-offset="1815">
+              <caret line="89" column="2" selection-start-line="89" selection-start-column="2" selection-end-line="89" selection-end-column="2" />
               <folding>
                 <element signature="n#head#0;n#html#0;n#!!top" expanded="false" />
                 <element signature="n#style#0;n#head#0;n#html#0;n#!!top" expanded="false" />
@@ -173,8 +193,9 @@
         <option value="$PROJECT_DIR$/homework5.html" />
         <option value="$PROJECT_DIR$/homework2.html" />
         <option value="$PROJECT_DIR$/projectVideo.html" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/projectPrototype.html" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/projectReport.html" />
       </list>
     </option>
   </component>
@@ -582,13 +603,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="270">
-          <caret line="11" column="240" selection-start-line="11" selection-start-column="240" selection-end-line="11" selection-end-column="240" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/homework1.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2408" max-vertical-offset="4050">
@@ -1022,26 +1036,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/homework1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3315" max-vertical-offset="4425">
-          <caret line="207" column="44" selection-start-line="207" selection-start-column="12" selection-end-line="207" selection-end-column="44" />
-          <folding>
-            <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="e#9331#9396#0" expanded="false" />
-            <element signature="e#10549#10623#0" expanded="false" />
-            <element signature="e#10676#11751#0" expanded="false" />
-            <element signature="n#section#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#p#1;n#section#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#2;n#section#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#4;n#section#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#footer#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#p#0;n#footer#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/homework3.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="6156" max-vertical-offset="7335">
@@ -1058,20 +1052,6 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="510" max-vertical-offset="1515">
           <caret line="59" column="23" selection-start-line="0" selection-start-column="0" selection-end-line="59" selection-end-column="23" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-22.5" vertical-offset="0" max-vertical-offset="1815">
-          <caret line="93" column="63" selection-start-line="93" selection-start-column="63" selection-end-line="93" selection-end-column="63" />
-          <folding>
-            <element signature="n#head#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#head#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#nav#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#p#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1113,18 +1093,68 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/homework1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="57.5" vertical-offset="3315" max-vertical-offset="4425">
+          <caret line="207" column="44" selection-start-line="207" selection-start-column="12" selection-end-line="207" selection-end-column="44" />
+          <folding>
+            <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="e#9331#9396#0" expanded="false" />
+            <element signature="e#10549#10623#0" expanded="false" />
+            <element signature="e#10676#11751#0" expanded="false" />
+            <element signature="n#section#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#p#1;n#section#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#2;n#section#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#4;n#section#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#footer#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#p#0;n#footer#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.75" vertical-offset="150" max-vertical-offset="1815">
+          <caret line="89" column="2" selection-start-line="89" selection-start-column="2" selection-end-line="89" selection-end-column="2" />
+          <folding>
+            <element signature="n#head#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#head#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#nav#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#p#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/projectPrototype.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.68899524" vertical-offset="3948" max-vertical-offset="14445">
-          <caret line="292" column="26" selection-start-line="292" selection-start-column="26" selection-end-line="292" selection-end-column="26" />
+        <state vertical-scroll-proportion="-23.0" vertical-offset="1728" max-vertical-offset="2535">
+          <caret line="152" column="9" selection-start-line="152" selection-start-column="9" selection-end-line="152" selection-end-column="9" />
           <folding>
-            <element signature="e#12228#12497#0" expanded="false" />
-            <element signature="e#19079#19198#0" expanded="false" />
-            <element signature="e#19236#19355#0" expanded="false" />
-            <marker date="1431706505000" expanded="true" signature="18085:18585" placeholder="..." />
-            <marker date="1431706505000" expanded="true" signature="21424:21433" placeholder="..." />
-            <marker date="1431706505000" expanded="true" signature="23747:23756" placeholder="..." />
-            <marker date="1431706505000" expanded="true" signature="23832:23841" placeholder="..." />
+            <element signature="n#script#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#script#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <marker date="1431746960000" expanded="true" signature="21432:21441" placeholder="..." />
+            <marker date="1431746960000" expanded="true" signature="23755:23764" placeholder="..." />
+            <marker date="1431746960000" expanded="true" signature="23840:23849" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projectReport.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.55" vertical-offset="6645" max-vertical-offset="9810">
+          <caret line="811" column="24" selection-start-line="811" selection-start-column="24" selection-end-line="811" selection-end-column="24" />
+          <folding>
+            <element signature="e#11243#17039#0" expanded="false" />
+            <element signature="e#17135#17254#0" expanded="false" />
+            <element signature="e#17292#17411#0" expanded="false" />
+            <element signature="e#17446#17559#0" expanded="false" />
+            <element signature="e#17694#19132#0" expanded="false" />
+            <element signature="e#19806#23444#0" expanded="false" />
+            <marker date="1431796194000" expanded="true" signature="19479:19488" placeholder="..." />
+            <marker date="1431796194000" expanded="true" signature="21875:21884" placeholder="..." />
+            <marker date="1431796194000" expanded="true" signature="21960:21969" placeholder="..." />
           </folding>
         </state>
       </provider>
