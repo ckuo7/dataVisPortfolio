@@ -228,11 +228,13 @@ var donut = donutChart.selectAll(".arc")
                 console.log(d);
                 selectHour = +d.data.label;
                 selectHourText.transition().duration(1000).style("fill","gray");
+
                 updateClock(+d.data.label);
                 updateCircle(selectHour);
+
                 selectHourText = d3.select("#hourText"+selectHour);
                 selectHourText.style("fill","#fb8072");
-//                d3.select("#texthour").datum(hour2[selectHour]).transition().duration(100).text(function(d){return d + ":00";});
+
                 });
 
 
@@ -870,7 +872,7 @@ function compare2(a,b) {
   return 0;
 }
 
-// plot two sided barchart
+// initiate two sided barchart
 d3.csv(file,
 
         function(d){
@@ -1195,6 +1197,7 @@ plotTemperature.update = function(_){
     d3.select("#temperatureText").transition().duration(1000).text(selectTemp+"˚C, ");
     d3.select("#weatherText").transition().duration(1000).text(selectWeather);
 };
+
 </script>
 </div>
 
