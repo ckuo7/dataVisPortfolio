@@ -39,17 +39,17 @@
   border-radius: 4px;
     white-space: nowrap;
 }
-.tooltip:after {
-  box-sizing: border-box;
-  display: inline;
-  font-size: 10px;
-  width: 100%;
-  line-height: 1;
-  color: rgba(0, 0, 0, 0.8);
-  content: "\25BC";
-  position: absolute;
-  text-align: center;
-}
+/*.tooltip:after {*/
+  /*box-sizing: border-box;*/
+  /*display: inline;*/
+  /*font-size: 10px;*/
+  /*width: 100%;*/
+  /*line-height: 1;*/
+  /*color: rgba(0, 0, 0, 0.8);*/
+  /*content: "\25BC";*/
+  /*position: absolute;*/
+  /*text-align: center;*/
+/*}*/
 
 /* Style northward tooltips differently */
 .tooltip.n:after {
@@ -161,7 +161,7 @@ var selectDate = 1;
 var selectHour = 15;
 var file = "./data/bikeshare/bs_2012_11_".concat(date2[0] + ".csv");
 
-
+// initiate the calendar heat map
 var calmap = calender.append("g");
 
   calmap.selectAll(".rect").data(date).enter().append("rect")
@@ -187,13 +187,12 @@ var calmap = calender.append("g");
             file = "./data/bikeshare/bs_2012_11_".concat(date2[+d.label] + ".csv");
 
             d3.selectAll(".station").remove();
-              //
+
             plotCircle();
             updateCal(file);
-//            plotLineChart.value
-
 
         });
+
 
 var days = ["Sun","Mon","Tue","Wed","Thur","Fri","Sat"];
 var daysText = calender.append("g");
@@ -209,16 +208,11 @@ var dateText = calender.append("g");
 var donutChart = widget.append("g").attr("transform", "translate(" + radius + "," + (radius + gridSize*5) + ")");
 
 
+// initial the clock donut chart
 var donut = donutChart.selectAll(".arc")
         .data(pie(hour))
         .enter().append("g")
         .attr("class", "arc");
-
-//    donut.append("text").datum(hour2[selectHour]).text(function(d){return d + ":00";})
-//                    .attr("text-anchor","middle")
-//                    .attr("id","texthour")
-//                    .attr("dy",5)
-//                    .style({"font-family":"georgia, serif", "font-size":20,"fill":"silver"});
 
 
     donut.append("path")
@@ -304,6 +298,10 @@ var legendline = legend.append("line")
 var linevalues0 = null;
 var linevalues1 = null;
 var linedata = null;
+
+// initial line chart
+var station0 = "10th & E St NW";
+var station1 = "16th & Harvard St NW";
 d3.csv("./data/bikeshare/bs_2012_11_01.csv",
 
         function(d){
@@ -324,10 +322,10 @@ d3.csv("./data/bikeshare/bs_2012_11_01.csv",
             var data_ = [];
             var data2_ = [];
 
-//            console.log(file);
+
             data.forEach(function(d){
-                if (d.station === "10th & E St NW"){  data_.push(d);}
-                if (d.station === "16th & Harvard St NW"){ data2_.push(d);}
+                if (d.station === station0){  data_.push(d);}
+                if (d.station === station1){ data2_.push(d);}
 
             });
 
@@ -351,7 +349,8 @@ function plotLineChart() {
     yScale1.domain(d3.extent(linedata.map(function (d) {return d["net"];})));
 
     var xGuide1 = lineChart1.append("g")
-            .attr("class", "xAxis")
+            .attr("class","x axis")
+            .attr("id","lineChartxAxis")
             .attr("transform", "translate(0," + height2 + ")")
             .call(xAxis1);
 
@@ -359,6 +358,7 @@ function plotLineChart() {
     xGuide1.selectAll("line").style({"fill": "none"});
 
     var yGuide1 = lineChart1.append("g")
+            .attr("id","lineChartyAxis")
             .attr("class", "y axis")
             .call(yAxis1);
 
@@ -518,6 +518,7 @@ function plotLineChart() {
                 .attr("transform",
                 "translate(0," + yScale1(d_.net) + ")").attr("x2",0);
 
+        console.log(d);
         focus.select("#hourtip").attr("transform",
                 "translate(" + xScale1(d.hour) + "," +
                 yScale1(tempheight) + ")").text(d.hour.getHours() +":00");
@@ -529,6 +530,7 @@ function plotLineChart() {
 }
 
 // updates the symbols values, must happen before drawing
+var missStation = hour2.map(function(d){return 0;});
 plotLineChart.values0 = function(_) {
         if (!arguments.length) {return linevalues0;}
         linevalues0 = _;
@@ -544,18 +546,48 @@ plotLineChart.data = function(_) {
         linedata = _;
         return plotLineChart;
         };
-plotLineChart.update1 = function(_){
+plotLineChart.update1 = function(){
 
+    var data_ = [];
+    var data2_ = [];
+
+    linedata.forEach(function (d) {
+        if (d.station === station0) {data_.push(d);}
+        if (d.station === station1){ data2_.push(d);}
+    });
+
+    // if miss station0 or 1
+    if ( data_.length < 24){ data_ = missStation;}
+    if ( data2_.length < 24){ data2_ = missStation;}
+
+    data_.sort(compare);
+    data2_.sort(compare);
+//    console.log(data_);
+//    console.log(data2_);
+    plotLineChart.values0(data_);
+    plotLineChart.values1(data2_);
+    d3.select("#line0").datum(linevalues0).transition().duration(1000).attr("d", line1);
+    d3.select("#line1").datum(linevalues1).transition().duration(1000).attr("d", line1);
+
+    //update line chart
+};
+plotLineChart.updateAxis = function(){
+
+
+    xScale1.domain(d3.extent(linedata.map(function (d) {return d.hour;}))).ticks(4);
+    yScale1.domain(d3.extent(linedata.map(function (d) {return d["net"];})));
+    console.log(yScale1.domain());
+    yAxis1.scale(yScale1);
+    d3.select("#lineChartyAxis").transition().duration(1000).call(yAxis1);
+    var yGuide_ = d3.select("#lineChartyAxis");
+    yGuide_.selectAll('line').style({"fill": "none", "stroke": "black"});
+    yGuide_.selectAll('path').style({"fill": "none", "stroke": "black"});
 
 };
-
 
 var lineCount = 0; // for selecting the line chart
 function updatelineChart(station, net){
 
-
-//    var line_ = "#line" + (lineCount%2);
-//    var linelabel_ = "#linelegendlabel" + (lineCount%2);
 
     d3.csv(file,
 
@@ -585,17 +617,15 @@ function updatelineChart(station, net){
                 plotLineChart.values0(data_);
                 d3.select("#line0").datum(linevalues0).transition().duration(1000).attr("d", line1);
                 d3.select("#linelegendlabel0").transition().duration(1000).text(station);
-
+                station0 = station;
             }
             else{
                 plotLineChart.values1(data_);
                 d3.select("#line1").datum(linevalues1).transition().duration(1000).attr("d", line1);
                 d3.select("#linelegendlabel1").transition().duration(1000).text(station);
-
+                station1 = station;
             }
             lineCount++;
-//            d3.select(line_).datum(data_).transition().duration(1000).attr("d", line1);
-//            d3.select(linelabel_).transition().duration(1000).text(station);
 
 
         })
@@ -605,20 +635,20 @@ function updatelineChart(station, net){
 
 
 
-//conicEqualArea()
+//initiate the map
 var projection = d3.geo.mercator().center([-77.0164,38.9047]).scale(120000).rotate([0,0,0]);
 var path = d3.geo.path().projection(projection);
 
-var tip = d3.tip()
-  .attr('class', 'd3-tip')
-  .offset([-10, 0])
-  .html(function(d) {
-
-    d3.select(this).style("opacity",.3);
-    return "<strong>zipcode:</strong> <span style='color:red'>" + d.station + "</span>";
-        });
-
-dcmap.call(tip);
+//var tip = d3.tip()
+//  .attr('class', 'd3-tip')
+//  .offset([-10, 0])
+//  .html(function(d) {
+//
+//    d3.select(this).style("opacity",.3);
+//    return "<strong>zipcode:</strong> <span style='color:red'>" + d.station + "</span>";
+//        });
+//
+//dcmap.call(tip);
 
 var opacity = d3.scale.linear().range([0.5,.9]);
 
@@ -626,9 +656,42 @@ var tooltip1 = d3.select("body").append("div")
     			 .attr("class", "tooltip")
    				 .style("opacity", 0.9);
 
+var tooltip2 = d3.select("body").append("div")
+    			 .attr("class", "tooltip")
+   				 .style("opacity", 0.9);
+
 var selectCircle0 = null;
 var selectCircle1 = null;
 var circleCount = 0;
+
+d3.json("./data/dczipcode.geojson", function(error,dc){
+
+        if (error) return console.error(error);
+        console.log(dc);
+//        console.log(topojson.feature(dc, dc.objects.dcZip));
+
+//        console.log(topojson.feature(dc, dc.objects.dczipcode));
+        dcmap.selectAll('path')
+//            .data(topojson.feature(dc, dc.objects.dczipcode).features).enter().append('path')
+            .data(dc.features).enter().append('path').attr("translate","transform(" + margin2.left + "," + (margin2.top + 200) +")")
+            .attr("d", path).style("fill","rgb(192, 192, 192)").style({"stroke":"white","stroke-width":2});
+//                .on("mouseover",
+//                tip.show
+//                function(d){
+//                    console.log(tip.show);
+//                    console.log(d);
+//                    d3.select(this).style("fill","green")}
+//                )
+//                .on("mouseout",
+//                tip.hide
+//                    function(d){
+//                    d3.select(this).style("fill","steelblue")}
+//                );
+        plotCircle();
+//                function(d){ console.log(d); return "steeblue";});
+    });
+//initial the circle on the map
+
 function plotCircle(){
 
 //    d3.csv("./data/bs_2012_11_19_clean.csv",
@@ -653,7 +716,7 @@ function plotCircle(){
                 if (d.hour === selectHour){ data_.push(d);}
             });
 
-            console.log(data_);
+//            console.log(data_);
 
         opacity.domain(d3.extent(data_.map(function(d){ return Math.abs(d.net);})));
 //            console.log(opacity.domain());
@@ -729,34 +792,6 @@ function plotCircle(){
         d3.select(this).style("stroke","none");}
     return plotCircle;
     }
-
-d3.json("./data/dczipcode.geojson", function(error,dc){
-
-        if (error) return console.error(error);
-        console.log(dc);
-//        console.log(topojson.feature(dc, dc.objects.dcZip));
-
-//        console.log(topojson.feature(dc, dc.objects.dczipcode));
-        dcmap.selectAll('path')
-//            .data(topojson.feature(dc, dc.objects.dczipcode).features).enter().append('path')
-            .data(dc.features).enter().append('path').attr("translate","transform(" + margin2.left + "," + (margin2.top + 200) +")")
-            .attr("d", path).style("fill","rgb(192, 192, 192)").style({"stroke":"white","stroke-width":2});
-//                .on("mouseover",
-//                tip.show
-//                function(d){
-//                    console.log(tip.show);
-//                    console.log(d);
-//                    d3.select(this).style("fill","green")}
-//                )
-//                .on("mouseout",
-//                tip.hide
-//                    function(d){
-//                    d3.select(this).style("fill","steelblue")}
-//                );
-        plotCircle();
-//                function(d){ console.log(d); return "steeblue";});
-    });
-
 function updateCircle(hour) {
     d3.csv(file,
             function (d) {
@@ -803,10 +838,8 @@ function updateCircle(hour) {
             });
 }
 
-</script>
-    </div>
-    <div id = "dashboard">
-<script>
+
+
 
 
 var framewidth = 1200,
@@ -836,8 +869,10 @@ function compare2(a,b) {
     return 1;
   return 0;
 }
+
+// plot two sided barchart
 d3.csv(file,
-//        "./data/bs_2012_11_19_clean.csv",
+
         function(d){
                 return {
                     "hour": +d.hour,
@@ -850,21 +885,16 @@ d3.csv(file,
 
             console.log(error);
 
-//            xScale.domain(d3.extent(data,function(d){return d;}));
-
-
-//            xScale.domain([d3.min(data, function(d){return d.net;}),d3.max(data, function(d){return d.net;})]);
 
             var temp = d3.nest().key(function(d){return d.hour})
                     .key(function(d){return d.zipcode;}).sortKeys(d3.ascending)
                     .rollup(function(d){ return d3.sum(d, function(e){ return e.net;});}).entries(data);
 
-//            console.log(dataRange);
-//            console.log(temp);
+
             plotTwoSideBar.values(temp);
             plotTwoSideBar();
         });
-//            console.log(data);
+
 
 
 
@@ -925,7 +955,24 @@ function plotTwoSideBar(){
                 if(d.values>=0){return xScale(d.values) - xScale(0);}
                 else{ return xScale(0) - xScale(d.values);}
             })
-            .style("fill","steelblue");
+            .style("fill","steelblue")
+            .on("mouseover", function(d) {
+
+                tooltip2.transition().duration(200)
+                        .style("opacity", 1);
+
+                tooltip2.html("<strong>Demand: </strong><span style='color:red'>" + d.values + "</span>")
+                        .style("left", (event.pageX + 15) + "px")
+                        .style("top", (event.pageY - 10) + "px");
+                d3.select(this).style("opacity", 0.5);
+
+            })
+            .on("mouseout", function(d){
+
+                tooltip2.transition().style("opacity", 0);
+                d3.select(this).style("opacity", 1);
+            });
+
 
 }
 
@@ -961,7 +1008,6 @@ plotTwoSideBar.update = function(_){
 
         return plotTwoSideBar;
         };
-
 plotTwoSideBar.updateAxis = function(){
 
     var dataRange = [];
@@ -982,13 +1028,14 @@ plotTwoSideBar.updateAxis = function(){
 //    yAxis.scale(yScale);
 //    d3.select("#yAxis1").transition().duration(1000).call(yAxis);
 };
+
 function updateCal(file) {
     // read the new data from new file
     d3.csv(file,
             // parse the new data
             function (d) {
                 return {
-                    "hour": +d.hour,
+                    "hour": parseDate2(d.hour),
                     "net": +d.net,
                     "station": d.station,
                     "lat": +d.lat,
@@ -1000,7 +1047,7 @@ function updateCal(file) {
             function (error, data) {
 
                 // update two sided bar chart
-                var temp = d3.nest().key(function (d) {return d.hour})
+                var temp = d3.nest().key(function (d) {return d.hour.getHours()})
                         .key(function (d) {return d.zipcode;}).sortKeys(d3.ascending)
                         .rollup(function (d) {return d3.sum(d, function (e) {return e.net;});
                         }).entries(data);
@@ -1010,6 +1057,16 @@ function updateCal(file) {
                 plotTwoSideBar.updateAxis();
                 console.log(selectHour);
                 plotTwoSideBar.update(selectHour);
+
+                //update linedata
+                plotLineChart.data(data);
+                plotLineChart.updateAxis();
+                plotLineChart.update1();
+
+                //update temperature
+                plotTemperature.update();
+
+
 
             });
 }
@@ -1037,10 +1094,14 @@ function updateClock(hour){
                     .key(function(d){return d.zipcode;}).sortKeys(d3.ascending)
                     .rollup(function(d){ return d3.sum(d, function(e){ return e.net;});}).entries(data);
 
+            //updae two-side barchart
             plotTwoSideBar.values(temp);
             plotTwoSideBar.update(hour);
 
-//            console.log(data_);
+            //update temperature
+            plotTemperature.update();
+
+
 
 
 
@@ -1048,8 +1109,96 @@ function updateClock(hour){
 
 }
 
+selectTemp = null;
+selectWeather = null;
+
+var temperature = widget.append('g')
+        .attr("transform","translate(0," + (radius*2 + gridSize*4) + ")");
+var tempRect = temperature.append("rect")
+        .attr("width",gridSize*7)
+        .attr("height",temperatureHeight)
+        .style("fill","none");
+var temperatureData = null;
+
+
+    d3.csv('./data/projectData.csv', function(d){
+        return { "weather": +d.weather,
+                "temp": +d.temp,
+                "humidity": +d.humidity,
+                "windspeed": +d.windspeed,
+                "day" : +d.day,
+                "hour" : +d.hour};
+            }, function(error,data){
+
+        data.forEach(function(d){
+
+            if (d.hour === selectHour && d.day === selectDate){
+                console.log(d);
+                selectTemp = d.temp;
+                console.log(d.weather);
+                switch (d.weather){
+
+                    case 1: selectWeather = "Clear, Partly Cloudy";
+                        break;
+                    case 2: selectWeather = "Mist, Cloudy";
+                        break;
+                    case 3: selectWeather = "Light Snow, Rain";
+                        break;
+                    case 4: selectWeather = "Heavy Rain, Thunderstorm";
+                        break;
+                    default: selectWeather = "";
+                }
+//                selectWeather = d.weather;
+                console.log(selectWeather)
+            }
+        });
+        var temp = d3.nest().key(function(d){return d.day}).sortKeys(d3.ascending)
+                    .key(function(d){return d.hour;}).sortKeys(d3.ascending)
+//                    .rollup(function(d){ return d3.sum(d, function(e){ return ;});})
+                    .entries(data);
+
+                console.log(temp);
+        plotTemperature.data(temp);
+        plotTemperature()
+        }
+    );
+
+function plotTemperature(){
+
+    temperature.append("text").attr("id","temperatureText").attr("transform","translate(0,45)").text(selectTemp+"˚C, ")
+            .style({"font-family": "arial, sans-serif", "fill": "gray", "font-size": "24px", "font-weight": "bold"});
+    temperature.append("text").attr("id","weatherText").attr("transform","translate(0,80)").text(selectWeather)
+            .style({"font-family": "arial, sans-serif", "fill": "gray", "font-size": "24px", "font-weight": "bold"});
+}
+plotTemperature.data = function(_){
+        if (!arguments.length) {return linevalues0;}
+        temperatureData= _;
+        return plotLineChart;
+        };
+plotTemperature.update = function(_){
+
+    selectTemp = temperatureData[selectDate-1]["values"][selectHour]["values"][0]["temp"];
+    console.log(selectTemp);
+    switch (temperatureData[selectDate-1]["values"][selectHour]["values"][0]["weather"]){
+
+                    case 1: selectWeather = "Clear, Partly Cloudy";
+                        break;
+                    case 2: selectWeather = "Mist, Cloudy";
+                        break;
+                    case 3: selectWeather = "Light Snow, Rain";
+                        break;
+                    case 4: selectWeather = "Heavy Rain, Thunderstorm";
+                        break;
+                    default: selectWeather = "";
+                }
+    console.log(selectWeather);
+    d3.select("#temperatureText").transition().duration(1000).text(selectTemp+"˚C, ");
+    d3.select("#weatherText").transition().duration(1000).text(selectWeather);
+};
 </script>
-    </div>
+</div>
+
+    <div id = "dashboard"></div>
 </div>
 </body>
 </html>
