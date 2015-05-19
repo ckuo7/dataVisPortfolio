@@ -99,7 +99,8 @@ lapply( df2012_11_day, function(df){
 
 df <- read.csv('./projectData.csv')
 
-df$day <- substr(df$datetime,9,10)
+#df$day <- substr(df$datetime,9,10)
+df$hour <- substr(df$datetime,12,13)
 write.csv(df,'./projectData.csv',row.names=F,na="")
 
 
