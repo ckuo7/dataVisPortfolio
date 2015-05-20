@@ -1324,6 +1324,7 @@ plotTemperature.update = function(_){
     commutes and to help alleviate traffic. As bike sharing demands increase, unavailability and uneven distribution of
     bikes become a critical issue for the programs, which could undermine users’ experience and waste public resources.
     <br>
+    <br>
     This project implemented a dashboard using Javascript D3 library to provide interaction with the Bikeshare demand data,
     provided by Capital Bikeshare, the bikeshare service in Washington D.C. One of the most important goal of this project
     is to visualize the bike rental demands geographically and and how they vary overtime. The result of this project
@@ -1340,48 +1341,63 @@ plotTemperature.update = function(_){
         I used color as pre-attentative attribute to indicate the data point that be selected so that users can
         easily refer.
     <h4><b>Symbol Map</b></h4>
-        The symbol map is the most important part of this dashboard. It encodes stations latitude and longitude information
-        with cir
+        The symbol map is the most important part of this dashboard. It encodes the location and bike demand of each
+        stations in the circles with Mercator projection. It is a very condensed visualization with high data density
+        and high data-ink ratio. I use contrasting color as pre-attentative
+        attriubte. Green stands for the excess of supplies while red represents the excess of demands. The intensity
+        is encoded in the opacity of colors. Hence, the stronger the color is, the degree of the excess is higher.
+        <br>
+        <br>
+        The interactivity of this map includes a tooltip that displays the name of bike stations and the bike demand at
+        certain time stamp. If we want to know more about certain stations, we can simple click the circles and the
+        line chart would show the demand distribution of 24 hours. When the circles are clicked, their border color
+        also change to the color of corresponding lines. This can help users to easily make reference.
+
     <h4><b>Two Sided barchart</b></h4>
         This visualization aims to provide bike demand information by region. I decide to use vertical two-sided
-        barchart with value of bike demand as x-axis and zip code as y-axis. The barchart allows users to easily
-        compare values of different regions with the least lie factor. However, the x scale might suffer from extreme
-        values of few outliers, which could potentially decrease the data density and data-ink ratio of this
-        visualization.
+        bar chart with value of bike demand as x-axis and zip code as y-axis. The bar chart allows users to easily
+        compare values of different regions with the least lie factor involved. However, it might suffer low
+        data density and low data-ink ratio if there are outliers with extreme values.
+        <br>
         <br>
         For the interactivity, I implemented a tooltip to indicate the exact bike demand. It would show up when
-        the mouse hovers bars. At the same time, stations that are not in the selected region would be
+        the mouse hovers bars. At the same time, bike stations that are not in the selected region would be
         temporarily removed from the map to provide a focus on the geo-location context of each region. In addition,
-        the bars width and the x axis would dynamically change according to the selected date and hour.
+        width of bars and the x axis would dynamically change according to the selected date and hour.
 
 
     <h4><b>Line Chart</b></h4>
-        The purpose of this line chart is to display the distribution of bike rental demand of two selected stations at a given date.
-        It provides the hourly demand stations and also allows easy comparisons between the distribution of
-        two different stations. Because relatively small amount of data is presented here, I decide to spend less
-        space for this visualization so the data-ink ratio and the data density won't be too low.
+        The purpose of this visualization is to realize the distribution of bike rental demand of two selected stations
+        and also allow users to make easy comparison between them. To display all visualization in one place, I squeezed
+        48 data point in a relatively small space, which might be a little difficult for users to read it. However,
+        considering its secondary position in terms of functionality of the whole dashboard, I think it is reasonable to
+        do so. The chart still has decent data-ink ratio and data density.
         <br>
-        For the interactivity, I implemented a cursor for each time series. Also, when hover the region, the legend
-        below would also display the actual number of bike demands.
+        <br>
+        For the interactivity, I implemented tooltip cursors for each time series. To display it, We simply need to
+        hover the mouse in plotting region. The function would figure out the closest hour and plot both vertical and horizontal
+        dash lines to indicate the exact positions on axes. Meanwhile, the legend below the line chart would show the
+        actual number of bike demands of the selected stations. Those implementation fulfill the detail on demands and
+        make the line chart more informative.
 
     </ul>
 
 
     <h2><b>Feedback</b></h2>
     <ul>
-        The feedback from the lab are super useful for improving my visualization and overall design.
-        At the beginning, I planned to have my symbol map displaying regional demand by zip code and barchart to
-        present individual demand of each station. It was not a good decision at all because my bar chart was below the
-        dashboard so users have to scroll down to see it. In addition, It requires a fair large
-        height for the svg elemnt to accommodate all the data, which makes it impossible to view the whole chart in one
-        screen.
+        The feedback from the Friday's lab are extremely useful for improving my visualization and overall design.
+        At the beginning, I planned to implement a choropleth map displaying regional demand by zip code and barchart to
+        show individual demand of each station. It was not a good decision at all because the map might
+        have lie factor issue and my bar chart was below the
+        dashboard. Users have to scroll down to see it. The height of the bar chart was too large to fit in one screen.
         <br>
         <br>
-        Thanks to my classmates' suggestion, I interchanged the roles of my symbol map and barchart. I used symbol map
+        Thanks to my classmates' suggestion, I interchanged the variables encoded by my symbol map and bar chart.
+        I used symbol map
         to represent the detail information for each bike station and used the barchart to display the regional information.
         This modification results high data density, low lie factor, and high data-ink ratio for my symbol map.
         Also, I would be able to accommodate the bar chart in between the widget and symbol map because of a fixed and
-        smaller number of variables at y-axis. After those big change, I ended up with a very compact and informative
+        smaller number of variables at y-axis. After those change, I ended up with a very compact and informative
         dashborad with all visualization in one screen.
 
 
@@ -1389,24 +1405,19 @@ plotTemperature.update = function(_){
         <br>
         <br>
 
-
-
     </ul>
-
-
-
     <h2><b>Challenges</b></h2>
     <ul>
-        The biggest challenge of this project is to simultaneously perform multiple transition of symbol map, bar chart,
+        The biggest challenge of this project is to perform simultaneous transition of symbol map, bar chart,
         and line chart when the calendar or the clock is clicked. I addressed this challenge with function objects and
-        sets of associated object function. For instance, for each of my visualization, I define one function object to initiate
-        the plot, one object function to update the underlying data attached with svg elements and another object function
-        to manipulate the transition. Once each function object is well defined, I can easily handle the transition by
-        simply calling their object function.
+        sets of associated object methods. For instance, for each of them, I define one function object to initiate
+        the plot, one object method to update the underlying data attached with svg elements and another object method
+        to manipulate the transition. Once each function object is instantiated, I can easily handle the transition by
+        simply calling their object methods.
         <br>
         <br>
-        In addition, number of station with observed records vary from day to day. For Nov. 1st, there might be 95 stations
-        while for Nov. 2nd, there might be only 90 stations. To dynamically track which stations have records of a given
+        In addition, number of station with observed records varies from day to day. For Nov. 1st, there might be 95 stations
+        while for Nov. 2nd, there might be only 90 stations. To dynamically track which stations have records on a given
         date, I assigned a key function of station name in <i>data()</i>. It would authomatically subset my dataset into
         <b>enter, exit, and update</b>. With separated accesses of this three subsets, I can create
         new circles for <b>enter</b> data, update the color scale and opacity for <b>update</b> data, and remove the
@@ -1416,11 +1427,31 @@ plotTemperature.update = function(_){
         There are few challenges that I did not address subject to the limited time frame. One is to substitute map
         projection with google map API which provides more context on the map and also allows dragging and zooming action
         on the map. Another one is to implement an adjustable div element for my line chart so when I clicked a button,
-        the large div would either pop up from the right hand side or the bottom and provide a large space for displaying
-        my line chart.
+        the large div would either pop up from the right hand side or the bottom and overlap the widget and barchart
+        so that there would be a large space for displaying the line chart.
     </ul>
-
     <h2><b>Conclusion</b></h2>
+    <ul>
+        Generally, we can sort of classifying each station into either a more downtown neighborhood such
+        as zip code <i>20004, 20005, 20006, 20007, 20245, 20415, 20433, and 20546</i> and a more residential
+        area like <i>20001, 20002, 20003, 20008, 20009, 20010, 20011</i>. Stations within the residential region
+        have huge demand during 7am to 9am in weekdays, the time when people leave for works or schools. This
+        demand not surprisingly delays to 10am to 12pm in weekends.
+        Conversely, stations within the downtown area suffer a huge bike in-flood every morning. This
+        uneven distribution would reverse in the afternoon when people start to leave their school or office
+        and go back to their houses. To visualize this phonemenon, we can simply compare one of stations in
+        residential region to the other one in downtown area using line chart; or, go through each
+        hour to visualize with symbol map and barchart.
+        <br>
+        <br>
+        Possible results of this distribution problem might be lack of decks when people try to return
+        bikes or might be lack of bikes when people actually need ones. Either way could be very frustrating and
+        ruins user experience. Hence, I think with the understanding of bike demand distribution of each station
+        the bikeshare service can develop a redistribution program to move those bikes around in rush hours
+        and alleviate this problem.
+
+
+    </ul>
 </div>
 </div>
 </body>
