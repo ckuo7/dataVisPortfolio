@@ -1327,37 +1327,38 @@ plotTemperature.update = function(_){
     <br>
     This project implemented a dashboard using Javascript D3 library to provide interaction with the Bikeshare demand data,
     provided by Capital Bikeshare, the bikeshare service in Washington D.C. One of the most important goal of this project
-    is to visualize the bike rental demands geographically and and how they vary overtime. The result of this project
+    is to visualize the bike rental demands geographically and to understand how they vary overtime. The result of this project
     can serve as part of city mobility research and provides insights of how to make bikeshare service better and
     benefit more people's daily life.
     </ul>
     <h2><b>Techniques/Interactivity</b></h2>
     <ul>
     <h4><b>Calendar and Clock</b>:</h4>
-        This two visualization encode time stamp information of the dataset and provide users accesses to select
-        different part of the data set. For calendar map, each square represents a single day in November 2012.
-        As for donut chart, each arch represents an hour in a given date. Because this visualization
-        is not used for comparison or , I decided to use donut char
-        I used color as pre-attentative attribute to indicate the data point that be selected so that users can
-        easily refer.
+        The calendar and the clock are filters of the bike demand data. Users can easily access different part of the
+        dataset by simply clicking squares in the calendar or arches in the clock. I used different color to indicated
+        the selected date and hour. Also, the clicking event would trigger
+        several transition on the rest of visualization. First, the bar chart and the line chart would re scale on
+        their axes. Second, svg elements including paths in the line chart, rectangles in the bar chart, and circles
+        in the symbol map would update according to the new dataset. Lastly, the text below the clock would also change.
+
     <h4><b>Symbol Map</b></h4>
         The symbol map is the most important part of this dashboard. It encodes the location and bike demand of each
         stations in the circles with Mercator projection. It is a very condensed visualization with high data density
-        and high data-ink ratio. I use contrasting color as pre-attentative
+        and high data-ink ratio. I use contrasting color as a pre-attentative
         attriubte. Green stands for the excess of supplies while red represents the excess of demands. The intensity
-        is encoded in the opacity of colors. Hence, the stronger the color is, the degree of the excess is higher.
+        is encoded in the opacity of colors. The stronger the color is, the higher degree of the excess is.
         <br>
         <br>
-        The interactivity of this map includes a tooltip that displays the name of bike stations and the bike demand at
-        certain time stamp. If we want to know more about certain stations, we can simple click the circles and the
-        line chart would show the demand distribution of 24 hours. When the circles are clicked, their border color
+        The interactivity of this map includes a tooltip that displays the name of a bike station and its bike demand at
+        certain time stamp. If we want to know more detail about certain stations, we can simple click the circles and the
+        line chart would show their demand distribution over 24 hours. In addition, their border color
         also change to the color of corresponding lines. This can help users to easily make reference.
 
     <h4><b>Two Sided barchart</b></h4>
         This visualization aims to provide bike demand information by region. I decide to use vertical two-sided
         bar chart with value of bike demand as x-axis and zip code as y-axis. The bar chart allows users to easily
         compare values of different regions with the least lie factor involved. However, it might suffer low
-        data density and low data-ink ratio if there are outliers with extreme values.
+        data density and low data-ink ratio if there are outliers in the dataset.
         <br>
         <br>
         For the interactivity, I implemented a tooltip to indicate the exact bike demand. It would show up when
@@ -1370,7 +1371,7 @@ plotTemperature.update = function(_){
         The purpose of this visualization is to realize the distribution of bike rental demand of two selected stations
         and also allow users to make easy comparison between them. To display all visualization in one place, I squeezed
         48 data point in a relatively small space, which might be a little difficult for users to read it. However,
-        considering its secondary position in terms of functionality of the whole dashboard, I think it is reasonable to
+        considering its secondary role in terms of functionality of the whole dashboard, I think it is reasonable to
         do so. The chart still has decent data-ink ratio and data density.
         <br>
         <br>
