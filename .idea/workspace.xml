@@ -2,45 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4da44846-0f61-4340-bdca-234c9e532f52" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/movieRecommendation.html" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework1.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework1/.idea/.name" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework1/.idea/encodings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework1/.idea/homework1.iml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework1/.idea/misc.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework1/.idea/modules.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework1/.idea/scopes/scope_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework1/.idea/vcs.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework1/.idea/workspace.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework1/_/base.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework1/_/d3.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework1/script.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework2.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework2/Untitled.R" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework2/moviesWhole.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework2/stateX77.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework2/stateX77aggregate.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework3.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework4.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework5.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework5/.idea/.name" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework5/.idea/encodings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework5/.idea/homework5.iml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework5/.idea/misc.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework5/.idea/modules.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework5/.idea/scopes/scope_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework5/.idea/vcs.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework5/.idea/workspace.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework5/4.5_month.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework5/README.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework5/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework5/script.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework5/style.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework5/thumbnail.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework5/usprecip.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/homework5/usprecip.r" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/movieRecommendation.html" afterPath="$PROJECT_DIR$/movieRecommendation.html" />
     </list>
     <ignored path="spring-2015-msan622.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -109,25 +71,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="movieRecommendation.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="movieRecommendation.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/movieRecommendation.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.35582823" vertical-offset="908" max-vertical-offset="11220">
-              <caret line="76" column="35" selection-start-line="76" selection-start-column="35" selection-end-line="76" selection-end-column="35" />
+            <state vertical-scroll-proportion="-8.416667" vertical-offset="503" max-vertical-offset="11220">
+              <caret line="47" column="42" selection-start-line="47" selection-start-column="42" selection-end-line="47" selection-end-column="42" />
               <folding>
-                <marker date="1437102443000" expanded="true" signature="12208:12217" placeholder="..." />
-                <marker date="1437102443000" expanded="true" signature="12308:12317" placeholder="..." />
-                <marker date="1437102443000" expanded="true" signature="12408:12417" placeholder="..." />
-                <marker date="1437102443000" expanded="true" signature="12517:12526" placeholder="..." />
+                <marker date="1437102853000" expanded="true" signature="12206:12215" placeholder="..." />
+                <marker date="1437102853000" expanded="true" signature="12306:12315" placeholder="..." />
+                <marker date="1437102853000" expanded="true" signature="12406:12415" placeholder="..." />
+                <marker date="1437102853000" expanded="true" signature="12515:12524" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1185" max-vertical-offset="2730">
+            <state vertical-scroll-proportion="1.4723927" vertical-offset="330" max-vertical-offset="2730">
               <caret line="97" column="51" selection-start-line="97" selection-start-column="51" selection-end-line="97" selection-end-column="51" />
               <folding>
                 <element signature="n#script#0;n#head#0;n#html#0;n#!!top" expanded="false" />
@@ -755,27 +717,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/movieRecommendation.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.416667" vertical-offset="503" max-vertical-offset="11220">
+          <caret line="47" column="42" selection-start-line="47" selection-start-column="42" selection-end-line="47" selection-end-column="42" />
+          <folding>
+            <marker date="1437102853000" expanded="true" signature="12206:12215" placeholder="..." />
+            <marker date="1437102853000" expanded="true" signature="12306:12315" placeholder="..." />
+            <marker date="1437102853000" expanded="true" signature="12406:12415" placeholder="..." />
+            <marker date="1437102853000" expanded="true" signature="12515:12524" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1185" max-vertical-offset="2730">
+        <state vertical-scroll-proportion="1.4723927" vertical-offset="330" max-vertical-offset="2730">
           <caret line="97" column="51" selection-start-line="97" selection-start-column="51" selection-end-line="97" selection-end-column="51" />
           <folding>
             <element signature="n#script#0;n#head#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#p#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#p#0;n#footer#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/movieRecommendation.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35582823" vertical-offset="908" max-vertical-offset="11220">
-          <caret line="76" column="35" selection-start-line="76" selection-start-column="35" selection-end-line="76" selection-end-column="35" />
-          <folding>
-            <marker date="1437102443000" expanded="true" signature="12208:12217" placeholder="..." />
-            <marker date="1437102443000" expanded="true" signature="12308:12317" placeholder="..." />
-            <marker date="1437102443000" expanded="true" signature="12408:12417" placeholder="..." />
-            <marker date="1437102443000" expanded="true" signature="12517:12526" placeholder="..." />
           </folding>
         </state>
       </provider>
