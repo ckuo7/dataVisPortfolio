@@ -2,8 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4da44846-0f61-4340-bdca-234c9e532f52" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bikeShare.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bikeShareDashboard.html" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/projectDataset.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/projectPrototype.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/projectReport.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/projectSketch.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/projectVideo.html" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/movieRecommendation.html" afterPath="$PROJECT_DIR$/movieRecommendation.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="spring-2015-msan622.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,54 +35,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="projectPrototype.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/projectPrototype.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1185" max-vertical-offset="2670">
-              <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
-              <folding>
-                <element signature="n#script#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-                <element signature="n#script#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="projectReport.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/projectReport.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="450" max-vertical-offset="3435">
-              <caret line="90" column="0" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
-              <folding>
-                <element signature="n#style#0;n#head#0;n#html#0;n#!!top" expanded="false" />
-                <element signature="n#script#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-                <element signature="e#11521#17423#0" expanded="false" />
-                <element signature="e#15714#17420#0" expanded="false" />
-                <element signature="e#17572#17691#0" expanded="false" />
-                <element signature="e#17729#17848#0" expanded="false" />
-                <element signature="e#17883#17996#0" expanded="false" />
-                <element signature="e#18032#18740#0" expanded="false" />
-                <element signature="e#19375#20611#0" expanded="false" />
-                <element signature="e#22652#22766#0" expanded="false" />
-                <element signature="e#26666#29392#0" expanded="false" />
-                <element signature="e#29426#32314#0" expanded="false" />
-                <element signature="e#34279#37577#0" expanded="false" />
-                <element signature="e#37615#37727#0" expanded="false" />
-                <element signature="e#37764#38680#0" expanded="false" />
-                <element signature="e#38720#39503#0" expanded="false" />
-                <element signature="e#41209#42447#0" expanded="false" />
-                <element signature="e#44333#44805#0" expanded="false" />
-                <element signature="e#44840#44962#0" expanded="false" />
-                <element signature="e#45000#45872#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="movieRecommendation.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/movieRecommendation.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.416667" vertical-offset="503" max-vertical-offset="11220">
+            <state vertical-scroll-proportion="-29.375" vertical-offset="0" max-vertical-offset="11220">
               <caret line="47" column="43" selection-start-line="47" selection-start-column="43" selection-end-line="47" selection-end-column="43" />
               <folding>
                 <marker date="1437102959000" expanded="true" signature="12223:12232" placeholder="..." />
@@ -90,8 +53,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8052147" vertical-offset="90" max-vertical-offset="2730">
-              <caret line="50" column="60" selection-start-line="50" selection-start-column="60" selection-end-line="50" selection-end-column="60" />
+            <state vertical-scroll-proportion="0.5291411" vertical-offset="1050" max-vertical-offset="2700">
+              <caret line="104" column="56" selection-start-line="104" selection-start-column="56" selection-end-line="104" selection-end-column="56" />
               <folding>
                 <element signature="n#script#0;n#head#0;n#html#0;n#!!top" expanded="false" />
                 <element signature="n#p#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
@@ -101,33 +64,37 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="projectDataset.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/projectDataset.html">
+      <file leaf-file-name="bikeShare.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bikeShare.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="1575">
-              <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="projectVideo.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/projectVideo.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="510" max-vertical-offset="1230">
-              <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="projectSketch.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/projectSketch.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="375" max-vertical-offset="1530">
-              <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+            <state vertical-scroll-proportion="-9.666667" vertical-offset="2543" max-vertical-offset="3195">
+              <caret line="185" column="34" selection-start-line="185" selection-start-column="34" selection-end-line="185" selection-end-column="34" />
               <folding>
-                <element signature="n#script#0;n#head#0;n#html#0;n#!!top" expanded="false" />
+                <marker date="1437166347000" expanded="true" signature="729:1129" placeholder="..." />
+                <marker date="1437166347000" expanded="true" signature="757:976" placeholder="{...}" />
+                <marker date="1437166347000" expanded="true" signature="808:848" placeholder="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bikeShareDashboard.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bikeShareDashboard.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="12.208333" vertical-offset="1148" max-vertical-offset="1965">
+              <caret line="1326" column="0" selection-start-line="1326" selection-start-column="4" selection-end-line="1391" selection-end-column="10" />
+              <folding>
+                <element signature="n#style#0;n#head#0;n#html#0;n#!!top" expanded="false" />
+                <element signature="n#nav#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+                <element signature="n#script#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+                <marker date="1437166238000" expanded="true" signature="1889:2289" placeholder="..." />
+                <marker date="1437166238000" expanded="true" signature="1917:2136" placeholder="{...}" />
+                <marker date="1437166238000" expanded="true" signature="1968:2008" placeholder="{...}" />
+                <marker date="1437166238000" expanded="true" signature="24712:24721" placeholder="..." />
+                <marker date="1437166238000" expanded="true" signature="24799:24808" placeholder="..." />
+                <marker date="1437166238000" expanded="true" signature="31051:31060" placeholder="..." />
+                <marker date="1437166238000" expanded="true" signature="31138:31147" placeholder="..." />
+                <marker date="1437166238000" expanded="true" signature="37007:37016" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -152,12 +119,14 @@
         <option value="$PROJECT_DIR$/homework3.html" />
         <option value="$PROJECT_DIR$/homework4.html" />
         <option value="$PROJECT_DIR$/homework5.html" />
-        <option value="$PROJECT_DIR$/projectDataset.html" />
         <option value="$PROJECT_DIR$/projectPrototype.html" />
         <option value="$PROJECT_DIR$/projectSketch.html" />
         <option value="$PROJECT_DIR$/projectVideo.html" />
         <option value="$PROJECT_DIR$/projectReport.html" />
         <option value="$PROJECT_DIR$/movieRecommendation.html" />
+        <option value="$PROJECT_DIR$/projectDataset.html" />
+        <option value="$PROJECT_DIR$/bikeShareDashboard.html" />
+        <option value="$PROJECT_DIR$/bikeShare.html" />
         <option value="$PROJECT_DIR$/index.html" />
       </list>
     </option>
@@ -436,12 +405,12 @@
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286385" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328125" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23009624" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22979398" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.62983423" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329927" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
@@ -652,75 +621,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/projectDataset.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="1440">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/projectSketch.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="375" max-vertical-offset="1530">
-          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-          <folding>
-            <element signature="n#script#0;n#head#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/projectVideo.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="1095">
-          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/projectPrototype.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1185" max-vertical-offset="2670">
-          <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
-          <folding>
-            <element signature="n#script#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#script#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/projectReport.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="3300">
-          <caret line="90" column="0" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
-          <folding>
-            <element signature="n#style#0;n#head#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#script#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="e#11521#17423#0" expanded="false" />
-            <element signature="e#15714#17420#0" expanded="false" />
-            <element signature="e#17572#17691#0" expanded="false" />
-            <element signature="e#17729#17848#0" expanded="false" />
-            <element signature="e#17883#17996#0" expanded="false" />
-            <element signature="e#18032#18740#0" expanded="false" />
-            <element signature="e#19375#20611#0" expanded="false" />
-            <element signature="e#22652#22766#0" expanded="false" />
-            <element signature="e#26666#29392#0" expanded="false" />
-            <element signature="e#29426#32314#0" expanded="false" />
-            <element signature="e#34279#37577#0" expanded="false" />
-            <element signature="e#37615#37727#0" expanded="false" />
-            <element signature="e#37764#38680#0" expanded="false" />
-            <element signature="e#38720#39503#0" expanded="false" />
-            <element signature="e#41209#42447#0" expanded="false" />
-            <element signature="e#44333#44805#0" expanded="false" />
-            <element signature="e#44840#44962#0" expanded="false" />
-            <element signature="e#45000#45872#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/movieRecommendation.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.416667" vertical-offset="503" max-vertical-offset="11220">
+        <state vertical-scroll-proportion="-29.375" vertical-offset="0" max-vertical-offset="11220">
           <caret line="47" column="43" selection-start-line="47" selection-start-column="43" selection-end-line="47" selection-end-column="43" />
           <folding>
             <marker date="1437102959000" expanded="true" signature="12223:12232" placeholder="..." />
@@ -731,10 +634,42 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/bikeShareDashboard.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="12.208333" vertical-offset="1148" max-vertical-offset="1965">
+          <caret line="1326" column="0" selection-start-line="1326" selection-start-column="4" selection-end-line="1391" selection-end-column="10" />
+          <folding>
+            <element signature="n#style#0;n#head#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#nav#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#script#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <marker date="1437166238000" expanded="true" signature="1889:2289" placeholder="..." />
+            <marker date="1437166238000" expanded="true" signature="1917:2136" placeholder="{...}" />
+            <marker date="1437166238000" expanded="true" signature="1968:2008" placeholder="{...}" />
+            <marker date="1437166238000" expanded="true" signature="24712:24721" placeholder="..." />
+            <marker date="1437166238000" expanded="true" signature="24799:24808" placeholder="..." />
+            <marker date="1437166238000" expanded="true" signature="31051:31060" placeholder="..." />
+            <marker date="1437166238000" expanded="true" signature="31138:31147" placeholder="..." />
+            <marker date="1437166238000" expanded="true" signature="37007:37016" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bikeShare.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.666667" vertical-offset="2543" max-vertical-offset="3195">
+          <caret line="185" column="34" selection-start-line="185" selection-start-column="34" selection-end-line="185" selection-end-column="34" />
+          <folding>
+            <marker date="1437166347000" expanded="true" signature="729:1129" placeholder="..." />
+            <marker date="1437166347000" expanded="true" signature="757:976" placeholder="{...}" />
+            <marker date="1437166347000" expanded="true" signature="808:848" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8052147" vertical-offset="90" max-vertical-offset="2730">
-          <caret line="50" column="60" selection-start-line="50" selection-start-column="60" selection-end-line="50" selection-end-column="60" />
+        <state vertical-scroll-proportion="0.5291411" vertical-offset="1050" max-vertical-offset="2700">
+          <caret line="104" column="56" selection-start-line="104" selection-start-column="56" selection-end-line="104" selection-end-column="56" />
           <folding>
             <element signature="n#script#0;n#head#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#p#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="false" />
