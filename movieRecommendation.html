@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>MSAN 622 Homework2</title>
+<title>Information Visualization Portfolio</title>
 
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/bootstrap-theme.min.css" rel="stylesheet">
@@ -45,19 +45,19 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="../index.html">MSAN 622</a>
+            <a class="navbar-brand" href="../index.html">Portfolio</a>
         </div>
 
         <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="#homework">Homework</a></li>
-                <li><a href="#project">Project</a></li>
-                <li><a href="#participation">Participation</a></li>
-            </ul>
+            <!--<ul class="nav navbar-nav">-->
+                <!--<li><a href="#homework">Homework</a></li>-->
+                <!--<li><a href="#project">Project</a></li>-->
+                <!--<li><a href="#participation">Participation</a></li>-->
+            <!--</ul>-->
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="http://msan695ckuo7.appspot.com/">Home</a></li>
+                <li><a href="http://msan695ckuo7.appspot.com/about">About</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -66,45 +66,66 @@
 <div class = "container">
 <div>
 
-        <h5>Author: <a href="https://www.linkedin.com/in/ckuo7">Chi-Liang "Daniel" Kuo</a></h5>
-        <h5>HW4 <a href="https://github.com/ckuo7/msan622">Repo</a> (Private)</h5>
-        <h2><a href="https://public.tableau.com/views/prototype_0/Dashboard1?:embed=y&:showTabs=y&:display_count=yes">Tableau Prototype</a></h2>
-        <h2>Data Preprocessing</h2>
-        <p>I did most of my data preprocessing in R to create three separate csv files for my plots. For donut and line chart, I aggregated number of movies and average
-            budgets by different genres and years. For the bar chart, I used the original dataset. The preprocessing facilitated data preparation in D3 so that browsers
-            can render my visualization more quickly.
-        </p>
-        <h2>Basic Functionality</h2>
-        <ul>
-            <li>A horizontal bar chart sorted by ratings of movies (rows: title, column: year)</li>
-            <li>A pie chart (category: year, measure: percentage. I don't know how to make a donut in tableau so I made a pie instead)</li>
-            <li>A line chart (rows: year, columns: budget)</li>
-        </ul>
-        <h2>Moderate Functionality</h2>
-        <ul>
-            <li>A horizontal bar chart with ratings on x axis and titles as y axis</li>
-            <li>A donut chart with genres as categories and percentage as angles</li>
-            <li>A line chart with time as x axis and average budgets as y axis</li>
-        </ul>
-        <h2>Advanced Functionality</h2>
-        <ul>
-            <li>Filtering movies of different years by the drop-down list</li>
-            <li>Filtering movies of different genres by clicking segments of donut chart</li>
-            <li>Filtering average budget of different genres by clicking segments of donut chart</li>
-        </ul>
-        <h2>User Guide</h2>
-        <p>
-            When I started this homework, I was thinking about how to make the best use of this dataset to benefit my normal life. I like to watch movies but sometimes it is
-            just too difficult to find a right one. So, I decided to use this dataset to build up a movie recommendation dashboard. It has two filter
-            function to help you select movies. The First one is the drop-down list on the top left corner of the dashboard where you can select movies from a particular year. After selecting a year, the barchart would automatically sort by
-            ratings of movies that belongs to the selected year in descending order. Then we can easily know which ones have highest ratings in a given year. Detail information about a movie is provided when its bar is hovered.
-            The second filter aims at selecting movies of a given year by genres. This is achived by clicking different segments of donut chart. For example, if you want to check romance movies, just click the orange segment!
-            This interactivity provides users an easy and quick access to all the highest rated movies of different genre of a given year. In addition,
-            the line chart, which shows the average budgets for making movies of corresponding genre, would also change if we click the segments.
+    <h2>Introduction</h2>
+
+    In this project, I built a movie recommendation dashboard using the <a href="http://docs.ggplot2.org/0.9.3.1/movies.html">movies</a>
+    dataset from <a href="http://ggplot2.org/">ggplot2</a> package in R. It has three interactive visualizations for users
+    to explore the movie dataset. The first one is the vertical barchart on the left hand side, which sorts movies
+    by their ratings in descending order. So, user can easily find movies with the highest ones. The second visualization
+    is the donut chart on the top right hand side, which shows the proportions of each genre in a given year.
+    The last one is the line chart below the donut chart, which is slightly irrelevant in this context but it shows
+    the trend of the average budget for making a movie in a particular genre over time.
+
+    <h2>Navigation</h2>
+    <ul>
+
+        <li><b>Filter 1:</b> click the drop-down list to select movies in a particular year</li>
+        <li><b>Filter 2:</b> click the donut chart to select movies by genres and also view the average budget over time.</li>
+        <li><b>Detail on demand:</b> hover the bar to see the detail information of the movie</li>
+    </ul>
+    <!--It has two filter function to help you select movies. The First one is the . The second one is the donut chart on the top right-->
+    <!--hand side where you-->
+
+
+        <!--<h2><a href="https://public.tableau.com/views/prototype_0/Dashboard1?:embed=y&:showTabs=y&:display_count=yes">Tableau Prototype</a></h2>-->
+        <!--<h2>Data Preprocessing</h2>-->
+        <!--<p>I did most of my data preprocessing in R to create three separate csv files for my plots. For donut and line chart, I aggregated number of movies and average-->
+            <!--budgets by different genres and years. For the bar chart, I used the original dataset. The preprocessing facilitated data preparation in D3 so that browsers-->
+            <!--can render my visualization more quickly.-->
+        <!--</p>-->
+        <!--<h2>Basic Functionality</h2>-->
+        <!--<ul>-->
+            <!--<li>A horizontal bar chart sorted by ratings of movies (rows: title, column: year)</li>-->
+            <!--<li>A pie chart (category: year, measure: percentage. I don't know how to make a donut in tableau so I made a pie instead)</li>-->
+            <!--<li>A line chart (rows: year, columns: budget)</li>-->
+        <!--</ul>-->
+        <!--<h2>Moderate Functionality</h2>-->
+        <!--<ul>-->
+            <!--<li>A horizontal bar chart with ratings on x axis and titles as y axis</li>-->
+            <!--<li>A donut chart with genres as categories and percentage as angles</li>-->
+            <!--<li>A line chart with time as x axis and average budgets as y axis</li>-->
+        <!--</ul>-->
+        <!--<h2>Advanced Functionality</h2>-->
+        <!--<ul>-->
+            <!--<li>Filtering movies of different years by the drop-down list</li>-->
+            <!--<li>Filtering movies of different genres by clicking segments of donut chart</li>-->
+            <!--<li>Filtering average budget of different genres by clicking segments of donut chart</li>-->
+        <!--</ul>-->
+        <!--<h2>User Guide</h2>-->
+        <!--<p>-->
+            <!--W-->
+            <!--just too difficult to find a right one. So, I decided to use this dataset to build up a movie recommendation dashboard.-->
+
+            <!--After selecting a year, the barchart would automatically sort by-->
+    <!--ratings of movies that belongs to the selected year in descending order. Then we can easily know which ones have highest ratings in a given year. Detail information about a movie is provided when its bar is hovered.-->
+    <!--This is achived by clicking different segments of donut chart. For example, if you want to check romance movies, just click the orange segment!-->
+    <!--This interactivity provides users an easy and quick access to all the highest rated movies of different genre of a given year. In addition,-->
+    <!--the line chart, which shows the average budgets for making movies of corresponding genre, would also change if we click the segments.-->
+
 
         </p>
         <div id ="start"></div>
-        <h2><a href="#start">Get Start</a></h2>
+        <h2><a href="#start">Get Started</a></h2>
 
 </div>
 <style>
